@@ -15,10 +15,12 @@ import type {
   InferenceToolDefinition,
 } from "../types.js";
 import { ResilientHttpClient } from "./http-client.js";
+import { createCodexOAuthClient } from "../inference/codex-oauth.js";
 
 const INFERENCE_TIMEOUT_MS = 60_000;
 
 interface InferenceClientOptions {
+  provider?: "codex-oauth";
   apiUrl: string;
   apiKey: string;
   defaultModel: string;
@@ -48,6 +50,7 @@ function isLoopbackHttpUrl(url: string | undefined): boolean {
 export function createInferenceClient(
   options: InferenceClientOptions,
 ): InferenceClient {
+  if (options.provider === "codex-oauth") return createCodexOAuthClient();
   const { apiUrl, apiKey, openaiApiKey, anthropicApiKey, ollamaBaseUrl, getModelProvider } = options;
   const httpClient = new ResilientHttpClient({
     baseTimeout: INFERENCE_TIMEOUT_MS,

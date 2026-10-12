@@ -53,6 +53,7 @@ export interface AutomatonConfig {
   anthropicApiKey?: string;
   ollamaBaseUrl?: string;
   inferenceModel: string;
+  inferenceProvider?: "codex-oauth";
   maxTokensPerTurn: number;
   heartbeatConfigPath: string;
   dbPath: string;

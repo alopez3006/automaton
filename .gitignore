@@ -1,6 +1,7 @@
 node_modules
 dist
 .env
+.operator.env
 *.log
 .DS_Store
 *.db
@@ -10,4 +11,8 @@ dist
 *.tgz
 .automaton/wallet.json
 .automaton/state.db
+business/audit-geo/.reports/
 
+# The landing page is versioned in its own managed Sites repository.
+business/audit-geo/site/
+.stripe.env

@@ -1,0 +1,13 @@
+{
+  "accountLabel": "Vutler",
+  "stripeContext": "acct_1T2tqGDj0FRggNOE",
+  "livemode": true,
+  "product": "prod_VQjNzsuKl6cVwJ",
+  "price": "price_1UPrvEDj0FRggNOELwIri6zx",
+  "amountCents": 900,
+  "currency": "eur",
+  "paymentLink": "plink_1UPs6ZDj0FRggNOEa1pj9S9O",
+  "url": "https://buy.stripe.com/bJe6oH2ae0Vu3Qo0Yl2Fa00",
+  "active": false,
+  "maxCompletedSessions": 5
+}

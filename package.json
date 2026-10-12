@@ -38,6 +38,8 @@
   "license": "MIT",
   "packageManager": "pnpm@10.28.1",
   "scripts": {
+    "start:snipara": "node scripts/with-snipara.mjs",
+    "audit:operator": "node business/audit-geo/operator.mjs --once",
     "build": "tsc && pnpm -r build",
     "dev": "tsx watch src/index.ts",
     "test": "vitest run",

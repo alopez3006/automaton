@@ -1,0 +1,14 @@
+import {writeFile,chmod} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {dirname,join} from 'node:path';
+if(!process.stdin.isTTY)throw Error('Use your terminal; do not pass the key in shell arguments');
+console.log('Paste a Vutler rk_live_ key with Checkout Sessions READ only. Input is hidden.');
+process.stdin.setRawMode(true);process.stdin.resume();
+const key=await new Promise((resolve,reject)=>{let value='';process.stdin.on('data',chunk=>{for(const c of chunk.toString()){if(c==='\u0003'){process.stdin.setRawMode(false);process.exit(130);}if(c==='\r'||c==='\n'){process.stdin.setRawMode(false);process.stdin.pause();resolve(value.trim());return;}if(c==='\u007f'){value=value.slice(0,-1);}else if(c>=' ')value+=c;if(value.length>500){process.stdin.setRawMode(false);reject(Error('Invalid key input'));return;}}});});
+if(!/^rk_live_[A-Za-z0-9]+$/.test(key))throw Error('A restricted live key is required');
+const url=new URL('https://api.stripe.com/v1/checkout/sessions');url.searchParams.set('payment_link','plink_1UPs6ZDj0FRggNOEa1pj9S9O');url.searchParams.set('limit','1');
+const result=await fetch(url,{headers:{Authorization:'Bearer '+key},redirect:'error',signal:AbortSignal.timeout(10000)});
+if(!result.ok)throw Error(`Stripe read verification failed (HTTP ${result.status}); check Vutler and Checkout Sessions READ permission`);
+const target=join(dirname(fileURLToPath(import.meta.url)),'.stripe.env');
+await writeFile(target,'STRIPE_RESTRICTED_KEY='+key+'\n',{mode:0o600,flag:'wx'});await chmod(target,0o600);
+console.log('Restricted key verified and stored privately. Tell Codex the local configuration is ready; no key value is printed.');

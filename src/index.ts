@@ -285,6 +285,7 @@ async function run(): Promise<void> {
   const modelRegistry = new ModelRegistry(db.raw);
   modelRegistry.initialize();
   const inference = createInferenceClient({
+    provider: config.inferenceProvider,
     apiUrl: config.conwayApiUrl,
     apiKey,
     defaultModel: config.inferenceModel,

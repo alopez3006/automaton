@@ -27,6 +27,7 @@ import type {
 import { DEFAULT_MODEL_STRATEGY_CONFIG } from "../types.js";
 import type { PolicyEngine } from "./policy-engine.js";
 import { buildSystemPrompt, buildWakeupPrompt } from "./system-prompt.js";
+import { loadSniparaTools, SNIPARA_INSTRUCTIONS } from "./snipara.js";
 import { buildContextMessages, trimContext } from "./context.js";
 import {
   createBuiltinTools,
@@ -98,7 +99,8 @@ export async function runAgentLoop(
 
   const builtinTools = createBuiltinTools(identity.sandboxId);
   const installedTools = loadInstalledTools(db);
-  const tools = [...builtinTools, ...installedTools];
+  const sniparaTools = await loadSniparaTools();
+  const tools = [...builtinTools, ...installedTools, ...sniparaTools];
   const toolContext: ToolContext = {
     identity,
     config,
@@ -510,7 +512,7 @@ export async function runAgentLoop(
         tools,
         skills,
         isFirstRun,
-      });
+      }) + (sniparaTools.length ? SNIPARA_INSTRUCTIONS : "");
 
       // Phase 2.2: Pre-turn memory retrieval
       let memoryBlock: string | undefined;
@@ -600,7 +602,20 @@ export async function runAgentLoop(
       log(config, `[THINK] Routing inference (tier: ${survivalTier}, model: ${inference.getDefaultModel()})...`);
 
       const inferenceTools = toolsToInferenceFormat(tools);
-      const routerResult = await inferenceRouter.route(
+      // Codex's OAuth CLI chooses its own model and consumes plan quota, not
+      // Conway credits. Do not attribute its usage to the router's API model.
+      const oauthResponse = inference.getDefaultModel() === "codex-oauth"
+        ? await inference.chat(messages, { tools: inferenceTools, maxTokens: config.maxTokensPerTurn })
+        : undefined;
+      const routerResult = oauthResponse ? {
+        content: oauthResponse.message.content,
+        model: oauthResponse.model,
+        inputTokens: oauthResponse.usage.promptTokens,
+        outputTokens: oauthResponse.usage.completionTokens,
+        toolCalls: oauthResponse.toolCalls,
+        finishReason: oauthResponse.finishReason,
+        costCents: 0, // No Conway API charge; OAuth subscription usage is separate.
+      } : await inferenceRouter.route(
         {
           messages: messages,
           taskType: "agent_turn",
