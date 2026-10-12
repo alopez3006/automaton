@@ -28,3 +28,11 @@ No external purchase has been made. Codex calls consume existing account quota; 
 ## Secure key input
 
 In Stripe Dashboard select Vutler in live mode, create a restricted key named Automaton audit pilot with Checkout Sessions READ and everything else NONE. Complete the owner 2FA step. Then run `node business/audit-geo/configure-stripe.mjs` in your own terminal and paste the key into its hidden prompt. It verifies a read against the prepared payment link and stores only an ignored .stripe.env file with mode 600. Codex can configure the Sites secret from that file without printing the key. Never paste a credential into chat.
+
+## Handoff controller
+
+`pnpm business:handoff` starts the fork's local Automaton business mode in a detached process. `pnpm business:status` reports its state; .automaton-business/supervisor.log and private execution receipts record progress. The controller uses Automaton's database and skill loader, retrieves hosted project memory in its supervisor, and delegates authorized actions to the official Codex OAuth CLI with connected apps and automatic approval review. No API key is forwarded to that action executor.
+
+This action-mode access was independently proved with a read of the existing public Site and a read of the Vutler account label. The old plain-inference limitation does not imply that action mode lacks connected apps. Raw credential-file access is forbidden; additional memory retrieval/persistence uses the dedicated hosted memory broker. Per-run duration is capped at 20 minutes; this pilot permits at most three controller runs. This is an initial execution handoff, not an unbounded permanent process or a funded Conway wallet/survival loop.
+
+The current task and authority are in HANDOFF.md. Registration of a domain waits for a concrete quote approval; the existing free hostname remains available. The Stripe CLI catalog currently has an authentication dependency distinct from the connected Stripe app; no legacy full-access key is reused to repair it.

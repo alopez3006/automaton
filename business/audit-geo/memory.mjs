@@ -1,0 +1,11 @@
+import{readFile}from'node:fs/promises';
+import{SniparaClient}from'../../dist/agent/snipara.js';
+const [operation,...parts]=process.argv.slice(2),text=parts.join(' ');
+if(!['recall','remember'].includes(operation)||!text||text.length>5000)throw Error('Use recall <question> or remember <durable non-secret learning>');
+if(/\b(?:rk|sk)_(?:live|test)_|\bwhsec_|Bearer\s|\b[a-f0-9]{64}\b|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/i.test(text))throw Error('Potential secret or personal data rejected');
+const source=await readFile(process.env.HOME+'/.codex/snipara.env','utf8');
+const match=source.match(/^(?:export\s+)?(?:RLM_API_KEY|SNIPARA_API_KEY)\s*=\s*(.+)$/m);
+const key=match?.[1].trim().replace(/^['"]|['"]$/g,'');if(!key)throw Error('Hosted memory credential unavailable');
+const client=new SniparaClient('https://api.snipara.com/mcp/automaton',key);
+const result=await client.call(operation==='recall'?'snipara_recall':'snipara_remember_if_novel',operation==='recall'?{scope:'project',query:text,limit:4}:{scope:'project',text,type:'learning',category:'automaton-business-handoff',source:'Automaton local business executor',novelty_threshold:.97});
+console.log(result);

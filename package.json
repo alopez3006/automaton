@@ -39,6 +39,9 @@
   "packageManager": "pnpm@10.28.1",
   "scripts": {
     "start:snipara": "node scripts/with-snipara.mjs",
+    "start:business": "node dist/index.js --business",
+    "business:handoff": "node scripts/start-business.mjs",
+    "business:status": "node dist/index.js --business-status",
     "audit:operator": "node business/audit-geo/operator.mjs --once",
     "build": "tsc && pnpm -r build",
     "dev": "tsx watch src/index.ts",

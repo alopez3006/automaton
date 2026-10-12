@@ -16,3 +16,4 @@ business/audit-geo/.reports/
 # The landing page is versioned in its own managed Sites repository.
 business/audit-geo/site/
 .stripe.env
+.automaton-business/

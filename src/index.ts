@@ -57,6 +57,8 @@ Sovereign AI Agent Runtime
 
 Usage:
   automaton --run          Start the automaton (first run triggers setup wizard)
+  automaton --business     Run the local business handoff with Codex OAuth
+  automaton --business-status  Show the local business execution receipt
   automaton --setup        Re-run the interactive setup wizard
   automaton --configure    Edit configuration (providers, model, treasury, general)
   automaton --pick-model   Interactively pick the active inference model
@@ -129,6 +131,16 @@ Environment:
     process.exit(0);
   }
 
+  if (args.includes("--business-status")) {
+    const { showBusinessStatus } = await import("./business/runtime.js");
+    await showBusinessStatus();
+    return;
+  }
+  if (args.includes("--business")) {
+    const { runBusiness } = await import("./business/runtime.js");
+    await runBusiness();
+    return;
+  }
   if (args.includes("--run")) {
     StructuredLogger.setSink(prettySink);
     await run();
