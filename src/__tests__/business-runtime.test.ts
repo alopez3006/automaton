@@ -73,15 +73,35 @@ describe('Automaton local business mode',()=>{
  it('continues an authorized standing mission without a new owner message, then enforces its daily limit',async()=>{
   const dir=await mkdtemp(join(tmpdir(),'automaton-standing-mission-fixture-'));
   try{
-   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Operate the offer');
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});
+   await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Historical fixture: require a fresh owner request before all work');
+   await writeFile(join(dir,'business/audit-geo/MISSION.md'),'Current fixture mission: independently improve qualified acquisition on owned surfaces');
    await writeFile(join(dir,'business/audit-geo/mission.json'),JSON.stringify({...legacyPolicy,enabled:true,externalBudgetCents:5000,passesPerDay:1}));
    let db=createDatabase(join(dir,'.automaton-business/state.db'));db.setKV('business_runs','6');db.close();
-   const executable=join(dir,'executor.mjs');await writeFile(executable,`#!/usr/bin/env node\nimport fs from 'node:fs';\nfs.writeFileSync(process.argv[process.argv.indexOf('-o')+1],JSON.stringify(${JSON.stringify({...receipt,status:'continue',blockers:[]})}));\nprocess.stdin.resume();\n`,{mode:0o700});
+   const executable=join(dir,'executor.mjs');await writeFile(executable,`#!/usr/bin/env node\nimport fs from 'node:fs';\nlet prompt='';process.stdin.on('data',chunk=>{prompt+=chunk});process.stdin.on('end',()=>{fs.writeFileSync(${JSON.stringify(join(dir,'captured-prompt.txt'))},prompt);fs.writeFileSync(process.argv[process.argv.indexOf('-o')+1],JSON.stringify(${JSON.stringify({...receipt,status:'continue',blockers:[]})}));});\n`,{mode:0o700});
    await runBusiness({workspace:dir,executable,context:'Fixture'});
+   const prompt=await readFile(join(dir,'captured-prompt.txt'),'utf8');
+   expect(prompt).toContain('Current fixture mission: independently improve qualified acquisition on owned surfaces');
+   expect(prompt).not.toContain('Historical fixture: require a fresh owner request before all work');
+   expect(prompt).toContain('Pending console messages: []');
+   expect(prompt).toContain('An empty incoming queue or a blocked provider does not imply no actionable work');
    db=createDatabase(join(dir,'.automaton-business/state.db'));expect(db.getKV('business_runs')).toBe('7');expect(JSON.parse(db.getKV('business_mission_passes')!)).toHaveLength(1);db.close();
    await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('Daily mission pass limit');
    await writeFile(join(dir,'business/audit-geo/mission.json'),JSON.stringify({...legacyPolicy,enabled:false,externalBudgetCents:5000}));
    await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('new owner request');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('fails closed when an enabled mission document is missing instead of silently using a historical handoff',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-missing-mission-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});
+   await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Historical fixture task');
+   await writeFile(join(dir,'business/audit-geo/mission.json'),JSON.stringify({...legacyPolicy,enabled:true,externalBudgetCents:5000}));
+   await expect(runBusiness({workspace:dir,context:'Fixture'})).rejects.toThrow('MISSION.md');
+   const db=createDatabase(join(dir,'.automaton-business/state.db'));
+   expect(db.getKV('business_runs')).toBeUndefined();
+   expect(db.getKV('business_mission_passes')).toBeUndefined();db.close();
+   await expect(readFile(join(dir,'.automaton-business/run.lock'))).rejects.toThrow();
   }finally{await rm(dir,{recursive:true,force:true});}
  });
  it('validates the per-pass remaining budget under the new fifty-euro mission ceiling',()=>{

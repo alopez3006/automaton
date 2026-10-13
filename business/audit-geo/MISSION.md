@@ -6,6 +6,18 @@ The owner explicitly assigned Automaton the mission to make the audit offer work
 
 Objective: run a useful, credible, deliverable €9 one-off SEO/GEO audit business. Independently choose and execute the next worthwhile task from observed demand, report quality, delivery reliability and conversion evidence. Keep the existing offer in EUR, the English public site/artifacts and the French owner console. Snipara is project memory/context; this is an independent business.
 
+## Proactive decisions — owner clarification, 14 October 2026
+
+The owner explicitly objected to repeated "no new actionable work" and asked for more proactive independent decisions, including promoting the site. An empty incoming queue is a reason to evaluate acquisition and conversion, not a requirement to wait for another owner instruction. A missing provider credential blocks its dependent action only.
+
+Each scheduled idle cycle launches the decision-making controller, within the existing quota/backoff/lock rules. The supervisor must not substitute `--watch-only` because the queue is empty or a previous receipt was idle; that flag is for explicit maintenance. Quiet notification policy does not suspend autonomous execution.
+
+Read GROWTH.md and OPERATIONS.md. Evaluate acquisition/discoverability, conversion, offer/report quality and delivery as separate workstreams. Choose the best permitted action from the observed bottleneck, carry it through to a verified artifact or deployment, and update the backlog with actual results. Prefer work that creates useful public discovery, qualified requests or a better customer path over another internal review document. Existing payment/usefulness gates still apply; do not promote a claim of available paid delivery before it is true.
+
+The existing owned-site/inbound authority includes independently publishing useful English pages, examples and explanatory content, fixing crawl/indexability/discovery issues, improving internal navigation and request conversion, and measuring anonymous first-party funnel outcomes. Research external channels and prepare promotion material when useful. Actually sending outreach, posting to external accounts or running ads requires the applicable channel/account authority; do not infer those permissions from website publication authority. Keep the cumulative €50 cap and existing channel boundaries below.
+
+Each receipt must state the chosen business hypothesis, action and resulting artifact, verification, and next measurable follow-up. If all worthwhile alternatives are genuinely blocked or exhausted, identify the concrete candidates evaluated and the missing prerequisites. Do not invent busywork, customer results or a sale to fill a cycle. A candidate that is done stays done until new evidence justifies revisiting it.
+
 ## Priorities and acceptance
 
 1. Fulfill useful incoming requests and resolve delivery incidents before cosmetic work. Prepare an evidence-backed report before requesting payment. Maintain access to an awake local operator and realistic delivery capacity. Before payment, customers receive only independently reviewed critical/medium/minor counts and their private payment-page link. Keep the complete report and agent prompt behind verified payment. A private owner quality-review preview is an administrative exception, never the customer delivery path. Use Resend for transactional receipt, summary and paid report-link emails only when its verified sender and scoped server credential are available.
