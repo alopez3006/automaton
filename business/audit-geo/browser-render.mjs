@@ -18,28 +18,60 @@ export async function renderPublicPage(url,{chromium,executablePath,fetchResourc
   await writeFile(wrapper,`#!/bin/sh\nexec /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny network*)' ${quote(executablePath)} "$@"\n`);
   await chmod(wrapper,0o700);
   const gateway=createBrowserGateway({totalTimeoutMs:timeoutMs,fetchResource});
-  let browser,timer,expired=false;
+  let browser,launchPromise,timer,expired=false;
   let deniedRequests=0;
   const run=async()=>{
     // Customer JavaScript must not inherit the operator's credential environment.
-    browser=await chromium.launch({executablePath:wrapper,headless:true,timeout:timeoutMs,env:{PATH:'/usr/bin:/bin:/usr/sbin:/sbin',TMPDIR:dir,LANG:'en_US.UTF-8'},args:['--disable-background-networking','--disable-quic','--disable-sync','--disable-extensions','--force-webrtc-ip-handling-policy=disable_non_proxied_udp']});
-    if(expired){await browser.close();throw Error('Render deadline exceeded');}
+    launchPromise=chromium.launch({executablePath:wrapper,headless:true,timeout:timeoutMs,env:{PATH:'/usr/bin:/bin:/usr/sbin:/sbin',TMPDIR:dir,LANG:'en_US.UTF-8'},args:['--disable-background-networking','--disable-quic','--disable-sync','--disable-extensions','--force-webrtc-ip-handling-policy=disable_non_proxied_udp']});
+    browser=await launchPromise;
+    if(expired)throw Error('Render deadline exceeded');
     const context=await browser.newContext({serviceWorkers:'block',acceptDownloads:false});
     await context.routeWebSocket('**/*',ws=>ws.close());
+    let page,pendingRedirect,navigating=false;
     await context.route('**/*',async route=>{
       const request=route.request();
-      try{const r=await gateway.request({url:request.url(),method:request.method(),resourceType:request.resourceType()});await route.fulfill({status:r.status,headers:r.headers,body:r.body});}
+      try{
+        const r=await gateway.request({url:request.url(),method:request.method(),resourceType:request.resourceType()});
+        // Chromium may bypass Playwright routing for the next redirect hop.
+        // Main-document hops are therefore explicit new navigations. Resource
+        // redirects fail closed rather than bypassing validation/base semantics.
+        if(r.status>=300&&r.status<400&&r.headers.location){
+          if(navigating&&request.isNavigationRequest()&&request.frame()===page.mainFrame()){
+            pendingRedirect=r.headers.location;
+            // Complete an inert navigation before starting the next hop. An
+            // aborted navigation can race Chromium's internal error page.
+            await route.fulfill({status:200,headers:{'content-type':'text/html','content-security-policy':"default-src 'none'"},body:''});
+          }else{deniedRequests++;await route.abort('blockedbyclient');}
+          return;
+        }
+        await route.fulfill({status:r.status,headers:r.headers,body:r.body});
+      }
       catch{deniedRequests++;await route.abort('blockedbyclient').catch(()=>{});}
     });
-    const page=await context.newPage();
-    await page.goto(target.href,{waitUntil:'domcontentloaded',timeout:timeoutMs});
+    page=await context.newPage();
+    let next=target.href;
+    for(let hop=0;;hop++){
+      if(hop>5)throw Error('Browser redirect limit exceeded');
+      pendingRedirect=undefined;navigating=true;
+      try{await page.goto(next,{waitUntil:'domcontentloaded',timeout:timeoutMs});}
+      catch(error){if(!pendingRedirect)throw error;}
+      finally{navigating=false;}
+      if(!pendingRedirect)break;
+      next=pendingRedirect;
+    }
     await page.waitForTimeout(Math.min(500,timeoutMs/4));
     const html=await page.content();
     if(Buffer.byteLength(html)>256000)throw Error('Rendered DOM exceeds evidence bound');
     const extracted=extractHtml(html);
     if(extracted.structuredData.status==='not_observed_in_raw_html')extracted.structuredData.status='not_observed_in_rendered_dom';
-    return {url:page.url(),observedAt:new Date().toISOString(),method:'Chromium DOM; macOS denies direct network; bounded public HTTPS gateway',...extracted,network:gateway.stats(),deniedRequests,limitations:['Single render, 500ms settling maximum; not a complete crawl','Blocked or oversized resources can leave content incomplete','No actual search/AI crawler access measured']};
+    return {url:page.url(),observedAt:new Date().toISOString(),method:'Chromium DOM; macOS denies direct network; bounded public HTTPS gateway',...extracted,network:gateway.stats(),deniedRequests,limitations:['Single render, 500ms settling maximum; not a complete crawl','Blocked, redirected or oversized resources can leave content incomplete','No actual search/AI crawler access measured']};
   };
   try{return await Promise.race([run(),new Promise((_,reject)=>{timer=setTimeout(()=>{expired=true;gateway.close();reject(Error('Render deadline exceeded'));},timeoutMs);})]);}
-  finally{clearTimeout(timer);gateway.close();if(browser)await browser.close();await rm(dir,{recursive:true,force:true});}
+  finally{
+    clearTimeout(timer);gateway.close();
+    // A launch can settle after the deadline wins. Reap it before removing its
+    // wrapper/profile directory; Playwright's launch timeout remains mandatory.
+    try{const launched=browser??await launchPromise?.catch(()=>undefined);if(launched)await launched.close();}
+    finally{await rm(dir,{recursive:true,force:true});}
+  }
 }
