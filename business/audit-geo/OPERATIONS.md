@@ -49,3 +49,12 @@ The current task and authority are in HANDOFF.md. Prefer the owned audit.vutler.
 `node scripts/mission-cycle.mjs` maintains the watcher and starts an eligible action pass. `--watch-only` maintains it without a controller. `--restart-watcher` is for a diagnosed/fixed watcher failure, not blind retries. `--pause` / `--resume` changes future autonomous cycles. All detached launches must run from a normal terminal or a network-authorized tool execution. The actual thread heartbeat is ACTIVE and checks every 20 minutes; its ID is in autonomy-schedule.json.
 
 Money helper: `node business/audit-geo/budget.mjs status`, `reserve <EUR cents including fees> <purpose>`, `commit <id> <actual cents> <non-secret receipt reference>`, `release <id>`. It reserves and records money; it cannot pay a provider or fund a wallet. Payment access must be configured securely with the selected provider. The console shows the current cumulative spend and policy budget.
+
+## Free local Lighthouse measurement
+Validated on the owned public domain on 2026-10-13 using Lighthouse CLI 12.8.2 and installed Chrome, with a temporary profile (no owner browser credentials). No API key or paid API required. Run manually, not on every watcher tick:
+
+```sh
+npm exec --yes --package=lighthouse@12.8.2 -- lighthouse https://audit.vutler.com --chrome-path='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --chrome-flags='--headless' --only-categories=performance,seo,accessibility,best-practices --output=json --output-path=/private/tmp/automaton-lighthouse.json --quiet
+```
+
+Use only public, authorized HTTPS targets. Keep raw browser diagnostics temporary; retain bounded non-secret summaries. Local browser runs require their own target-access validation before integration into the customer collector; this command is not an automatic customer pipeline. The single simulated mobile baseline is in LIGHTHOUSE-BASELINE.json. No field data or ranking proof. Next investigate CSP-blocked inline script and the 404 resource, then responsive studio.jpg delivery (estimated 190463 wasted bytes). Do not relax CSP blindly.

@@ -53,3 +53,5 @@ Optional bounded mobile diagnostics implemented; 8 tests pass, live PageSpeed HT
 
 ## 2026-10-13T12:41:08.136Z — Cadence demandée par le propriétaire
 Heartbeat existant ACTIVE toutes les 20 minutes ; plafond de contrôleur porté de 6 à 72 passes par jour de Zurich pour permettre cette cadence. Timeout de 20 minutes, exclusion des doublons, pause, backoff et budget TOTAL de 50 € conservés. Compteurs non remis à zéro. 29 tests ciblés et compilation passent. Le message du propriétaire sur sa carte virtuelle limitée à 50 € a été acquitté par Automaton ; aucune donnée bancaire publiée ni mémorisée par ce suivi. Aucun achat effectué.
+
+- 2026-10-13T13:03:11.942841+00:00: Free isolated Lighthouse 12.8.2 mobile baseline obtained for owned domain (97 performance / 100 accessibility / 93 best practices / 100 SEO). Bounded summary saved; CSP inline block, 404 and responsive image flagged for source investigation. Queue prepared 0; attempts 3 preserved; no deployment or purchases.
