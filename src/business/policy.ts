@@ -9,7 +9,7 @@ export async function loadBusinessPolicy(workspace: string): Promise<BusinessPol
   if (value === null) return { ...legacyPolicy };
   if (value.version !== 1 || typeof value.enabled !== "boolean" || typeof value.objective !== "string" || !value.objective.trim() || value.objective.length > 1000 ||
       !Number.isSafeInteger(value.externalBudgetCents) || value.externalBudgetCents < 0 || value.externalBudgetCents > 5000 ||
-      !Number.isSafeInteger(value.passesPerDay) || value.passesPerDay < 1 || value.passesPerDay > 6 ||
+      !Number.isSafeInteger(value.passesPerDay) || value.passesPerDay < 1 || value.passesPerDay > 72 ||
       !Number.isSafeInteger(value.auditAttemptsPerDay) || value.auditAttemptsPerDay < 1 || value.auditAttemptsPerDay > 10 || value.timeZone !== "Europe/Zurich") throw new Error("Invalid authorized business mission policy");
   return value;
 }

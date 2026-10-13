@@ -2,7 +2,7 @@
 
 The latest direct owner request is: give Automaton the mission to make the audit offer function and perfect it, with autonomy and a 50-euro budget. The owner also asked what is needed to use that budget. **MISSION.md and mission.json are the current authority.** They supersede historical €20, three-total-pass, fresh-message-per-pass and 24-hour setup limits. Read them first.
 
-Choose the next useful task independently and execute it during this bounded pass. Use the previous receipt, live queue and evidence to prioritize. Do not repeat the completed installation, domain/sandbox setup or version-9 redesign/example unless a new observed problem justifies a change. Do not create another controller or schedule; the existing hourly heartbeat handles continuation.
+Choose the next useful task independently and execute it during this bounded pass. Use the previous receipt, live queue and evidence to prioritize. Do not repeat the completed installation, domain/sandbox setup or version-9 redesign/example unless a new observed problem justifies a change. Do not create another controller or schedule; the existing heartbeat every 20 minutes handles continuation.
 
 Current assets:
 - Public site: https://audit.vutler.com ; fallback https://audit-geo-pilote.alopez-nevicom.chatgpt.site.

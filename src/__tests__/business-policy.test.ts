@@ -15,6 +15,18 @@ describe("Standing business mission", () => {
     await writeFile(join(dir, "business/audit-geo/mission.json"), JSON.stringify({ ...policy, externalBudgetCents: 5001 }));
     await expect(loadBusinessPolicy(dir)).rejects.toThrow("Invalid authorized");
   }));
+  it("supports the twenty-minute cadence without losing the daily ceiling or prior passes", async () => fixture(async dir => {
+    const cadencePolicy = { ...policy, passesPerDay: 72 };
+    await writeFile(join(dir, "business/audit-geo/mission.json"), JSON.stringify(cadencePolicy));
+    expect(await loadBusinessPolicy(dir)).toMatchObject({ passesPerDay: 72, externalBudgetCents: 5000 });
+    const now = Date.parse("2026-10-13T12:00:00Z");
+    const passes = Array.from({ length: 72 }, (_, i) => ({ id: String(i), startedAt: "2026-10-13T10:00:00Z", outcome: "completed" as const }));
+    expect(missionCapacity(cadencePolicy, passes.slice(0, 6), now)).toMatchObject({ allowed: true, usedToday: 6 });
+    expect(missionCapacity(cadencePolicy, passes.slice(0, 71), now).allowed).toBe(true);
+    expect(missionCapacity(cadencePolicy, passes, now)).toMatchObject({ allowed: false, usedToday: 72 });
+    await writeFile(join(dir, "business/audit-geo/mission.json"), JSON.stringify({ ...cadencePolicy, passesPerDay: 73 }));
+    await expect(loadBusinessPolicy(dir)).rejects.toThrow("Invalid authorized");
+  }));
   it("uses Zurich days and preserves cumulative audit counts across the daily reset", () => {
     const now = Date.parse("2026-10-13T22:30:00Z"); expect(missionDay(now, policy)).toBe("2026-10-14");
     expect(auditCapacity({ attempts: 31, auditDay: "2026-10-13", dailyAttempts: 10 }, policy, now)).toMatchObject({ attempts: 31, today: 0, allowed: true });

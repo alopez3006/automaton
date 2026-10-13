@@ -3,7 +3,7 @@
   "enabled": true,
   "objective": "Operate the EUR 9 SEO/GEO audit offer, make it genuinely useful and deliverable, and continuously improve evidence quality, customer conversion and fulfillment using measured outcomes.",
   "externalBudgetCents": 5000,
-  "passesPerDay": 6,
+  "passesPerDay": 72,
   "auditAttemptsPerDay": 10,
   "timeZone": "Europe/Zurich"
 }

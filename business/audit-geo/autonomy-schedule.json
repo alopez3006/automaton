@@ -2,6 +2,6 @@
   "provider": "Codex thread heartbeat",
   "automationId": "automaton-exploiter-et-am-liorer-l-audit",
   "status": "ACTIVE",
-  "intervalMinutes": 60,
+  "intervalMinutes": 20,
   "local": true
 }

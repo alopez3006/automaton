@@ -47,3 +47,9 @@ Le propriétaire confie la mission permanente de faire fonctionner et perfection
 
 ## 2026-10-13T12:20:47.885519+00:00 — collecte enrichie
 JSON-LD conservé avant nettoyage, métadonnées HTML et jusqu’à quatre pages internes. Six tests passent ; contrôle HTTPS réel sur le domaine effectué. Opérateur --once : 0 préparé, 3 tentatives cumulées, aucun paiement demandé. Aucune ouverture des ventes, aucun achat ni nouveau contrôleur. Diagnostics Lighthouse détaillés et revue d’un rapport utile restent à faire. Reçu : HANDOFF-RESULT.md.
+
+## 2026-10-13T12:39:25.513778+00:00 — Lighthouse evidence
+Optional bounded mobile diagnostics implemented; 8 tests pass, live PageSpeed HTTP 429 recorded as unavailable. Operator prepared 0, lifetime attempts 3, no payment requested. No purchase, publication or new controller. Owner message acknowledged without retaining payment details in artifacts. Safe hosted memory used. Next: obtain free real measurements and review a useful incoming report. Receipt: HANDOFF-RESULT.md.
+
+## 2026-10-13T12:41:08.136Z — Cadence demandée par le propriétaire
+Heartbeat existant ACTIVE toutes les 20 minutes ; plafond de contrôleur porté de 6 à 72 passes par jour de Zurich pour permettre cette cadence. Timeout de 20 minutes, exclusion des doublons, pause, backoff et budget TOTAL de 50 € conservés. Compteurs non remis à zéro. 29 tests ciblés et compilation passent. Le message du propriétaire sur sa carte virtuelle limitée à 50 € a été acquitté par Automaton ; aucune donnée bancaire publiée ni mémorisée par ce suivi. Aucun achat effectué.
