@@ -46,3 +46,12 @@ test('PageSpeed quota, malformed and oversized responses never become scores',as
  }
  const e=await collectPageSpeed('https://example.com/',{fetchApi:async()=>Response.json({lighthouseResult:{audits:{},categories:{performance:{score:0.9}}}})});assert.equal(e.performanceScore,0.9);
 });
+test('optional rendered evidence gets separate IDs and preserves raw evidence on failure',async()=>{
+ const fetchPage=async url=>({url,status:200,observedAt:'2026-10-13T00:00:00Z',headers:{'content-type':'text/html'},body:'<title>Raw</title>'});
+ const good=await collectEvidence('https://example.com/',{fetchPage,renderPage:async url=>({url,title:'Rendered',observedAt:'2026-10-13T00:00:01Z',method:'Sandboxed fixture'})});
+ assert.equal(good.observations[0].title,'Raw');assert.equal(good.observations[3].title,'Rendered');assert.equal(good.observations[3].id,'E4');assert.equal(good.observations[3].kind,'rendered_page');
+ const bad=await collectEvidence('https://example.com/',{fetchPage,renderPage:async()=>{throw Error('Isolation unavailable');}});
+ assert.equal(bad.observations[0].title,'Raw');assert.equal(bad.observations[3].error,'Isolation unavailable');
+ const redirected=await collectEvidence('https://example.com/',{fetchPage,renderPage:async()=>({url:'https://other.example/'})});
+ assert.match(redirected.observations[3].error,/Cross-origin/);
+});

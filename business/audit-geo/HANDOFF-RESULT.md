@@ -1,23 +1,17 @@
-# Execution receipt — 2026-10-13 13:33 UTC
+# Execution receipt — 2026-10-13, isolated renderer pass
 
 ## Completed
-- Added validate-draft.mjs: strict zero-to-three structured tasks and reference checks against collected ID, URL, observation date, whitelisted scalar field and exact excerpt. Failed observations cannot support a task; missing and invented fields fail closed.
-- Applied validation to newly generated reports and existing prepared drafts before payment transitions. Legacy drafts without the contract cannot request payment. Model-provided review approvals are discarded; independent source-support and usefulness approval are required in addition to reference validation.
-- Updated inference contract and evidence-engine plan. Preserved existing dirty work, counters, sales settings and scheduling.
+Added opt-in macOS Chromium renderer using mandatory OS network denial, fresh temporary browser profile and fail-closed routing through the existing public HTTPS gateway. Added optional rendered observations to collectEvidence with independent IDs, raw evidence retained, failed/cross-origin renders marked unavailable. Denied-request accounting is constant-size. No production browser dependency or watcher activation, public deployment, payment change, new controller or schedule.
 
 ## Evidence
-- 19 tests passed across collector, robots and draft validation; six validator tests rerun after final length-bound adjustment. Operator syntax and git diff checks passed.
-- Actual operator --once: prepared 0, cumulative attempts 3, externalPurchaseSpendCents 0, payment not requested.
-- Hosted broker recall and persistence succeeded after allowing network access; initial sandbox DNS failure resolved. No credentials printed or manually loaded.
-- Owner inbox empty at start and both checkpoints; French outcome sent to console.
-- Local operator changes only; no public deployment or real sale claimed.
+42 tests passed with real Chromium fixtures enabled; git diff --check passed. Real browser executed JavaScript-only content and denied private HTTP, POST/beacon and WebSocket attempts. Independent socket probe under the identical macOS network policy returned EPERM. Owned-domain real render: expected title, 3 gateway requests, 194247 bytes, zero denied routes. Explicit runtime from installed local cache used for tests only, without owner browser profile or credential files. Safe hosted broker recalled after sandbox DNS restriction was resolved with approved network execution.
+Operator --once: prepared 0, lifetime attempts 7, payment not requested; notifications unconfigured. Budget used 0 / reserved 0 / available 5000 cents. Owner inbox empty at checkpoints. Existing edits and counters preserved.
 
-## Dependencies and next actions
-- Reference validation proves source presence, not semantic entailment or usefulness. Review one genuinely useful report and its structured evidence before setting review.sourceSupportApproved and review.usefulnessApproved in its private draft. Both remain mandatory for --accept-orders; payment configuration must also be ready.
-- Add a safe bounded rendered-browser worker, including redirects/subrequest public-address controls, then compare raw and rendered content.
-- Improve representative sampling and redirect provenance. No new customer report available this pass.
-- Historical HawkScan HTTP 402 blocker not retried, per instruction not to repeat documented access blockers. No DAST scan or security certification claimed.
-- No controller or schedule created.
+## Remaining dependencies / next useful actions
+Watcher remains raw-HTTP by default: supply a portable explicit Playwright/Chromium runtime before enabling rendered observations. Expand real-browser redirect, deadline/cleanup, resource-exhaustion and non-HTTP bypass controls; add bounded screenshots and explicit raw-versus-rendered comparison. Network confinement does not establish complete hostile-code filesystem/CPU isolation. No customer report generated with rendered evidence this pass, no new sale or paid delivery proof. Transactional email remains unconfigured. Prior documented HawkScan HTTP 402 blocker not retried; skill consulted, no DAST performed. Sales settings unchanged and not reverified.
 
 ## Cost
-External purchases THIS PASS: 0 cents. No reservation or purchase added; EUR 50 cumulative mission cap preserved.
+External purchases THIS PASS: 0 cents. No reservation, charge or purchase.
+
+## Independent supervisor reconciliation
+The final source passed all 43 audit tests with a real installed headless-shell runtime. A generic clean child environment was added so rendering does not inherit operator credentials; its regression also verifies temporary-directory cleanup. Desktop Chrome could not create its singleton socket under network denial; an experimental nested native sandbox did not pass and was removed. The original mandatory macOS network policy was preserved. This is local bounded renderer proof, not customer pipeline activation or complete hostile-code isolation. Continue the remaining runtime, deadline, cleanup and resource controls before enabling customer rendering. No counters were reset and no purchase or email occurred.

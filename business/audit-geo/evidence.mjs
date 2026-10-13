@@ -3,23 +3,61 @@ import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import { evaluateRobots } from './robots.mjs';
 
+// Conservative global-unicast allowlist; reject special-use/tunnel ranges.
+function ipv6Number(address) {
+  const halves=address.split('::');
+  const left=halves[0]?halves[0].split(':'):[];
+  const right=halves[1]?halves[1].split(':'):[];
+  const words=halves.length===2?[...left,...Array(8-left.length-right.length).fill('0'),...right]:left;
+  return words.reduce((n,w)=>(n<<16n)+BigInt('0x'+w),0n);
+}
+function inV6Range(value,base,bits) { const shift=128n-BigInt(bits);return value>>shift===ipv6Number(base)>>shift; }
 export function publicAddress(address) {
-  if(isIP(address)===4){const [a,b]=address.split('.').map(Number);return !(a===0||a===10||a===127||a>=224||a===169&&b===254||a===172&&b>=16&&b<=31||a===192&&(b===168||b===0||b===2)||a===198&&(b===18||b===19||b===51)||a===203&&b===0||a===100&&b>=64&&b<=127);}
-  if(isIP(address)===6){const s=address.toLowerCase();return s.startsWith('2')||s.startsWith('3') ? !s.startsWith('2001:db8')&&!s.startsWith('2001:0:')&&!s.startsWith('2002:') : false;}
+  if(isIP(address)===4){const [a,b,c]=address.split('.').map(Number);return !(a===0||a===10||a===127||a>=224||a===169&&b===254||a===172&&b>=16&&b<=31||a===192&&(b===168||b===0&&c===0||b===0&&c===2)||a===198&&(b===18||b===19||b===51&&c===100)||a===203&&b===0&&c===113||a===100&&b>=64&&b<=127);}
+  if(isIP(address)===6){
+    if(address.includes('.')||address.includes('%'))return false;
+    const n=ipv6Number(address);
+    return inV6Range(n,'2000::',3)&&!['2001::/23','2001:db8::/32','2002::/16','3fff::/20'].some(range=>{const [base,bits]=range.split('/');return inV6Range(n,base,Number(bits));});
+  }
   return false;
 }
-export async function publicFetch(target, redirects=0) {
-  const url=new URL(target);if(url.protocol!=='https:'||url.username||url.password||url.port||isIP(url.hostname)||url.hostname.includes(':'))throw Error('Public HTTPS hostname required');
-  const ips=await lookup(url.hostname,{all:true,verbatim:true});if(!ips.length||ips.some(i=>!publicAddress(i.address)))throw Error('Private/reserved DNS address rejected');
-  const ip=ips.find(i=>i.family===4)??ips[0];
-  const result=await new Promise((resolve,reject)=>{
-    const req=https.get(url,{headers:{'User-Agent':'AuditGEO-Pilot/1.0 (public technical audit)','Accept-Encoding':'identity'},lookup:(_host,_opts,cb)=>cb(null,_opts?.all?[{address:ip.address,family:ip.family}]:ip.address,ip.family)},res=>{
-      const chunks=[];let size=0;res.on('data',c=>{size+=c.length;if(size>120000){req.destroy(Error('Evidence exceeds 120 KB'));return;}chunks.push(c);});res.on('end',()=>resolve({url:url.href,status:res.statusCode,headers:res.headers,body:Buffer.concat(chunks).toString('utf8'),observedAt:new Date().toISOString()}));res.on('error',reject);
-    });req.setTimeout(10000,()=>req.destroy(Error('Evidence request timed out')));req.on('error',reject);
+function bounded(promise,ms) {
+  return new Promise((resolve,reject)=>{
+    const timer=setTimeout(()=>reject(Error('Evidence total deadline exceeded')),ms);
+    Promise.resolve(promise).then(resolve,reject).finally(()=>clearTimeout(timer));
   });
-  if(result.status>=300&&result.status<400&&result.headers.location){if(redirects>=3)throw Error('Too many redirects');return publicFetch(new URL(result.headers.location,url).href,redirects+1);}
-  return result;
 }
+// Injection is for deterministic network-policy tests; runtime uses Node DNS/HTTPS.
+export function createPublicFetcher({resolveHost=lookup,get=https.get,totalTimeoutMs=10000,maxBytes=120000,responseEncoding='utf8',followRedirects=true}={}) {
+  if(!Number.isSafeInteger(totalTimeoutMs)||totalTimeoutMs<=0||!Number.isSafeInteger(maxBytes)||maxBytes<=0)throw Error('Invalid fetch bounds');
+  if(!['utf8','buffer'].includes(responseEncoding)||typeof followRedirects!=='boolean')throw Error('Invalid response mode');
+  return async function fetchPublic(target) {
+    const deadline=Date.now()+totalTimeoutMs;
+    const remaining=()=>{const ms=deadline-Date.now();if(ms<=0)throw Error('Evidence total deadline exceeded');return ms;};
+    async function visit(target,redirects) {
+      const url=new URL(target);if(url.protocol!=='https:'||url.username||url.password||url.port||isIP(url.hostname)||url.hostname.includes(':'))throw Error('Public HTTPS hostname required');
+      const ips=await bounded(resolveHost(url.hostname,{all:true,verbatim:true}),remaining());
+      if(!ips.length||ips.some(i=>!publicAddress(i.address)||isIP(i.address)!==i.family))throw Error('Private/reserved DNS address rejected');
+      const ip=ips.find(i=>i.family===4)??ips[0];
+      const timeout=remaining();
+      const result=await new Promise((resolve,reject)=>{
+        let req,timer,settled=false;
+        const fail=error=>{if(settled)return;settled=true;clearTimeout(timer);reject(error);req?.destroy(error);};
+        timer=setTimeout(()=>fail(Error('Evidence total deadline exceeded')),timeout);
+        try{req=get(url,{headers:{'User-Agent':'AuditGEO-Pilot/1.0 (public technical audit)','Accept-Encoding':'identity'},lookup:(_host,_opts,cb)=>cb(null,_opts?.all?[{address:ip.address,family:ip.family}]:ip.address,ip.family)},res=>{
+          const chunks=[];let size=0;
+          res.on('error',fail);res.on('aborted',()=>fail(Error('Evidence response aborted')));
+          res.on('data',c=>{size+=c.length;if(size>maxBytes){fail(Error('Evidence exceeds byte limit'));return;}chunks.push(c);});
+          res.on('end',()=>{if(settled)return;settled=true;clearTimeout(timer);const bytes=Buffer.concat(chunks);resolve({url:url.href,status:res.statusCode,headers:res.headers,body:responseEncoding==='buffer'?bytes:bytes.toString('utf8'),observedAt:new Date().toISOString()});});
+        });req.on('error',fail);}catch(e){fail(e);}
+      });
+      if(followRedirects&&result.status>=300&&result.status<400&&result.headers.location){if(redirects>=3)throw Error('Too many redirects');return visit(new URL(result.headers.location,url).href,redirects+1);}
+      return result;
+    }
+    return visit(target,0);
+  };
+}
+export const publicFetch=createPublicFetcher();
 // Raw HTML evidence only: this is not a rendered-browser or schema-validity audit.
 function attributes(tag) {
   const result={};
@@ -92,7 +130,7 @@ export async function collectPageSpeed(url,{fetchApi=fetch}={}) {
     return summarizePageSpeed(JSON.parse(Buffer.concat(chunks).toString('utf8')),api.href);
   }catch(e){return {status:'unavailable',observedAt:new Date().toISOString(),source:api.href,reason:e.message};}
 }
-export async function collectEvidence(website,{pagespeed=false,fetchPage=publicFetch}={}) {
+export async function collectEvidence(website,{pagespeed=false,fetchPage=publicFetch,renderPage}={}) {
   const url=new URL(website);
   const raw=new Map();
   async function observe(target,kind){
@@ -110,6 +148,17 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
   const selected=[...new Set(candidates)].filter(u=>!resources.includes(u)&&u!==homepage?.url).slice(0,4);
   for(const target of selected)observations.push(await observe(target,'page'));
   observations.forEach((o,i)=>{o.id=`E${i+1}`;o.method='Public HTTPS GET; raw response, no JavaScript execution';o.limitations??=['Single dated response; actual crawler behavior is unmeasured'];});
+  // Renderer is opt-in; unavailable rendering never replaces raw evidence.
+  if(renderPage){
+    const pages=observations.filter(o=>o.kind==='page'&&!o.error&&o.status===200);
+    for(const page of pages){
+      try{
+        const rendered=await renderPage(page.url);
+        if(new URL(rendered.url).origin!==url.origin)throw Error('Cross-origin rendered page excluded');
+        observations.push({...rendered,id:`E${observations.length+1}`,kind:'rendered_page'});
+      }catch(e){observations.push({id:`E${observations.length+1}`,url:page.url,kind:'rendered_page',observedAt:new Date().toISOString(),method:'Chromium render attempted',error:e.message,limitations:['Rendered evidence unavailable; raw HTML retained']});}
+    }
+  }
   const robots=raw.get(resources[1]);
   const robotsPolicy=evaluateRobots(robots,observations.filter(o=>o.kind==='page'&&!o.error).map(o=>o.url));
   robotsPolicy.evidenceId=observations[1].id;
