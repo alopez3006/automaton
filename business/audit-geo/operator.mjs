@@ -8,6 +8,7 @@ import { assembleReport } from './report.mjs';
 import { validateDraft,canRequestPayment } from './validate-draft.mjs';
 import { draftSchema } from './draft-schema.mjs';
 import { reviewedPreview } from './preview.mjs';
+import { summarizeFunnel } from './funnel.mjs';
 import { sniparaEnvironment } from '../../scripts/with-snipara.mjs';
 import { loadSniparaTools } from '../../dist/agent/snipara.js';
 import {loadBusinessPolicy,auditCapacity} from '../../dist/business/policy.js';
@@ -25,6 +26,10 @@ const reports=join(root,'.reports');await mkdir(reports,{recursive:true,mode:0o7
 const lock=await open(join(reports,'operator.lock'),'wx',0o600).catch(()=>{throw Error('Another operator is running; inspect its process before removing a stale lock');});
 async function api(method,body){const r=await fetch(new URL('/api/operator/requests',site),{method,headers:{...headers,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(20000),redirect:'error'});if(!r.ok)throw Error(`Operator API HTTP ${r.status}`);return r.json();}
 try{
+ if(process.argv.includes('--metrics-only')){
+  if(process.argv.includes('--accept-orders')||process.argv.includes('--retry-review'))throw Error('Metrics mode cannot mutate orders');
+  console.log(JSON.stringify(summarizeFunnel(await api('GET'))));
+ }else{
  const ledgerPath=join(reports,'ledger.json');let ledger;
  try{ledger=JSON.parse(await readFile(ledgerPath,'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;ledger={attempts:0,externalSpendCents:0};}
  if(!Number.isSafeInteger(ledger.attempts)||ledger.attempts<0||!Number.isSafeInteger(ledger.externalSpendCents)||ledger.externalSpendCents<0||ledger.externalSpendCents>policy.externalBudgetCents)throw Error('Invalid pilot ledger');
@@ -61,4 +66,5 @@ try{
    count++;console.log(JSON.stringify({requestId:job.id,status:'prepared',usage:r.usage}));
  }
  let notificationState={configured:false};if(typeof queue.notificationsConfigured==='boolean'){const mail=await fetch(new URL('/api/operator/notifications',site),{method:'POST',headers,signal:AbortSignal.timeout(30000),redirect:'error'});if(!mail.ok)throw Error('Notification reconciliation failed');notificationState=await mail.json();}console.log(JSON.stringify({prepared:count,attempts:ledger.attempts,externalPurchaseSpendCents:ledger.externalSpendCents,payment:'not_requested',notifications:notificationState}));
+ }
 }finally{await lock.close();const{unlink}=await import('node:fs/promises');await unlink(join(reports,'operator.lock'));}

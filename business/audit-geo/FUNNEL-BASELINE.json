@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-13T23:51:36.494Z",
+  "scope": "retained first-page operator inventory, not lifetime or customer-only cohort",
+  "completeLifetimeCohort": false,
+  "listLimit": 50,
+  "atListLimit": false,
+  "retentionDays": {
+    "undelivered": 30,
+    "delivered": 90
+  },
+  "inventory": {
+    "total": 3,
+    "statuses": {
+      "requested": 0,
+      "prepared": 1,
+      "needs_review": 0,
+      "payment_pending": 0,
+      "ineligible": 2,
+      "delivered": 0
+    },
+    "unknownStatus": 0,
+    "reviewedSummaries": 1
+  },
+  "configuration": {
+    "payments": false,
+    "notifications": false
+  },
+  "outcomes": {
+    "visits": null,
+    "qualifiedRequests": null,
+    "verifiedCustomerSales": null,
+    "inboxDeliveries": null,
+    "conversionRate": null
+  }
+}
