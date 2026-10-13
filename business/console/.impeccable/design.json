@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-13T07:16:24.040Z",
+  "title": "Design System: Automaton owner console",
+  "extensions": {
+    "colorMeta": {
+      "forest-green": {
+        "role": "primary",
+        "displayName": "Forest Green",
+        "tonalRamp": [
+          "oklch(15% 0.0718 165.41)",
+          "oklch(26.43% 0.0718 165.41)",
+          "oklch(37.86% 0.0718 165.41)",
+          "oklch(49.29% 0.0718 165.41)",
+          "oklch(60.71% 0.0718 165.41)",
+          "oklch(72.14% 0.0718 165.41)",
+          "oklch(83.57% 0.0718 165.41)",
+          "oklch(95% 0.0718 165.41)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "forest-deep": {
+        "role": "primary",
+        "displayName": "Deep Forest",
+        "tonalRamp": [
+          "oklch(15% 0.0643 165.41)",
+          "oklch(26.43% 0.0643 165.41)",
+          "oklch(37.86% 0.0643 165.41)",
+          "oklch(49.29% 0.0643 165.41)",
+          "oklch(60.71% 0.0643 165.41)",
+          "oklch(72.14% 0.0643 165.41)",
+          "oklch(83.57% 0.0643 165.41)",
+          "oklch(95% 0.0643 165.41)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "forest-wash": {
+        "role": "primary",
+        "displayName": "Forest Wash",
+        "tonalRamp": [
+          "oklch(15% 0.0147 142.23)",
+          "oklch(26.43% 0.0147 142.23)",
+          "oklch(37.86% 0.0147 142.23)",
+          "oklch(49.29% 0.0147 142.23)",
+          "oklch(60.71% 0.0147 142.23)",
+          "oklch(72.14% 0.0147 142.23)",
+          "oklch(83.57% 0.0147 142.23)",
+          "oklch(95% 0.0147 142.23)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "feedback-error": {
+        "role": "secondary",
+        "displayName": "Error Terracotta",
+        "tonalRamp": [
+          "oklch(15% 0.1241 35.67)",
+          "oklch(26.43% 0.1241 35.67)",
+          "oklch(37.86% 0.1241 35.67)",
+          "oklch(49.29% 0.1241 35.67)",
+          "oklch(60.71% 0.1241 35.67)",
+          "oklch(72.14% 0.1241 35.67)",
+          "oklch(83.57% 0.1241 35.67)",
+          "oklch(95% 0.1241 35.67)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "warm-paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0098 87.47)",
+          "oklch(26.43% 0.0098 87.47)",
+          "oklch(37.86% 0.0098 87.47)",
+          "oklch(49.29% 0.0098 87.47)",
+          "oklch(60.71% 0.0098 87.47)",
+          "oklch(72.14% 0.0098 87.47)",
+          "oklch(83.57% 0.0098 87.47)",
+          "oklch(95% 0.0098 87.47)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "paper-surface": {
+        "role": "neutral",
+        "displayName": "Paper Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0069 88.64)",
+          "oklch(26.43% 0.0069 88.64)",
+          "oklch(37.86% 0.0069 88.64)",
+          "oklch(49.29% 0.0069 88.64)",
+          "oklch(60.71% 0.0069 88.64)",
+          "oklch(72.14% 0.0069 88.64)",
+          "oklch(83.57% 0.0069 88.64)",
+          "oklch(95% 0.0069 88.64)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Deep Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0307 168.41)",
+          "oklch(26.43% 0.0307 168.41)",
+          "oklch(37.86% 0.0307 168.41)",
+          "oklch(49.29% 0.0307 168.41)",
+          "oklch(60.71% 0.0307 168.41)",
+          "oklch(72.14% 0.0307 168.41)",
+          "oklch(83.57% 0.0307 168.41)",
+          "oklch(95% 0.0307 168.41)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0233 159.06)",
+          "oklch(26.43% 0.0233 159.06)",
+          "oklch(37.86% 0.0233 159.06)",
+          "oklch(49.29% 0.0233 159.06)",
+          "oklch(60.71% 0.0233 159.06)",
+          "oklch(72.14% 0.0233 159.06)",
+          "oklch(83.57% 0.0233 159.06)",
+          "oklch(95% 0.0233 159.06)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Soft Divider",
+        "tonalRamp": [
+          "oklch(15% 0.0161 130.43)",
+          "oklch(26.43% 0.0161 130.43)",
+          "oklch(37.86% 0.0161 130.43)",
+          "oklch(49.29% 0.0161 130.43)",
+          "oklch(60.71% 0.0161 130.43)",
+          "oklch(72.14% 0.0161 130.43)",
+          "oklch(83.57% 0.0161 130.43)",
+          "oklch(95% 0.0161 130.43)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Border",
+        "tonalRamp": [
+          "oklch(15% 0.0197 145.38)",
+          "oklch(26.43% 0.0197 145.38)",
+          "oklch(37.86% 0.0197 145.38)",
+          "oklch(49.29% 0.0197 145.38)",
+          "oklch(60.71% 0.0197 145.38)",
+          "oklch(72.14% 0.0197 145.38)",
+          "oklch(83.57% 0.0197 145.38)",
+          "oklch(95% 0.0197 145.38)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      },
+      "on-primary": {
+        "role": "neutral",
+        "displayName": "On Primary",
+        "tonalRamp": [
+          "oklch(15% 0.0000 0.00)",
+          "oklch(26.43% 0.0000 0.00)",
+          "oklch(37.86% 0.0000 0.00)",
+          "oklch(49.29% 0.0000 0.00)",
+          "oklch(60.71% 0.0000 0.00)",
+          "oklch(72.14% 0.0000 0.00)",
+          "oklch(83.57% 0.0000 0.00)",
+          "oklch(95% 0.0000 0.00)"
+        ],
+        "tonalRampSource": "Generated OKLCH preview only; these ramp values are not implemented UI tokens."
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Identity heading",
+        "purpose": "Fraunces masthead identity; 26px at compact width."
+      },
+      "title": {
+        "displayName": "Section title",
+        "purpose": "Fraunces journal and conversation titles; 23px at compact width."
+      },
+      "body": {
+        "displayName": "Working body",
+        "purpose": "Questions and inherited control text."
+      },
+      "body-small": {
+        "displayName": "Journal and conversation body",
+        "purpose": "Operational prose with bounded line length."
+      },
+      "label": {
+        "displayName": "Supporting label",
+        "purpose": "Status labels, timestamps and detail."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "control-feedback",
+        "value": "background .16s ease, color .16s ease",
+        "purpose": "Implemented button hover feedback; removed for reduced-motion preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "740px"
+      },
+      {
+        "name": "middle",
+        "value": "1000px"
+      },
+      {
+        "name": "wide",
+        "value": "1600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Forest action used to launch, send or answer.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Lancer une passe</button>",
+      "css": ".ds-primary{font:15px/1.6 Arial,Helvetica,sans-serif;min-height:44px;cursor:pointer;border:1px solid var(--line,#d9dfd4);border-radius:8px;padding:10px 16px;transition:background .16s ease,color .16s ease;background:var(--green,#215c46);color:#fff;border-color:var(--green,#215c46)}.ds-primary:hover{background:#174b38}.ds-primary:disabled{cursor:not-allowed;opacity:.55}.ds-primary:focus-visible{outline:2px solid var(--green,#215c46);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary,.ds-secondary{transition:none!important}}"
+    },
+    {
+      "name": "Suggested answer",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Pale secondary button for an existing suggested answer.",
+      "html": "<button class=\"ds-secondary\" type=\"button\">Choisir cette réponse</button>",
+      "css": ".ds-secondary{font:15px/1.6 Arial,Helvetica,sans-serif;min-height:44px;cursor:pointer;border:1px solid var(--line,#d9dfd4);border-radius:8px;padding:10px 16px;transition:background .16s ease,color .16s ease;background:var(--surface,#fffdf8);color:var(--ink,#20352d)}.ds-secondary:hover{background:#e6eee5}.ds-secondary:disabled{cursor:not-allowed;opacity:.55}.ds-secondary:focus-visible{outline:2px solid var(--green,#215c46);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary,.ds-secondary{transition:none!important}}"
+    },
+    {
+      "name": "Message composer field",
+      "kind": "input",
+      "refersTo": "message-field",
+      "description": "Labelled, vertically resizable message field.",
+      "html": "<label class=\"ds-message-label\" for=\"ds-message\">Ton message</label><textarea class=\"ds-message-field\" id=\"ds-message\" rows=\"3\" maxlength=\"6000\" placeholder=\"Une consigne, une question, une précision…\" required></textarea>",
+      "css": ".ds-message-label{display:block;font:600 13px/1.6 Arial,Helvetica,sans-serif;color:var(--ink,#20352d);margin-bottom:7px}.ds-message-field{font:15px/1.5 Arial,Helvetica,sans-serif;width:100%;min-height:90px;max-height:250px;resize:vertical;padding:12px 13px;border:1px solid #aab5aa;border-radius:8px;background:var(--surface,#fffdf8);color:var(--ink,#20352d)}.ds-message-field::placeholder{color:var(--muted,#526158)}.ds-message-field:focus-visible{outline:2px solid var(--green,#215c46);outline-offset:4px}"
+    },
+    {
+      "name": "Free answer field",
+      "kind": "input",
+      "refersTo": "answer-field",
+      "description": "Single-line answer field inside an inline owner question.",
+      "html": "<label class=\"ds-answer-label\" for=\"ds-answer\">Ta réponse</label><input class=\"ds-answer-field\" id=\"ds-answer\" maxlength=\"6000\" required>",
+      "css": ".ds-answer-label{display:block;font:12px/1.6 Arial,Helvetica,sans-serif;color:var(--ink,#20352d);margin-bottom:4px}.ds-answer-field{font:15px/1.6 Arial,Helvetica,sans-serif;width:100%;min-height:44px;border:1px solid #aab5aa;border-radius:8px;background:var(--page,#f5f2eb);padding:9px 11px;color:var(--ink,#20352d)}.ds-answer-field:focus-visible{outline:2px solid var(--green,#215c46);outline-offset:4px}"
+    },
+    {
+      "name": "Masthead and site navigation",
+      "kind": "nav",
+      "description": "Incumbent line mark, Fraunces identity, connection text and external site link.",
+      "html": "<header class=\"ds-masthead\"><div class=\"ds-identity\"><svg viewBox=\"0 0 32 32\" width=\"34\" height=\"34\" aria-hidden=\"true\"><path d=\"M5 25 16 5l11 20M10 19h12M16 5v20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"/></svg><div><h1>Automaton</h1><p>Console du pilote SEO / GEO</p></div></div><nav class=\"ds-nav\"><span class=\"ds-connected\" role=\"status\">Connecté</span><a href=\"#ds-site\">Voir le site <svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/></svg></a></nav></header>",
+      "css": ".ds-masthead{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:27px 4vw 22px;border-bottom:1px solid var(--line,#d9dfd4);color:var(--ink,#20352d);font:15px/1.6 Arial,Helvetica,sans-serif}.ds-identity{display:flex;align-items:center;gap:16px}.ds-identity h1{font:600 31px/1.15 Fraunces,Georgia,serif;margin:0}.ds-identity p{margin:5px 0 0;color:var(--muted,#526158);font-size:13px}.ds-nav{display:flex;align-items:center;gap:24px;font-size:13px}.ds-connected{color:var(--muted,#526158)}.ds-connected:before{content:'';display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:var(--green,#215c46)}.ds-nav a{color:var(--green,#215c46);text-underline-offset:4px}.ds-nav svg{vertical-align:middle}.ds-nav a:focus-visible{outline:2px solid var(--green,#215c46);outline-offset:4px}@media(max-width:740px){.ds-masthead{padding:20px;align-items:start;gap:12px}.ds-identity{gap:9px}.ds-identity h1{font-size:26px}.ds-identity p{font-size:11px}.ds-identity svg{width:28px}.ds-nav{flex-direction:column;align-items:end;gap:8px;font-size:12px}}"
+    },
+    {
+      "name": "Flat status row",
+      "kind": "custom",
+      "refersTo": "status-row",
+      "description": "The implemented labelled overview grid; static labels illustrate structure rather than live runtime values.",
+      "html": "<section class=\"ds-overview\" aria-label=\"État d’Automaton\"><div class=\"ds-status\"><span class=\"ds-status-label\">Contrôleur</span><strong>Prêt à démarrer</strong><span class=\"ds-status-detail\">Messages lus entre les étapes</span></div><div class=\"ds-status\"><span class=\"ds-status-label\">Commandes entrantes</span><strong>Arrêté</strong><span class=\"ds-status-detail\">Surveillance locale, toutes les 5 minutes</span></div><div class=\"ds-status\"><span class=\"ds-status-label\">Limites du pilote</span><strong>20 € maximum</strong><span class=\"ds-status-detail\">Compteurs du pilote</span></div><button class=\"ds-start\" type=\"button\">Lancer une passe</button></section>",
+      "css": ".ds-overview{display:grid;grid-template-columns:1fr 1.1fr 1.1fr auto;align-items:center;gap:26px;padding:0 0 24px;border-bottom:1px solid var(--line,#d9dfd4);color:var(--ink,#20352d);font:15px/1.6 Arial,Helvetica,sans-serif}.ds-status{display:flex;flex-direction:column}.ds-status strong{font-size:16px;font-weight:600}.ds-status-label,.ds-status-detail{font-size:12px;color:var(--muted,#526158)}.ds-status-label{margin-bottom:5px}.ds-start{font:inherit;min-height:44px;cursor:pointer;border:1px solid var(--green,#215c46);border-radius:8px;padding:10px 16px;background:var(--green,#215c46);color:#fff;transition:background .16s ease,color .16s ease}.ds-start:hover{background:#174b38}.ds-start:focus-visible{outline:2px solid var(--green,#215c46);outline-offset:4px}.ds-start:disabled{cursor:not-allowed;opacity:.55}@media(max-width:1000px){.ds-overview{grid-template-columns:1fr 1fr;gap:20px}.ds-start{justify-self:start}}@media(max-width:740px){.ds-overview{gap:18px 14px}.ds-status strong{font-size:14px}.ds-status-detail{font-size:11px}}@media(prefers-reduced-motion:reduce){.ds-start{transition:none!important}}"
+    },
+    {
+      "name": "Inline question surface",
+      "kind": "card",
+      "refersTo": "question-surface",
+      "description": "The implemented pale, bordered owner-question container; its text is illustrative.",
+      "html": "<section class=\"ds-questions\" aria-label=\"Questions à résoudre\"><h2>Automaton a besoin de toi</h2><p class=\"ds-question-help\">Les réponses sont lues entre les étapes.</p><div class=\"ds-question\"><p>Une question du pilote apparaît ici.</p></div></section>",
+      "css": ".ds-questions{font:15px/1.6 Arial,Helvetica,sans-serif;background:var(--surface,#fffdf8);color:var(--ink,#20352d);padding:22px 24px;margin:0 0 28px;border-radius:12px;border:1px solid var(--line,#d9dfd4)}.ds-questions h2{margin:0 0 12px;font-size:17px}.ds-question-help{font-size:12px;color:var(--muted,#526158)}.ds-question{padding:16px 0;border-top:1px solid var(--line,#d9dfd4)}.ds-question p{margin:0 0 12px;max-width:75ch}@media(max-width:740px){.ds-questions{padding:18px}}"
+    },
+    {
+      "name": "Conversation message",
+      "kind": "custom",
+      "refersTo": "conversation-message",
+      "description": "Flat owner message with time and explicit queued/read state; sample copy is illustrative.",
+      "html": "<article class=\"ds-message\"><div class=\"ds-message-header\"><strong>Toi</strong><time>09:00:00</time></div><p>Une consigne, une question, une précision…</p><small>En attente de lecture</small></article>",
+      "css": ".ds-message{font:15px/1.6 Arial,Helvetica,sans-serif;color:var(--ink,#20352d);padding:16px 0;border-top:1px solid var(--line,#d9dfd4)}.ds-message-header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted,#526158)}.ds-message-header strong{color:var(--green,#215c46)}.ds-message p{white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 0;font-size:14px;max-width:70ch}.ds-message small{display:block;margin-top:5px;color:var(--muted,#526158);font-size:11px}"
+    },
+    {
+      "name": "Keyboard-scrollable journal",
+      "kind": "custom",
+      "description": "Divider-free journal prose in a labelled, focusable scroll viewport; sample copy is illustrative.",
+      "html": "<div class=\"ds-journal\" tabindex=\"0\" aria-label=\"Journal des actions\"><h2>Journal du pilote</h2><p>Actions, raisons courtes des choix et résultats observés.</p><ul><li>Une action observée apparaît ici.</li></ul></div>",
+      "css": ".ds-journal{font:15px/1.6 Arial,Helvetica,sans-serif;color:var(--ink,#20352d);max-height:650px;overflow:auto;padding-right:12px;overscroll-behavior:contain}.ds-journal h2{font:600 16px/1.5 Arial,Helvetica,sans-serif;margin:0 0 10px}.ds-journal p{margin:8px 0;font-size:14px;overflow-wrap:anywhere;max-width:72ch}.ds-journal ul{padding-left:21px;margin:8px 0 18px}.ds-journal li{margin:6px 0;font-size:14px;overflow-wrap:anywhere;max-width:72ch}.ds-journal:focus-visible{outline:2px solid var(--green,#215c46)}@media(max-width:1000px){.ds-journal{max-height:600px}}@media(max-width:740px){.ds-journal{max-height:390px}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Le carnet de bord du pilote",
+    "overview": "This is the implemented owner console: a calm working journal beside a conversation, using the pilot's incumbent warm paper, deep ink and forest-green actions. Fraunces brings the same heading character as the public pilot site; readable system sans carries operational detail. The interface keeps activity, short decision explanations, observed results and owner input in view without adding a marketing hero or decorative data display.\n\nThe owner's interface is in plain French. Status rows, timestamps, message acknowledgements and inline questions establish hierarchy through type, spacing and fine dividers. This document records the built console in `index.html`, `console.css` and `console.js`; it does not define a redesign of the commercial site.\n",
+    "keyCharacteristics": [
+      "Warm-paper background with a pale question surface.",
+      "Flat status rows and divider-led journal and conversation entries.",
+      "Fraunces headings with compact, readable sans-serif detail.",
+      "Inline owner questions followed by a desktop journal/conversation split.",
+      "Explicit states, visible keyboard focus and restrained feedback transitions."
+    ],
+    "rules": [
+      {
+        "name": "The Text Carries State Rule",
+        "body": "Every visible state has a text label; color and the connection dot reinforce that label.",
+        "section": "colors"
+      },
+      {
+        "name": "The Working Type Rule",
+        "body": "Keep Fraunces on identity and major section headings; operational detail stays in the established sans-serif stack.",
+        "section": "typography"
+      },
+      {
+        "name": "The Reading Order Rule",
+        "body": "Keep unresolved questions above the journal and conversation, and preserve that same order when the split view stacks.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "Keep operating information flat; boundaries come from the existing divider and surface vocabulary.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** preserve the incumbent warm-paper, ink and forest-green palette and self-hosted Fraunces headings.",
+      "**Do** keep owner operations in plain French and distinguish controller, watcher, queued messages and read messages.",
+      "**Do** use real runtime state for status, counters, activity and conversation.",
+      "**Do** preserve keyboard access, visible focus, labelled fields and readable pending/error states.",
+      "**Do** keep questions inline and preserve the questions/journal/chat reading order on compact screens.",
+      "**Do** describe local conversation storage and Codex transmission together in the composer helper copy."
+    ],
+    "donts": [
+      "**Don't** add a marketing hero, decorative charts or fabricated performance metrics to this operating console.",
+      "**Don't** turn the journal and conversation into a grid of raised cards or add decorative motion.",
+      "**Don't** imply continuous token streaming, instant message reading or visibility into private reasoning.",
+      "**Don't** ask for secrets or render message and journal content as untrusted HTML.",
+      "**Don't** replace the established fonts, palette or SVG identity merely to match generic dashboard guidance."
+    ]
+  }
+}

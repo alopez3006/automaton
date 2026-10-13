@@ -42,6 +42,8 @@
     "start:business": "node dist/index.js --business",
     "business:handoff": "node scripts/start-business.mjs",
     "business:status": "node dist/index.js --business-status",
+    "business:console": "node scripts/business-console.mjs",
+    "business:console-start": "node scripts/start-console.mjs",
     "audit:operator": "node business/audit-geo/operator.mjs --once",
     "build": "tsc && pnpm -r build",
     "dev": "tsx watch src/index.ts",

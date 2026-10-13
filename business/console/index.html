@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="console-token" content="__CONSOLE_TOKEN__">
+  <title>Automaton — Console du pilote</title>
+  <link rel="stylesheet" href="/console.css"><script src="/console.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#work">Aller à l’activité</a>
+<header class="masthead">
+  <div class="identity"><svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><path d="M5 25 16 5l11 20M10 19h12M16 5v20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><div><h1>Automaton</h1><p>Console du pilote SEO / GEO</p></div></div>
+  <div class="header-actions"><span id="connection" role="status">Connexion…</span><a id="public-site-link" href="https://audit-geo-pilote.alopez-nevicom.chatgpt.site" target="_blank" rel="noopener noreferrer">Voir le site <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a></div>
+</header>
+<main>
+  <section class="overview" aria-label="État d’Automaton">
+    <div><span class="label">Contrôleur</span><strong id="controller-status">Chargement</strong><span id="controller-detail" class="detail"></span></div>
+    <div><span class="label">Commandes entrantes</span><strong id="watcher-status">Vérification…</strong><span class="detail">Surveillance locale, toutes les 5 minutes</span></div>
+    <div><span class="label">Limites du pilote</span><strong id="budget">20 € maximum</strong><span id="capacity" class="detail">Chargement des compteurs</span></div>
+    <button id="start" class="primary" type="button">Lancer une passe</button>
+  </section>
+  <p id="feedback" class="feedback" role="status"></p>
+  <section id="questions" class="questions" aria-label="Questions à résoudre" hidden></section>
+  <div class="workspace">
+    <section class="work" id="work" tabindex="-1">
+      <div class="section-heading"><h2>Ce qu’il fait</h2><span id="updated" class="detail"></span></div>
+      <p class="intro">Actions, raisons courtes des choix et résultats observés.</p>
+      <div id="activity" class="activity" tabindex="0" aria-label="Journal des actions"><p class="empty">Le journal se charge…</p></div>
+    </section>
+    <section class="conversation" aria-labelledby="chat-title">
+      <div class="section-heading"><h2 id="chat-title">Parler à Automaton</h2><span id="queue" class="detail"></span></div>
+      <p class="intro">Il lit tes messages entre ses étapes. S’il est arrêté, tu peux lancer une nouvelle passe.</p>
+      <div id="messages" class="messages" tabindex="0" role="log" aria-label="Conversation" aria-live="polite"><p class="empty">Les messages d’Automaton et tes réponses apparaîtront ici.</p></div>
+      <form id="chat-form">
+        <label for="message">Ton message</label>
+        <textarea id="message" name="message" rows="3" maxlength="6000" placeholder="Une consigne, une question, une précision…" required></textarea>
+        <div class="compose-footer"><label class="checkbox"><input id="auto-start" type="checkbox" checked> Lancer une passe s’il est arrêté</label><button id="send" class="primary" type="submit">Envoyer</button></div>
+        <p class="detail">Conversation enregistrée sur ce Mac et transmise à Automaton via Codex. Ne colle pas de clé ni de secret.</p>
+      </form>
+    </section>
+  </div>
+</main>
+<footer><span>Accès local · Mac éveillé requis</span><span>Site commercial en anglais · Console propriétaire en français</span></footer>
+</body>
+</html>

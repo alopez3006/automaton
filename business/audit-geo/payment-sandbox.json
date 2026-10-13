@@ -1,0 +1,10 @@
+{
+  "name": "Vutler Automaton",
+  "stripeContext": "acct_1UPzvFD1odHjzufx",
+  "livemode": false,
+  "parentLiveAccount": "acct_1T2tqGDj0FRggNOE",
+  "createdFromScratch": true,
+  "mcpAuthorized": true,
+  "verifiedRead": "GET /v1/products returned an empty list in this sandbox",
+  "purpose": "Isolated fulfillment validation for the Automaton audit pilot"
+}

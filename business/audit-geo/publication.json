@@ -1,0 +1,9 @@
+{
+  "publicUrl": "https://audit.vutler.com",
+  "fallbackUrl": "https://audit-geo-pilote.alopez-nevicom.chatgpt.site",
+  "siteProjectId": "appgprj_6acd6192fcac8191b47b7b9538517608",
+  "customDomainId": "appgdom_6acdd6ba79388191939f78ba6816fcf7",
+  "domainStatus": "active",
+  "sslStatus": "active",
+  "verifiedPublicPaths": ["/", "/privacy", "/example.md"]
+}
