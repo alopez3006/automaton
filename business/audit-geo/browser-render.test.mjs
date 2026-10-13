@@ -29,6 +29,8 @@ test('real sandboxed browser renders JS while gateway refuses private and non-GE
  calls.push(url);return {url,status:200,headers:{'content-type':'text/html'},body:Buffer.from(html)};
  }});
  assert.match(JSON.stringify(r),/Rendered proof/);assert.deepEqual(calls,['https://example.com/']);assert.ok(r.deniedRequests>=2);
+ assert.equal(r.comparison.status,'available');
+ assert.deepEqual(r.comparison.changes,[{field:'h1',before:['Initial'],after:['Rendered proof']}]);
 });
 test('deadline reaps a late browser launch before deleting its directory',{skip:process.platform!=='darwin'},async()=>{
  let directory,closed=false,contexts=0;
@@ -55,6 +57,8 @@ test('real browser preserves redirect base URL and refuses private redirect',{sk
  }};
  const result=await renderPublicPage('https://example.com/',options);
  assert.equal(result.url,'https://example.com/nested/page');
+ assert.equal(result.comparison.url,result.url);
+ assert.deepEqual(result.comparison.changes,[]);
  assert.ok(calls.includes('https://example.com/nested/relative.js'));
  const blocked=[];
  await assert.rejects(renderPublicPage('https://example.com/',{...options,fetchResource:async url=>{
@@ -91,4 +95,11 @@ test('real browser terminates non-settling JavaScript at the deadline',{skip:!pr
  const start=Date.now();
  await assert.rejects(renderPublicPage('https://example.com/',{chromium,executablePath:process.env.AUDIT_BROWSER_TEST_CHROME,timeoutMs:1500,fetchResource:async url=>({url,status:200,headers:{'content-type':'text/html'},body:Buffer.from('<script>while(true){}</script>')})}),/deadline|Timeout/);
  assert.ok(Date.now()-start<5000,'browser cleanup must complete promptly');
+});
+test('later same-URL document reload cannot be compared with an earlier response',{skip:!process.env.AUDIT_BROWSER_TEST_RUNTIME},async()=>{
+ const {chromium}=await import(process.env.AUDIT_BROWSER_TEST_RUNTIME);
+ let requests=0;
+ const r=await renderPublicPage('https://example.com/',{chromium,executablePath:process.env.AUDIT_BROWSER_TEST_CHROME,fetchResource:async url=>({url,status:200,headers:{'content-type':'text/html'},body:Buffer.from(++requests===1?'<title>First</title><script>setTimeout(()=>location.reload(),100)</script>':'<title>Second</title>')})});
+ assert.equal(requests,2);assert.equal(r.title,'Second');
+ assert.equal(r.comparison.status,'unavailable');
 });
