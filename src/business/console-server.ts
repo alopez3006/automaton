@@ -44,7 +44,7 @@ export async function consoleSnapshot(workspace: string) {
     mission: { enabled: policy.enabled, objective: policy.objective, passesPerDay: policy.passesPerDay, ...capacity },
     watcher: { running: alive(watcher?.pid), startedAt: watcher?.startedAt, maxHours: watcher?.mode === "mission" ? null : watcher?.maxHours ?? 24 },
     audit: { attempts: audits.attempts, todayAttempts: audits.today, maxAttempts: policy.auditAttemptsPerDay, externalSpendCents: budget.usedCents, reservedCents: budget.reservedCents, remainingCents: budget.availableCents, budgetCents: budget.budgetCents },
-    activity, messages: messages.slice(-250), questions: messages.filter(m => m.kind === "question" && !answered.has(m.id)),
+    activity, messages: messages.slice(-250), questions: messages.filter(m => m.kind === "question" && !answered.has(m.id) && !m.answerMessageId),
     queuedMessages: messages.filter(m => m.role === "owner" && !m.acknowledged).length,
     publicSite };
 }
@@ -115,6 +115,7 @@ export function createConsoleServer(options: { workspace: string; launch?: () =>
         if (messages.length >= 2000) throw new Error("Journal plein : archive nécessaire.");
         if (input.questionId && !messages.some(m => m.id === input.questionId && m.kind === "question")) throw new Error("Question introuvable.");
         if (input.questionId && messages.some(m => m.kind === "answer" && m.questionId === input.questionId)) throw new Error("Cette question a déjà une réponse.");
+        if (input.questionId && messages.some(m => m.id === input.questionId && m.answerMessageId)) throw new Error("Cette question a déjà une réponse.");
         const message = await appendConsoleMessage(workspace, { role: "owner", kind: input.questionId ? "answer" : "message", text: input.text, ...(input.questionId ? { questionId: input.questionId } : {}) });
         let launchResult: unknown = null, launchError: string | null = null;
         if (input.start === true) { try { launchResult = await launch(); } catch (e: any) { launchError = e.message; } }

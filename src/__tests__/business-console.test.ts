@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { request } from 'node:http';
 import { createConsoleServer } from '../business/console-server.js';
-import { appendConsoleMessage, pendingConsoleMessages, acknowledgeConsoleMessages, listConsoleMessages } from '../business/console-state.js';
+import { appendConsoleMessage, pendingConsoleMessages, acknowledgeConsoleMessages, listConsoleMessages, resolveConsoleQuestion } from '../business/console-state.js';
 
 async function fixture(work: (dir: string) => Promise<void>) {
  const dir = await mkdtemp(join(tmpdir(), 'automaton-console-test-'));
@@ -91,5 +91,15 @@ describe('Automaton owner console', () => {
   expect((await (await fetch(url + '/api/state', { headers })).json()).publicSite).toMatch(/^https:/);
   await writeFile(publication, JSON.stringify({ publicUrl: 'malformed URL' }));
   expect((await (await fetch(url + '/api/state', { headers })).json()).publicSite).toMatch(/^https:/);
+ })));
+ it('resolves a question from a genuine owner chat reply without fabricating another message', async () => fixture(async dir => web(dir, async (url, headers) => {
+  const q = await appendConsoleMessage(dir, { role: 'automaton', kind: 'question', text: 'Currency?' });
+  const agent = await appendConsoleMessage(dir, { role: 'automaton', kind: 'message', text: 'Assume EUR' });
+  await expect(resolveConsoleQuestion(dir,q.id,agent.id)).rejects.toThrow('réponse réelle');
+  const owner = await appendConsoleMessage(dir, { role: 'owner', kind: 'message', text: 'Keep EUR for now' });
+  await resolveConsoleQuestion(dir,q.id,owner.id);await resolveConsoleQuestion(dir,q.id,owner.id);
+  const messages=await listConsoleMessages(dir);expect(messages).toHaveLength(3);expect(messages.find(m=>m.id===owner.id)?.kind).toBe('message');expect(messages.find(m=>m.id===q.id)?.answerMessageId).toBe(owner.id);
+  expect((await (await fetch(url+'/api/state',{headers})).json()).questions).toHaveLength(0);
+  expect((await fetch(url+'/api/messages',{method:'POST',headers,body:JSON.stringify({text:'Another answer',questionId:q.id})})).status).toBe(400);
  })));
 });

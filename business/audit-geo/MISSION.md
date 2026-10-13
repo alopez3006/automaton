@@ -39,3 +39,5 @@ Only one action controller and one watcher may run. Respect locks and inspect st
 Read owner messages at major checkpoints, reply and acknowledge handled instructions. Ask only for missing input/access or decisions outside the granted authority. Maintain ACTIVITY.md, receipts and metrics; distinguish what actually ran, was tested locally, deployed, or sold. Explain actions and reasons briefly, without private internal reasoning, secrets or customer data. Retrieve/persist durable memory through the hosted Automaton broker. Latest direct owner authority and policy override historical memory caps.
 
 Pause future autonomous work: `node scripts/mission-cycle.mjs --pause`. Resume: `node scripts/mission-cycle.mjs --resume`. A current pass finishes within its timeout; scheduled supervision respects the flag.
+
+When the owner answers a question in a normal chat message, use `node business/console/message.mjs resolve <question id> <owner message id>` to link that genuine reply. Never fabricate a human answer or leave an already answered question pending. The resolver verifies the original owner message and preserves its text and timestamp.

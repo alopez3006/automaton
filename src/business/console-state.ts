@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 export type ConsoleMessage = {
   id: string; createdAt: string; role: "owner" | "automaton";
   kind: "message" | "question" | "answer"; text: string;
-  questionId?: string; options?: string[]; acknowledged?: boolean;
+  questionId?: string; options?: string[]; acknowledged?: boolean; answerMessageId?: string;
 };
 const uuid = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
 export function claimedOwnerRequests(raw?: string): string[] {
@@ -57,7 +57,26 @@ export async function listConsoleMessages(workspace: string): Promise<ConsoleMes
     try { await readFile(join(dirs.acknowledgments, value.id)); value.acknowledged = true; } catch (e: any) { if (e.code !== "ENOENT") throw e; }
     return value;
   }));
+  for (const question of messages.filter(m => m.kind === "question")) {
+    try {
+      const id = await readFile(join(dirs.root, "answers", question.id), "utf8");
+      const answer = messages.find(m => m.id === id && m.role === "owner" && m.createdAt >= question.createdAt);
+      if (answer) question.answerMessageId = id;
+    } catch (e: any) { if (e.code !== "ENOENT") throw e; }
+  }
   return messages.sort((a, b) => a.createdAt.localeCompare(b.createdAt) || a.id.localeCompare(b.id));
+}
+export async function resolveConsoleQuestion(workspace: string, questionId: string, ownerMessageId: string) {
+  if (!uuid.test(questionId) || !uuid.test(ownerMessageId)) throw new Error("Identifiants invalides.");
+  const messages = await listConsoleMessages(workspace);
+  const question = messages.find(m => m.id === questionId && m.kind === "question" && m.role === "automaton");
+  const answer = messages.find(m => m.id === ownerMessageId && m.role === "owner" && m.kind !== "question");
+  if (!question || !answer || answer.createdAt < question.createdAt || answer.questionId && answer.questionId !== questionId) throw new Error("Question et réponse réelle du propriétaire requises.");
+  const root = join(paths(workspace).root, "answers"); await mkdir(root, { recursive: true, mode: 0o700 });
+  const path = join(root, questionId);
+  try { await writeFile(path, ownerMessageId, { flag: "wx", mode: 0o600 }); }
+  catch (e: any) { if (e.code !== "EEXIST") throw e; if (await readFile(path, "utf8") !== ownerMessageId) throw new Error("Cette question a déjà une réponse."); }
+  return { questionId, answerMessageId: ownerMessageId };
 }
 export async function pendingConsoleMessages(workspace: string) {
   const messages = await listConsoleMessages(workspace);
