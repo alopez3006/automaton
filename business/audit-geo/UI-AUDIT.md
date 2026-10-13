@@ -1,19 +1,12 @@
-# Technical UI review
+# Contrôle UI — modernisation du 13 octobre 2026
 
-Version 2, inspected against source and the live mobile browser at 399 CSS pixels. Full desktop browser verification remains unconfirmed because the in-app browser viewport override did not change its actual viewport.
+Source Worker existante. UI/UX Pro Max : recherche design-system et stack html-tailwind exécutées ; Impeccable contexte, audit, craft-floor et détecteur consultés. Palette/polices éditoriales conservées volontairement. Aucun ajout de dépendance.
 
-| Dimension | Score | Evidence |
-|---|---:|---|
-| Accessibility | 3/4 | Labelled fields, live status, keyboard focus, semantic headings. Body contrast 13.16:1, muted text 6.26:1, button text 8.60:1. Screen-reader and keyboard walkthrough not exhaustive. |
-| Performance | 4/4 | No framework dependency, one embedded font, no decorative animation or external asset fetch. |
-| Responsive | 3/4 | Fluid sizes and one-column mobile layout; actual mobile DOM has no horizontal overflow, 48px inputs and buttons. Desktop layout checked in code only. |
-| Theming | 3/4 | Consistent tokens for the intentionally single light theme. |
-| Integrity | 4/4 | Real request persistence, explicit pending state, honest fictional demonstration, no made-up customer proof. |
+- Navigateurs : aperçu local Chrome réel aux largeurs 375, 768, 1024 et 1440 CSS px. innerWidth confirmé ; aucun overflow horizontal, colonne unique mobile/tablette, deux colonnes desktop. Inputs 52 px, bouton environ 50 px. Screenshots mobile et desktop inspectés.
+- Clavier/formulaire : URL vide bloque et reçoit le focus ; Tab URL → email → consentement avec outline solid ; consentement absent bloque. Labels required, aide aria-describedby et aria-busy ajoutés. La boîte statut est aria-live ; contrôle copie possède un fallback. Pas de screen-reader exhaustif.
+- Design : hiérarchie titres/paragraphes, espace responsive, fichier exemple clairement fictif, prix €9 et conditions inchangés. Le form ne prétend pas livrer par email. Contraste palette inchangé : corps 13.16:1, secondaire 6.26:1, bouton 8.60:1 (valeurs du précédent contrôle, couleurs conservées).
+- Détecteur : deux warnings font Fraunces/Arial ; choix incumbent assumé. Aucun error technique détecté. La critique de police ne justifie pas une refonte demandée modérée.
+- Trois suites locales intake/paiement/webhook : passent. Stockage webhook simulé ; ce contrôle ne prouve aucun paiement sandbox ni live.
+- StackHawk v6.4.0, skills à jour ; nouvelle tentative plateforme HTTP 402 Payment Required. Aucun scan DAST réalisé, aucune assurance de sécurité globale.
 
-Detector: two font warnings. Fraunces was a deliberate editorial choice, not a functional defect. Arial is body text, not the display face. A skipped heading level found during review was corrected before publication.
-
-Local intake/privacy/authorization/payment-gate assertions passed. Live anonymous intake persisted a synthetic request; the owner operator prepared it through OAuth and did not process it twice. Missing Stripe server credentials prevent report release. No paid customer path or payment was tested.
-
-StackHawk preflight found the CLI and credentials, but its platform returned HTTP 402 Payment Required. No DAST scan was completed and no security certification is claimed.
-
-Version 2 adds tested server-side payment reconciliation and a delivery gate. Synthetic cases reject unpaid/incomplete status, wrong amount/currency/link/request, disabled payments, a full-access key and excessive polling. No live paid transaction was performed.
+Le parcours live et la publication exacte sont consignés dans HANDOFF-RESULT.md. Le schéma legacy PRODUCT.md a été signalé par Impeccable ; aucune migration générale ni interview init hors périmètre effectuée.

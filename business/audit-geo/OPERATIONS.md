@@ -1,7 +1,7 @@
 # Pilot operations
 
-Public page: https://audit-geo-pilote.alopez-nevicom.chatgpt.site
-Site version 2: source bc880bc67b7e6ed75b842abc3f02eb61029a668b.
+Public page: https://audit.vutler.com (the original free hostname remains available).
+Current verified publication: version 9, source c3be733dad2dfcf31ecd991a2957676d3445f32d, deployment succeeded with runtime environment revision 6. See LAUNCH-STATUS.md for the reconciled result after the third controller's time limit. Earlier details below describe their dated steps and do not override this current status.
 
 ## What runs today
 
@@ -10,16 +10,17 @@ Site version 2: source bc880bc67b7e6ed75b842abc3f02eb61029a668b.
 - `--pagespeed` adds the optional Google PageSpeed call. A failed quota check is unavailable, never a fabricated score.
 - Private reports and evidence live in ignored `.reports/`. Operator access is in ignored `.operator.env`, mode 600. Neither is published.
 
-## Payment setup still required
+## Payment fulfillment status — 13 October 2026
 
-The Vutler Stripe connector is connected in the Codex owner chat. Its OAuth grant is not automatically inherited by this local Node process or the hosted Site.
+Latest supervisor update: the owner requested and authorized an isolated sandbox. **Vutler Automaton**, `acct_1UPzvFD1odHjzufx`, `livemode=false`, is now created from scratch under Vutler and explicitly connected to the Stripe MCP session by owner OAuth consent. A real sandbox products GET succeeded. Metadata is in payment-sandbox.json. This removes the second pass's missing-sandbox-access dependency; that catalog read alone does not prove fulfillment. Signed simulated sandbox fulfillment is recorded below; real paid delivery remains unproven. The existing live Vutler grant remains separate.
 
-The €9 one-off payment link in payment.json is prepared but INACTIVE. Its cap is five completed sessions. Before activating it:
-1. Review the first prepared reports and confirm a delivery date for the request.
-2. Configure a Vutler restricted key with read access to Checkout Sessions as the Sites runtime secret STRIPE_RESTRICTED_KEY; never paste it into chat or source. Set STRIPE_PAYMENT_LINK_ID to the exact prepared link ID. Deploy the saved Site version to apply the environment revision.
-3. Associate the payment link with the accepted request using `client_reference_id=<request UUID>`. Verify paid status, live mode, 900 cents EUR and the expected payment link/account. The server delivery gate performs these checks when an authenticated operator submits a receipt and report. A boolean or return URL alone cannot authorize delivery.
-4. The operator can invite payment with --accept-orders after server setup is enabled. It prepares the report before payment and rejects paid eligibility when no useful task is supported. The customer returns to the private tracking page after paying; its server polls Checkout Sessions at most once a minute and releases the stored report only for a matching complete paid receipt.
-5. After validation, activate the prepared payment link through the owner Stripe connector, set PAYMENTS_ENABLED=true in Sites and deploy the saved version. Start `node business/audit-geo/watch.mjs` for a bounded 24-hour local pilot, polling every five minutes, stopping at ten inference attempts or three consecutive failures. This requires the Mac to remain awake. No email, ad purchase or background Conway wallet loop is started.
+A dedicated Vutler live webhook `we_1UPsaRDj0FRggNOEbzyrpors` now targets `/api/stripe/webhook` for `checkout.session.completed` and `checkout.session.async_payment_succeeded`. Its signing secret was transferred directly from the connected Stripe response into secret-marked Sites `STRIPE_WEBHOOK_SECRET`; it was not stored in local files. The handler validates the raw-body HMAC with a five-minute timestamp tolerance, live mode, paid and complete status, EUR 900 cents, the exact payment link and request association. It unlocks an already prepared useful report without a customer page revisit. Duplicate delivered requests are acknowledged without another delivery. Storage failures are retryable. Open-checkout requests cannot be deleted from the tracking page, preserving delayed-payment fulfillment.
+
+PAYMENTS_ENABLED remains false and the five-checkout-cap link remains inactive. Two drafts, zero eligible, three attempts of ten were last observed; do not force a sale. The third pass recorded a real simulated sandbox checkout and signed delivery to its synthetic fixture, separate from live fulfillment. Asynchronous and duplicate/retry cases were tested locally. The parent independently confirmed both sandbox runtime disablement and the test webhook disabled after use. This does not prove a real paid customer path. Before activation, review the next evidence-backed eligible report and confirm capacity. Do not charge the owner to test.
+
+The existing restricted Checkout Sessions key path is optional reconciliation/manual receipt verification. No restricted key was created or read during this run; signed webhook fulfillment does not require a Stripe API key on Sites. `configure-stripe.mjs` remains available for an owner who wants that separate fallback. Never paste secrets in chat.
+
+The bounded incoming watcher was started on 13 October 2026 (PID and start time in ignored `.reports/watch-process.json`), five-minute polling, maximum 24 hours, ten inference attempts total or three consecutive failures. It requires an awake Mac and is not 24/7 cloud hosting. Its first pass found no new request; attempts remain two of ten. Payments stay disabled, so it can prepare drafts but cannot invite checkout.
 
 Conway's native wallet/configuration and continuous agent loop have not been started. The OAuth inference provider is implemented separately; set inferenceProvider to codex-oauth in an existing Automaton configuration to select it. Existing Conway financial/survival prerequisites still apply. Do not call the current bounded operator a fully autonomous business.
 
@@ -31,8 +32,12 @@ In Stripe Dashboard select Vutler in live mode, create a restricted key named Au
 
 ## Handoff controller
 
+The owner console is available locally at `http://127.0.0.1:4317`. Start or reuse it with `npm run business:console-start`, or run the foreground server with `npm run business:console`. It displays controller and watcher separately, ACTIVITY.md, owner messages, actual Automaton replies and actionable questions. Messages are read at major checkpoints, with explicit acknowledgement. The three-pass and 20-minute limits still apply. See `../console/README.md` for operation and verification. The owner explicitly selected this Mac only; remote hosting is not configured.
+
+Latest owner authority is in HANDOFF.md / OWNER-ASSETS.md: nine already-owned domains were supplied, necessary one-off launch spending was approved within the existing €20 total cap, and a moderate UI/UX Pro Max modernization of the public English site was requested. These instructions supersede the first pass's per-domain quote approval requirement. No domain is considered connected solely from the ownership statement or recommendation.
+
 `pnpm business:handoff` starts the fork's local Automaton business mode in a detached process. `pnpm business:status` reports its state; .automaton-business/supervisor.log and private execution receipts record progress. The controller uses Automaton's database and skill loader, retrieves hosted project memory in its supervisor, and delegates authorized actions to the official Codex OAuth CLI with connected apps and automatic approval review. No API key is forwarded to that action executor.
 
 This action-mode access was independently proved with a read of the existing public Site and a read of the Vutler account label. The old plain-inference limitation does not imply that action mode lacks connected apps. Raw credential-file access is forbidden; additional memory retrieval/persistence uses the dedicated hosted memory broker. Per-run duration is capped at 20 minutes; this pilot permits at most three controller runs. This is an initial execution handoff, not an unbounded permanent process or a funded Conway wallet/survival loop.
 
-The current task and authority are in HANDOFF.md. Registration of a domain waits for a concrete quote approval; the existing free hostname remains available. The Stripe CLI catalog currently has an authentication dependency distinct from the connected Stripe app; no legacy full-access key is reused to repair it.
+The current task and authority are in HANDOFF.md. Prefer the owned audit.vutler.com subdomain; exact pending DNS records are in DOMAIN-OPTIONS.md. Necessary one-off expenses are authorized within the existing €20 total cap, without subscriptions, add-ons or automatic renewal commitments. The free hostname remains active until DNS/TLS is verified. The Stripe CLI catalog currently has an authentication dependency distinct from the connected Stripe app; no legacy full-access key is reused to repair it.

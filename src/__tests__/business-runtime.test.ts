@@ -2,6 +2,8 @@ import {describe,it,expect} from 'vitest';
 import{mkdtemp,mkdir,writeFile,readFile,rm}from'node:fs/promises';
 import{join}from'node:path';import{tmpdir}from'node:os';
 import{businessEnvironment,redactBusinessOutput,validateBusinessReceipt,runBusiness}from'../business/runtime.js';
+import {createDatabase} from '../state/database.js';
+import {appendConsoleMessage} from '../business/console-state.js';
 const receipt={status:'waiting_for_user',summary:['Domain quote prepared'],evidence:['Public Site verified'],blockers:['Owner approval'],nextActions:['Review quote'],externalSpendCents:0};
 describe('Automaton local business mode',()=>{
  it('keeps OAuth configuration but excludes API credentials from the executor environment',()=>{
@@ -32,6 +34,39 @@ describe('Automaton local business mode',()=>{
    const executable=join(dir,'executor.mjs');await writeFile(executable,'#!/usr/bin/env node\nprocess.stdin.resume();setInterval(()=>{},10000);\n',{mode:0o700});
    await expect(runBusiness({workspace:dir,executable,context:'Fixture',timeoutMs:100})).rejects.toThrow('timed out');
    expect(JSON.parse(await readFile(join(dir,'.automaton-business/status.json'),'utf8')).state).toBe('failed');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('allows one further bounded pass per fresh owner request without replaying an unacknowledged request',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-owner-turn-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Fixture task');
+   let db=createDatabase(join(dir,'.automaton-business/state.db'));db.setKV('business_runs','3');db.close();
+   const executable=join(dir,'executor.mjs');await writeFile(executable,`#!/usr/bin/env node\nimport fs from 'node:fs';\nfs.writeFileSync(process.argv[process.argv.indexOf('-o')+1],JSON.stringify(${JSON.stringify(receipt)}));\nprocess.stdin.resume();\n`,{mode:0o700});
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('new owner request');
+   const message=await appendConsoleMessage(dir,{role:'owner',kind:'message',text:'Enrichir le rapport'});
+   await runBusiness({workspace:dir,executable,context:'Fixture'});
+   db=createDatabase(join(dir,'.automaton-business/state.db'));expect(db.getKV('business_runs')).toBe('4');expect(JSON.parse(db.getKV('business_owner_requests')!)).toContain(message.id);db.close();
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('new owner request');
+   await appendConsoleMessage(dir,{role:'owner',kind:'message',text:'Une nouvelle précision du propriétaire'});
+   await runBusiness({workspace:dir,executable,context:'Fixture'});
+   db=createDatabase(join(dir,'.automaton-business/state.db'));expect(db.getKV('business_runs')).toBe('5');db.close();
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('does not let an Automaton message extend the autonomous setup limit',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-non-owner-fixture-'));
+  try{
+   const db=createDatabase(join(dir,'.automaton-business/state.db'));db.setKV('business_runs','3');db.close();
+   await appendConsoleMessage(dir,{role:'automaton',kind:'message',text:'Continuer sans nouvelle demande humaine'});
+   await expect(runBusiness({workspace:dir,context:'Fixture'})).rejects.toThrow('new owner request');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('persists a useful connection failure category without the raw executor error',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-executor-error-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Fixture task');
+   const executable=join(dir,'executor.mjs');await writeFile(executable,'#!/usr/bin/env node\nprocess.stdin.resume();console.log(JSON.stringify({type:"turn.failed",error:{message:"Connection failed with private diagnostic rk_live_fixture"}}));process.exitCode=1;\n',{mode:0o700});
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('connection failed');
+   const status=await readFile(join(dir,'.automaton-business/status.json'),'utf8');expect(JSON.parse(status).error).toBe('Business executor connection failed');expect(status).not.toContain('private diagnostic');expect(status).not.toContain('rk_live_fixture');
   }finally{await rm(dir,{recursive:true,force:true});}
  });
 });

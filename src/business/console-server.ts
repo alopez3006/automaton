@@ -5,7 +5,7 @@ import { join, resolve } from "node:path";
 import { randomBytes, timingSafeEqual } from "node:crypto";
 import { spawn } from "node:child_process";
 import Database from "better-sqlite3";
-import { appendConsoleMessage, listConsoleMessages } from "./console-state.js";
+import { appendConsoleMessage, listConsoleMessages, claimedOwnerRequests } from "./console-state.js";
 import { businessEnvironment, redactBusinessOutput } from "./runtime.js";
 
 const LIMIT = 16_384;
@@ -17,11 +17,11 @@ async function tail(file: string, bytes = 40_000) {
   finally { await handle?.close(); }
 }
 function alive(pid: unknown) { if (!Number.isSafeInteger(pid) || (pid as number) <= 0) return false; try { process.kill(pid as number, 0); return true; } catch { return false; } }
-function runCount(workspace: string) {
-  if (!existsSync(join(workspace, ".automaton-business/state.db"))) return 0;
+function runControl(workspace: string) {
+  if (!existsSync(join(workspace, ".automaton-business/state.db"))) return { runs: 0, claimed: [] as string[] };
   let db;
-  try { db = new Database(join(workspace, ".automaton-business/state.db"), { readonly: true, fileMustExist: true }); return Number((db.prepare("SELECT value FROM kv WHERE key = ?").get("business_runs") as any)?.value ?? 0); }
-  catch (e: any) { if (e.code === "SQLITE_CANTOPEN") return 0; throw e; }
+  try { db = new Database(join(workspace, ".automaton-business/state.db"), { readonly: true, fileMustExist: true }); const get = (key: string) => (db!.prepare("SELECT value FROM kv WHERE key = ?").get(key) as any)?.value; return { runs: Number(get("business_runs") ?? 0), claimed: claimedOwnerRequests(get("business_owner_requests")) }; }
+  catch (e: any) { if (e.code === "SQLITE_CANTOPEN") return { runs: 0, claimed: [] as string[] }; throw e; }
   finally { db?.close(); }
 }
 async function receiptSpend(workspace: string) {
@@ -39,10 +39,12 @@ export async function consoleSnapshot(workspace: string) {
   ]);
   const answered = new Set(messages.filter(m => m.kind === "answer").map(m => m.questionId));
   const running = alive(lock?.pid);
+  const control = runControl(workspace);
+  const freshOwnerRequest = messages.some(m => m.role === "owner" && !m.acknowledged && !control.claimed.includes(m.id));
   let publicSite = "https://audit-geo-pilote.alopez-nevicom.chatgpt.site";
   if (typeof publication?.publicUrl === "string") { try { const url = new URL(publication.publicUrl); if (url.protocol === "https:" && !url.username && !url.password) publicSite = url.href; } catch { /* Preserve the verified fallback if metadata is malformed. */ } }
   return { updatedAt: new Date().toISOString(), status: status ?? { state: "not_started" }, running, staleLock: Boolean(lock && !running),
-    runs: runCount(workspace), maxRuns: 3, watcher: { running: alive(watcher?.pid), startedAt: watcher?.startedAt, maxHours: watcher?.maxHours ?? 24 },
+    runs: control.runs, maxRuns: 3, canStart: control.runs < 3 || freshOwnerRequest, watcher: { running: alive(watcher?.pid), startedAt: watcher?.startedAt, maxHours: watcher?.maxHours ?? 24 },
     audit: { attempts: ledger?.attempts ?? 0, maxAttempts: 10, externalSpendCents: Math.max(ledger?.externalSpendCents ?? 0, spent), budgetCents: 2000 },
     activity, messages: messages.slice(-250), questions: messages.filter(m => m.kind === "question" && !answered.has(m.id)),
     queuedMessages: messages.filter(m => m.role === "owner" && !m.acknowledged).length,
@@ -65,7 +67,7 @@ export function createConsoleServer(options: { workspace: string; launch?: () =>
       const state = await consoleSnapshot(workspace);
       if (state.running) return { alreadyRunning: true };
       if (state.staleLock) throw new Error("Verrou ancien détecté : vérifier le processus avant reprise.");
-      if (state.runs >= state.maxRuns) throw new Error("Les trois passes du pilote sont utilisées. Une nouvelle autorisation de durée est nécessaire.");
+      if (!state.canStart) throw new Error("Les passes initiales sont utilisées. Envoie une nouvelle demande pour lancer une passe de 20 minutes.");
       if (options.launch) return await options.launch();
       return await new Promise((accept, reject) => {
         const child = spawn(process.execPath, [join(workspace, "scripts/start-business.mjs")], { cwd: workspace, env: businessEnvironment(process.env), stdio: ["ignore", "pipe", "pipe"] });

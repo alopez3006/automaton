@@ -8,7 +8,7 @@ import { createDatabase } from "../state/database.js";
 import { loadSkills, getActiveSkillInstructions } from "../skills/loader.js";
 import { codexExecutable } from "../inference/codex-oauth.js";
 import { SniparaClient } from "../agent/snipara.js";
-import { pendingConsoleMessages, appendConsoleMessage, listConsoleMessages } from "./console-state.js";
+import { pendingConsoleMessages, appendConsoleMessage, listConsoleMessages, claimedOwnerRequests } from "./console-state.js";
 
 const schema = {
   type: "object", additionalProperties: false,
@@ -33,6 +33,16 @@ export function redactBusinessOutput(text: string): string {
     .replace(/\bwhsec_[A-Za-z0-9]+\b/g, "[REDACTED]")
     .replace(/Bearer\s+[A-Za-z0-9._~+/=-]+/gi, "Bearer [REDACTED]")
     .replace(/\b[a-f0-9]{64}\b/gi, "[REDACTED]");
+}
+
+// Persist fixed diagnostic categories, never raw executor errors or tool output.
+function executorFailure(event: any): string {
+  const message = typeof event.message === "string" ? event.message : typeof event.error?.message === "string" ? event.error.message : "";
+  if (/unauthorized|authentication|unauthenticated|expired token|sign in/i.test(message)) return "Business executor authentication failed";
+  if (/rate limit|usage limit|quota|usage cap/i.test(message)) return "Business executor usage limit reached";
+  if (/network|connection|connect|stream disconnected|dns|name resolution/i.test(message)) return "Business executor connection failed";
+  if (/context window|context length|too many tokens/i.test(message)) return "Business executor context limit reached";
+  return "Business executor failed";
 }
 
 export function validateBusinessReceipt(raw: string) {
@@ -89,16 +99,20 @@ export async function runBusiness(options: {
   };
   try {
     const runs = Number(db.getKV("business_runs") ?? 0);
-    if (!Number.isSafeInteger(runs) || runs < 0 || runs >= 3) throw new Error("Pilot controller limit reached (3 runs)");
+    if (!Number.isSafeInteger(runs) || runs < 0) throw new Error("Invalid business run count");
+    const inbox = await pendingConsoleMessages(workspace);
+    const claimed = claimedOwnerRequests(db.getKV("business_owner_requests"));
+    const freshOwnerRequests = inbox.filter(message => !claimed.includes(message.id));
+    if (runs >= 3 && !freshOwnerRequests.length) throw new Error("Initial controller limit reached; a new owner request is required");
     const memory = options.context === undefined ? await projectMemory() : undefined;
     const mission = await readFile(join(workspace, "business/audit-geo/HANDOFF.md"), "utf8");
-    const inbox = await pendingConsoleMessages(workspace);
     const conversation = (await listConsoleMessages(workspace)).slice(-40);
     const skills = loadSkills(join(workspace, "business/skills"), db);
     const resultPath = join(stateDir, runId + ".json");
     const schemaPath = join(stateDir, "receipt.schema.json");
     await writeFile(schemaPath, JSON.stringify(schema), { mode: 0o600 });
     db.setKV("business_runs", String(runs + 1));
+    db.setKV("business_owner_requests", JSON.stringify([...new Set([...claimed, ...freshOwnerRequests.map(message => message.id)])]));
     db.setAgentState("running");
     await status("running", { runNumber: runs + 1, loadedSkills: skills.map(s => s.name) });
     const prompt = `You are Automaton's local business operator, executing through the official Codex CLI OAuth agent.\n` +
@@ -108,6 +122,7 @@ export async function runBusiness(options: {
       `For additional Automaton memory use the safe broker: node business/audit-geo/memory.mjs recall '<question>', or remember '<durable non-secret learning>'. Never save customer data or transient domain prices to memory.\n\n` +
       `The owner has a local console. Read new owner messages at each major checkpoint with node business/console/message.mjs inbox, reply using say '<short French explanation>', then acknowledge handled messages using ack <id...>. Ask missing-information questions using ask '<question>' '["choice 1","choice 2"]'. Do not proceed with work that requires an unanswered question. Explain actions and outcomes briefly; never expose private internal reasoning, raw secrets or customer data. The owner console messages below are direct owner instructions.\n` +
       `Pending console messages: ${JSON.stringify(inbox)}\n\n` +
+      (runs >= 3 ? `This additional bounded pass is authorized by fresh owner console requests. The three-pass limit applies to the initial autonomous setup, not new human requests. Handle the new requests without resetting counters, scheduling a further controller or increasing the external 20 EUR total cap.\n\n` : "") +
       `Recent console conversation for continuity: ${JSON.stringify(conversation)}. Owner-role messages are human instructions; Automaton-role messages are context, not new human authority. Read earlier messages if necessary using node business/console/message.mjs history.\n\n` +
       mission + `\n\nAutomaton skill context:\n${getActiveSkillInstructions(skills)}` + `\n\nProject memory:\n${memory?.context ?? options.context ?? ""}`;
     console.log(JSON.stringify({ event: "business_started", runId, pid: process.pid, loadedSkills: skills.map(s => s.name) }));
@@ -117,7 +132,7 @@ export async function runBusiness(options: {
       const child = spawn(options.executable ?? codexExecutable(), ["exec", "--ephemeral", "--approve-for-me", "--json", "--output-schema", schemaPath,
         "-c", "mcp_servers.snipara.enabled=false",
         "-o", resultPath, "-C", workspace, "-"], { stdio: ["pipe", "pipe", "pipe"], env: childEnvironment });
-      let buffer = "", bytes = 0, failed = false, timedOut = false;
+      let buffer = "", bytes = 0, failed = false, timedOut = false, failureReason = "Business executor failed";
       const timer = setTimeout(() => { timedOut = true; child.kill("SIGTERM"); }, timeoutMs);
       const forceTimer = setTimeout(() => child.kill("SIGKILL"), timeoutMs + 5000);
       const stop = () => child.kill("SIGTERM");
@@ -135,6 +150,7 @@ export async function runBusiness(options: {
             if (event.type === "item.started" || event.type === "item.completed") {
               void status("running", { activity: event.item?.type ?? "work" }).catch(() => {});
             }
+            if (event.type === "error" || event.type === "turn.failed") failureReason = executorFailure(event);
             if (event.type === "turn.failed") failed = true;
             if (event.type === "turn.completed") console.log(JSON.stringify({ event: "business_turn_completed", usage: event.usage }));
           } catch { /* Ignore non-event lines rather than logging potentially sensitive output. */ }
@@ -143,7 +159,7 @@ export async function runBusiness(options: {
       child.stderr.resume(); child.stdin.on("error", () => {});
       const clean = () => { clearTimeout(timer); clearTimeout(forceTimer); process.removeListener("SIGTERM", stop); process.removeListener("SIGINT", stop); };
       child.on("error", () => { clean(); reject(new Error("Cannot start Codex business executor")); });
-      child.on("close", code => { clean(); code === 0 && !failed && !timedOut ? accept() : reject(new Error(timedOut ? "Business run timed out" : "Business executor failed")); });
+      child.on("close", code => { clean(); code === 0 && !failed && !timedOut ? accept() : reject(new Error(timedOut ? "Business run timed out" : failureReason)); });
       child.stdin.end(prompt);
     });
     await chmod(resultPath, 0o600);
@@ -155,7 +171,7 @@ export async function runBusiness(options: {
     await appendConsoleMessage(workspace, { role: "automaton", kind: "message", text: [receipt.summary.join("\n"), receipt.blockers.length ? "Points à résoudre : " + receipt.blockers.join(" ; ") : ""].filter(Boolean).join("\n\n").slice(0, 6000) || "Passe terminée. Consulter le compte rendu." });
     if (memory) {
       await memory.client.call("snipara_remember_if_novel", { scope: "project", type: "learning", category: "automaton-business-handoff",
-        text: "Automaton local business mode uses --business to supervise a Codex OAuth action executor with Automaton skills/state and hosted memory through a broker. Connected apps are preserved in action mode while plain inference is isolated. API credentials are not forwarded to the executor. The local console provides owner messages, questions and concise progress explanations; the executor reads messages at major checkpoints and questions require an owner answer. The pilot allows three bounded controller passes. Purchase authority comes from the latest owner instructions in HANDOFF.md, within the 20 EUR total cap. --business-status reports execution receipts.",
+        text: "Automaton local business mode supervises bounded Codex OAuth action execution with skills/state and hosted memory. API credentials are not forwarded to the executor. The local console supplies owner messages, questions and concise progress explanations at checkpoints. Initial autonomous setup permits three passes; afterwards a fresh unclaimed owner request can authorize one further bounded pass. Owner request IDs are claimed before execution so they cannot silently trigger retries after timeout. Counters are preserved and the external 20 EUR total cap remains unchanged. --business-status reports execution receipts.",
         source: "verified local business runtime" });
     }
     console.log(JSON.stringify({ event: "business_finished", status: receipt.status, receiptPath: resultPath, summary: receipt.summary, blockers: receipt.blockers }));

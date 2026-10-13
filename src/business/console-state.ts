@@ -8,6 +8,11 @@ export type ConsoleMessage = {
   questionId?: string; options?: string[]; acknowledged?: boolean;
 };
 const uuid = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
+export function claimedOwnerRequests(raw?: string): string[] {
+  const ids = JSON.parse(raw ?? "[]");
+  if (!Array.isArray(ids) || ids.length > 2000 || ids.some(id => typeof id !== "string" || !uuid.test(id))) throw new Error("Invalid owner request history");
+  return ids;
+}
 export function messageText(value: unknown): string {
   if (typeof value !== "string" || !value.trim() || value.length > 6000) throw new Error("Message requis, maximum 6 000 caractères.");
   if (/\b(?:rk|sk)_(?:live|test)_|\bwhsec_|Bearer\s+[\w.-]+|-----BEGIN.*PRIVATE KEY/i.test(value)) throw new Error("Ne transmettez pas de clé ou de secret dans le chat.");
