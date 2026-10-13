@@ -44,3 +44,6 @@ Objectif : identifier des preuves supplémentaires utiles au rapport à 9 €. L
 
 ## 2026-10-13T12:09:54.271Z — Nouvelle mission et budget
 Le propriétaire confie la mission permanente de faire fonctionner et perfectionner l’offre, avec autonomie et 50 € au total. Politique exécutable et mémoire durable en cours de mise à jour ; compteurs conservés, réservations avant achat et reçus réels. Six passes bornées et dix tentatives d’audit par jour de Zurich. Le budget ne fournit pas de moyen de paiement ; aucun achat ni carte ajouté. Tests mission/budget/runtime/console : 27 passent, compilation réussie. Scan StackHawk toujours indisponible : HTTP 402.
+
+## 2026-10-13T12:20:47.885519+00:00 — collecte enrichie
+JSON-LD conservé avant nettoyage, métadonnées HTML et jusqu’à quatre pages internes. Six tests passent ; contrôle HTTPS réel sur le domaine effectué. Opérateur --once : 0 préparé, 3 tentatives cumulées, aucun paiement demandé. Aucune ouverture des ventes, aucun achat ni nouveau contrôleur. Diagnostics Lighthouse détaillés et revue d’un rapport utile restent à faire. Reçu : HANDOFF-RESULT.md.
