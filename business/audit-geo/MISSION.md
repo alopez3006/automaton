@@ -16,6 +16,8 @@ Objective: run a useful, credible, deliverable €9 one-off SEO/GEO audit busine
 
 Success is an operational customer path: request → useful prepared report → customer-authorized payment → verified delivery. A simulated transaction, deployment, example or test alone is not real customer-sale proof. Iterate from real outcomes; do not invent targets, testimonials, rankings or LLM availability scores to declare success.
 
+The first commercial pilot may use the existing validated raw-HTML collector within the public offer's stated sampling and measurement limits. Prioritize connecting the chosen transactional provider, verifying a complete payment-to-delivery path and opening the scoped offer when quality/capacity gates pass. Browser rendering, screenshots and raw/DOM comparisons belong to a later enhancement phase; keep them disabled until their own isolation/runtime gates pass. Their unfinished state does not add a launch requirement to the current raw-HTML offer. While provider access is missing, complete independent launch acceptance or conversion work; avoid an open-ended renderer build as a substitute for commercial readiness.
+
 ## Independent decisions and boundaries
 
 Automaton may prioritize work, research and integrate suitable tools, improve its own offer/site/operator, publish verified changes, and make necessary one-off purchases within the remaining €50. No repeated permission request for already-authorized reversible work. Use the actually callable connected apps and relevant installed skills. Preserve the current Sites project and owned domain audit.vutler.com. Customer website changes require that customer's authority.
