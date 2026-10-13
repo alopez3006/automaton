@@ -1,26 +1,23 @@
-# Execution receipt — free local Lighthouse baseline
-
-Date: 2026-10-13T13:03:11.942841+00:00
+# Execution receipt — 2026-10-13 13:33 UTC
 
 ## Completed
-- Read current mission/policy and owner inbox; safe hosted broker recall succeeded after network authorization.
-- Processed live queue with existing operator: 0 new reports, lifetime attempts 3, payment not requested. Counters preserved.
-- Ran free pinned Lighthouse 12.8.2 against owned audit.vutler.com using installed headless Chrome and an isolated temporary profile. No API key, purchase or customer data.
-- Saved bounded metrics/diagnostics to LIGHTHOUSE-BASELINE.json and documented the manual procedure in OPERATIONS.md. No collector integration or public deployment this pass.
+- Added validate-draft.mjs: strict zero-to-three structured tasks and reference checks against collected ID, URL, observation date, whitelisted scalar field and exact excerpt. Failed observations cannot support a task; missing and invented fields fail closed.
+- Applied validation to newly generated reports and existing prepared drafts before payment transitions. Legacy drafts without the contract cannot request payment. Model-provided review approvals are discarded; independent source-support and usefulness approval are required in addition to reference validation.
+- Updated inference contract and evidence-engine plan. Preserved existing dirty work, counters, sales settings and scheduling.
 
 ## Evidence
-- Real local mobile simulated lab run, fetchTime 2026-10-13T13:02:09.277Z: performance 97, accessibility 100, best practices 93, SEO 100. These scores are not rankings or field Core Web Vitals.
-- FCP 1188 ms; LCP 2462 ms; TBT 0 ms; CLS 0.024; speed index 3249 ms. Field measurements unavailable.
-- studio.jpg: responsive-image diagnostic estimates 190463 wasted bytes. Console reports a CSP-blocked inline script and a 404 resource; cause and customer impact still unverified.
-- Existing evidence suite 8/8 passes; git diff --check passes.
-- Budget status: used 0, reserved 0, available 5000 cents.
+- 19 tests passed across collector, robots and draft validation; six validator tests rerun after final length-bound adjustment. Operator syntax and git diff checks passed.
+- Actual operator --once: prepared 0, cumulative attempts 3, externalPurchaseSpendCents 0, payment not requested.
+- Hosted broker recall and persistence succeeded after allowing network access; initial sandbox DNS failure resolved. No credentials printed or manually loaded.
+- Owner inbox empty at start and both checkpoints; French outcome sent to console.
+- Local operator changes only; no public deployment or real sale claimed.
 
 ## Dependencies and next actions
-- Inspect blocked script and identify 404 against exact managed Sites source; verify customer interactions before any corrective publication. Preserve CSP protections.
-- Optimize image delivery only after confirming the asset/source and responsive behavior.
-- Manual Lighthouse is available; automatic customer use still needs bounded target-access validation and report integration.
-- No useful eligible customer report reviewed, no real sale; sales gate unchanged. Historical HawkScan 402 blocker not repeated.
+- Reference validation proves source presence, not semantic entailment or usefulness. Review one genuinely useful report and its structured evidence before setting review.sourceSupportApproved and review.usefulnessApproved in its private draft. Both remain mandatory for --accept-orders; payment configuration must also be ready.
+- Add a safe bounded rendered-browser worker, including redirects/subrequest public-address controls, then compare raw and rendered content.
+- Improve representative sampling and redirect provenance. No new customer report available this pass.
+- Historical HawkScan HTTP 402 blocker not retried, per instruction not to repeat documented access blockers. No DAST scan or security certification claimed.
 - No controller or schedule created.
 
 ## Cost
-External purchase cost THIS PASS: 0 cents.
+External purchases THIS PASS: 0 cents. No reservation or purchase added; EUR 50 cumulative mission cap preserved.

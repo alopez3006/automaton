@@ -20,6 +20,13 @@ test('cross-origin redirected markup cannot seed further pages',async()=>{
  const e=await collectEvidence('https://example.com/',{fetchPage:async url=>({url:'https://elsewhere.test/',status:200,headers:{'content-type':'text/html'},body:'<a href="/secret">',observedAt:'now'})});
  assert.ok(e.observations.every(o=>o.error));assert.equal(e.scope.selectedPages.length,0);
 });
+test('robots policy uses complete fetched rules and stable observation IDs',async()=>{
+ const e=await collectEvidence('https://example.com/',{fetchPage:async url=>({url,status:200,observedAt:'2026-10-13T13:00:00Z',headers:{'content-type':url.endsWith('.txt')?'text/plain':'text/html'},body:url.endsWith('.txt')?'#'+'x'.repeat(17000)+'\nUser-agent: GPTBot\nDisallow: /\nUser-agent: OAI-SearchBot\nAllow: /':'<h1>Home</h1>'})});
+ assert.deepEqual(e.observations.map(o=>o.id),['E1','E2','E3']);
+ assert.equal(e.robotsPolicy.evidenceId,'E2');assert.equal(e.observations[1].bodyTruncated,true);
+ assert.equal(e.robotsPolicy.evaluations.find(o=>o.agent==='GPTBot').status,'disallowed_according_to_robots_txt');
+ assert.ok(e.observations.every(o=>o.method&&o.observedAt&&o.limitations.length));
+});
 test('public fetch rejects private literals and non-HTTPS before network',async()=>{
  for(const u of ['http://example.com','https://127.0.0.1','https://[::1]','https://user:pass@example.com','https://example.com:444'])await assert.rejects(publicFetch(u));
  for(const ip of ['127.0.0.1','10.0.0.1','169.254.169.254','::1','fc00::1'])assert.equal(publicAddress(ip),false);

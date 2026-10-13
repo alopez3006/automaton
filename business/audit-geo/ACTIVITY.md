@@ -55,3 +55,22 @@ Optional bounded mobile diagnostics implemented; 8 tests pass, live PageSpeed HT
 Heartbeat existant ACTIVE toutes les 20 minutes ; plafond de contrôleur porté de 6 à 72 passes par jour de Zurich pour permettre cette cadence. Timeout de 20 minutes, exclusion des doublons, pause, backoff et budget TOTAL de 50 € conservés. Compteurs non remis à zéro. 29 tests ciblés et compilation passent. Le message du propriétaire sur sa carte virtuelle limitée à 50 € a été acquitté par Automaton ; aucune donnée bancaire publiée ni mémorisée par ce suivi. Aucun achat effectué.
 
 - 2026-10-13T13:03:11.942841+00:00: Free isolated Lighthouse 12.8.2 mobile baseline obtained for owned domain (97 performance / 100 accessibility / 93 best practices / 100 SEO). Bounded summary saved; CSP inline block, 404 and responsive image flagged for source investigation. Queue prepared 0; attempts 3 preserved; no deployment or purchases.
+
+
+## 2026-10-13 13:27 UTC — public evidence engine review
+
+- Owner proposal reviewed against code and primary Google/OpenAI/Anthropic sources; current-state matrix saved in EVIDENCE-ENGINE-PLAN.md.
+- Added bounded per-URL robots evaluation for five search/training agents, matching rule provenance, conservative unknown outcomes and stable observation IDs/methods/limits. Updated inference wording.
+- 13 tests pass; syntax and diff checks pass. Owned-domain homepage/discovered resources HTTP 200; robots and sitemap HTTP 404, policy correctly unknown.
+- One operator pass: zero prepared, cumulative attempts 3, no payment requested. Counters preserved; no customer data written to this journal.
+- Missing: safe browser integration, deterministic citation validation, representative sampling and desktop lab diagnostics. Sales unchanged. Historical HawkScan HTTP 402 blocker not retried.
+- External purchase cost this pass: 0 cents. No new controller or schedule.
+
+## 2026-10-13 13:33 UTC — source-reference gate
+- Added strict structured task ID/URL/date/field/excerpt validation to generation and prepared-draft payment paths; legacy and invented references fail closed. Independent usefulness/source-support review required, model approvals discarded.
+- 19 tests passed; final six validator tests, syntax and diff checks passed. Queue prepared 0, cumulative attempts 3; sales unchanged.
+- Hosted memory recalled and durable workflow persisted; console checkpoints empty and outcome sent. Browser rendering and useful-report review remain next gates.
+- Historical HawkScan HTTP 402 blocker not retried. No public deployment, controller, schedule or purchase; this pass cost 0 cents.
+
+## 2026-10-13T13:41:32.468Z — Revue du superviseur
+Collecte robots et contrat de recommandations vérifiés indépendamment : 20 tests passent. Correction générique du contrôle de citation : E10 ou un identifiant incorporé ne satisfait plus une référence E1. Références exactes, revue de pertinence et validation des paiements restent obligatoires. Aucun achat ni ouverture des ventes. Prochaine passe confiée au contrôleur existant.

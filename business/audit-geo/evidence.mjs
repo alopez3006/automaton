@@ -1,6 +1,7 @@
 import https from 'node:https';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
+import { evaluateRobots } from './robots.mjs';
 
 export function publicAddress(address) {
   if(isIP(address)===4){const [a,b]=address.split('.').map(Number);return !(a===0||a===10||a===127||a>=224||a===169&&b===254||a===172&&b>=16&&b<=31||a===192&&(b===168||b===0||b===2)||a===198&&(b===18||b===19||b===51)||a===203&&b===0||a===100&&b>=64&&b<=127);}
@@ -108,7 +109,11 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
   const candidates=[...internalCandidates(homepage?.status===200?homepage.body:'',homepage?.url??url.href),...internalCandidates(sitemap?.status===200?sitemap.body:'',url.href,{sitemap:true})];
   const selected=[...new Set(candidates)].filter(u=>!resources.includes(u)&&u!==homepage?.url).slice(0,4);
   for(const target of selected)observations.push(await observe(target,'page'));
+  observations.forEach((o,i)=>{o.id=`E${i+1}`;o.method='Public HTTPS GET; raw response, no JavaScript execution';o.limitations??=['Single dated response; actual crawler behavior is unmeasured'];});
+  const robots=raw.get(resources[1]);
+  const robotsPolicy=evaluateRobots(robots,observations.filter(o=>o.kind==='page'&&!o.error).map(o=>o.url));
+  robotsPolicy.evidenceId=observations[1].id;
   let performance={status:'not_requested'};
   if(pagespeed)performance=await collectPageSpeed(url.href);
-  return {website,observations,performance,scope:{maxAdditionalPages:4,selectedPages:selected,selection:'First unique same-origin HTML links, then sitemap URLs; no query strings',limitations:['Bounded sample, not a complete crawl','Sitemap indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
+  return {website,observations,robotsPolicy,performance,scope:{maxAdditionalPages:4,selectedPages:selected,selection:'First unique same-origin HTML links, then sitemap URLs; no query strings',limitations:['Bounded sample, not a complete crawl','Sitemap indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
 }

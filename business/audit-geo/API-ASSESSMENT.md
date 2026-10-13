@@ -41,3 +41,8 @@ Validation attendue : JSON-LD présent/absent/invalide, contenu tronqué, site r
 - [Google, fonctionnalités IA et fondations SEO](https://developers.google.com/search/docs/appearance/ai-features).
 
 Stripe Directory tenté avec le CLI scoped : plugin indisponible ; page de secours stripe.directory inaccessible via le lecteur web. Comparaison poursuivie sur les sources primaires, sans engagement de fournisseur. Broker mémoire hébergé interrogé avec succès après résolution du blocage réseau du sandbox. Aucun secret lu ou affiché.
+
+
+## Actualisation — 13 octobre, 13:27 UTC
+
+Les descriptions du code ci-dessus correspondent à la recherche initiale. JSON-LD et échantillon de quatre pages supplémentaires ont depuis été intégrés, puis diagnostics Lighthouse mobiles. Cette passe ajoute les IDs/méthodes/limites des observations et une politique robots par URL et usage. Le bilan actuel et les écarts non implémentés sont dans `EVIDENCE-ENGINE-PLAN.md`. Aucun fournisseur payant supplémentaire requis ; Codex OAuth existe déjà.
