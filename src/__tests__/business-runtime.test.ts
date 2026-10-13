@@ -4,6 +4,7 @@ import{join}from'node:path';import{tmpdir}from'node:os';
 import{businessEnvironment,redactBusinessOutput,validateBusinessReceipt,runBusiness}from'../business/runtime.js';
 import {createDatabase} from '../state/database.js';
 import {appendConsoleMessage} from '../business/console-state.js';
+import {legacyPolicy} from '../business/policy.js';
 const receipt={status:'waiting_for_user',summary:['Domain quote prepared'],evidence:['Public Site verified'],blockers:['Owner approval'],nextActions:['Review quote'],externalSpendCents:0};
 describe('Automaton local business mode',()=>{
  it('keeps OAuth configuration but excludes API credentials from the executor environment',()=>{
@@ -68,5 +69,23 @@ describe('Automaton local business mode',()=>{
    await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('connection failed');
    const status=await readFile(join(dir,'.automaton-business/status.json'),'utf8');expect(JSON.parse(status).error).toBe('Business executor connection failed');expect(status).not.toContain('private diagnostic');expect(status).not.toContain('rk_live_fixture');
   }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('continues an authorized standing mission without a new owner message, then enforces its daily limit',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-standing-mission-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Operate the offer');
+   await writeFile(join(dir,'business/audit-geo/mission.json'),JSON.stringify({...legacyPolicy,enabled:true,externalBudgetCents:5000,passesPerDay:1}));
+   let db=createDatabase(join(dir,'.automaton-business/state.db'));db.setKV('business_runs','6');db.close();
+   const executable=join(dir,'executor.mjs');await writeFile(executable,`#!/usr/bin/env node\nimport fs from 'node:fs';\nfs.writeFileSync(process.argv[process.argv.indexOf('-o')+1],JSON.stringify(${JSON.stringify({...receipt,status:'continue',blockers:[]})}));\nprocess.stdin.resume();\n`,{mode:0o700});
+   await runBusiness({workspace:dir,executable,context:'Fixture'});
+   db=createDatabase(join(dir,'.automaton-business/state.db'));expect(db.getKV('business_runs')).toBe('7');expect(JSON.parse(db.getKV('business_mission_passes')!)).toHaveLength(1);db.close();
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('Daily mission pass limit');
+   await writeFile(join(dir,'business/audit-geo/mission.json'),JSON.stringify({...legacyPolicy,enabled:false,externalBudgetCents:5000}));
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('new owner request');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('validates the per-pass remaining budget under the new fifty-euro mission ceiling',()=>{
+   expect(validateBusinessReceipt(JSON.stringify({...receipt,externalSpendCents:3000}),5000).externalSpendCents).toBe(3000);
+   expect(()=>validateBusinessReceipt(JSON.stringify({...receipt,externalSpendCents:501}),500)).toThrow('Invalid');
  });
 });

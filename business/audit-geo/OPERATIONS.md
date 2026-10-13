@@ -1,5 +1,8 @@
 # Pilot operations
 
+## Current standing authority
+On 13 October the owner assigned the ongoing mission to operate and perfect the audit offer with a €50 TOTAL purchase budget. MISSION.md and mission.json supersede historical setup limits below. The runtime now permits independent 20-minute passes, six per Zurich day, with failure backoff. The incoming watcher operates continuously while enabled, with ten audit inference attempts per Zurich day and cumulative counters retained. Hourly thread-heartbeat supervision owns continuation and watcher recovery; current native schedule metadata is in autonomy-schedule.json after creation. Purchases require budget reservations and actual receipts. No general purchase-payment method is configured; this ceiling is not wallet funding. Existing EUR 9 offer and customer payment gates remain. Sales readiness is decided from actual report usefulness and delivery capacity under the new authority.
+
 Public page: https://audit.vutler.com (the original free hostname remains available).
 Current verified publication: version 9, source c3be733dad2dfcf31ecd991a2957676d3445f32d, deployment succeeded with runtime environment revision 6. See LAUNCH-STATUS.md for the reconciled result after the third controller's time limit. Earlier details below describe their dated steps and do not override this current status.
 
@@ -41,3 +44,8 @@ Latest owner authority is in HANDOFF.md / OWNER-ASSETS.md: nine already-owned do
 This action-mode access was independently proved with a read of the existing public Site and a read of the Vutler account label. The old plain-inference limitation does not imply that action mode lacks connected apps. Raw credential-file access is forbidden; additional memory retrieval/persistence uses the dedicated hosted memory broker. Per-run duration is capped at 20 minutes; this pilot permits at most three controller runs. This is an initial execution handoff, not an unbounded permanent process or a funded Conway wallet/survival loop.
 
 The current task and authority are in HANDOFF.md. Prefer the owned audit.vutler.com subdomain; exact pending DNS records are in DOMAIN-OPTIONS.md. Necessary one-off expenses are authorized within the existing €20 total cap, without subscriptions, add-ons or automatic renewal commitments. The free hostname remains active until DNS/TLS is verified. The Stripe CLI catalog currently has an authentication dependency distinct from the connected Stripe app; no legacy full-access key is reused to repair it.
+
+## Standing mission commands
+`node scripts/mission-cycle.mjs` maintains the watcher and starts an eligible action pass. `--watch-only` maintains it without a controller. `--restart-watcher` is for a diagnosed/fixed watcher failure, not blind retries. `--pause` / `--resume` changes future autonomous cycles. All detached launches must run from a normal terminal or a network-authorized tool execution. The actual thread heartbeat is ACTIVE and hourly; its ID is in autonomy-schedule.json.
+
+Money helper: `node business/audit-geo/budget.mjs status`, `reserve <EUR cents including fees> <purpose>`, `commit <id> <actual cents> <non-secret receipt reference>`, `release <id>`. It reserves and records money; it cannot pay a provider or fund a wallet. Payment access must be configured securely with the selected provider. The console shows the current cumulative spend and policy budget.

@@ -1,3 +1,30 @@
+# Reçu actuel — 13 octobre 2026, 11:39 UTC
+
+Le propriétaire a demandé de conserver EUR et un état du lancement. Réponse envoyée dans la console ; message ffb11141-46e9-4e62-9a69-09971304a990 acquitté. La question USD est résolue : offre 9 EUR, aucun affichage ni checkout USD.
+
+## Vérifications de ce passage
+
+- Sites get_site : projet existant actif, version 9, https://audit.vutler.com.
+- HTTPS curl sans désactivation TLS : HTTP 200.
+- Source locale : c3be733dad2dfcf31ecd991a2957676d3445f32d ; worktree Sites propre. Aucun changement public ni nouvelle publication nécessaire.
+- Ledger et agrégats des drafts : 3 tentatives sur 10, 2 brouillons, 0 éligible ; dépenses externes 0 EUR sur 20 EUR.
+- ps confirme watcher PID 34505 actif, démarré 12 octobre à 23:29:43 UTC, fenêtre initiale de 24 h conservée ; Mac éveillé requis. Aucun doublon ni nouveau contrôleur.
+- Console disponible via inbox/say/ack. Mémoire EUR persistée via broker hébergé, ID cmv6lzem400bkt0n3uccfi5gx. Aucun secret lu directement, aucune donnée client publiée.
+
+## Preuves antérieures conservées
+
+LAUNCH-STATUS.md documente le redesign commercial avec photo, le rapport enrichi publié en version 9, DNS/TLS, le paiement et la livraison synthétiques en sandbox et la désactivation des ressources de test. Ces tests sandbox ne sont pas un achat réel ; ils n’ont pas été répétés dans ce passage. Dernier état vérifié des gates : PAYMENTS_ENABLED=false et lien live inactif. Aucun changement de paiement effectué ici. Aucun scan DAST : blocage HTTP 402 antérieur.
+
+## Suite et fichiers
+
+Les ventes restent fermées. Obtenir puis revoir un rapport réellement utile et confirmer la capacité avant ouverture sous les gates existants. Aucun besoin d’un nouveau domaine ou abonnement. Aucun nouveau travail de design demandé ou effectué.
+
+Fichiers modifiés : LAUNCH-STATUS.md (décision EUR), ACTIVITY.md (checkpoint), HANDOFF-RESULT.md (ce reçu). Les compteurs et l’état du contrôleur sont préservés.
+
+---
+
+## Reçu historique de la deuxième passe
+
 # Reçu Automaton — deuxième passage, 13 octobre 2026
 
 > Ce reçu historique décrit la deuxième passe. L’état final réconcilié après la troisième passe est dans **LAUNCH-STATUS.md** : domaine et HTTPS actifs, sandbox MCP connecté, version 8 avec photo publiée, test sandbox enregistré et ressources de test désactivées. Le contrôleur a atteint sa limite de 20 minutes ; le superviseur a vérifié sa publication terminée ensuite.
@@ -69,3 +96,6 @@ Les modifications préexistantes du dépôt Automaton (runtime, console, package
 2. Connecter un **sandbox Stripe isolé** via le plugin, sans coller de clé en console/chat ; question console toujours ouverte. Préparer fixtures et secret propres à ce sandbox, valider événement signé → stockage → téléchargement, doublons et événement asynchrone sans visite client. Ne pas réutiliser le secret live ni activer un bypass sandbox en production.
 3. Obtenir/revoir un rapport réel avec une à trois tâches utiles et confirmer la capacité ; seulement après preuves, activer le lien existant et PAYMENTS_ENABLED puis appliquer la révision Sites. Aucune ouverture autorisée par un simple timeout ou réponse absente.
 4. Réutiliser le watcher borné pendant sa fenêtre ; ne pas prolonger indéfiniment ce controller. Les dépendances owner et la preuve payée restent explicitement en attente.
+
+## 2026-10-13T11:43:12.868708+00:00 — Reçu de recherche API
+Demande console 89af5b78-c48e-45d2-971d-14310966d3ba traitée. Livrable : API-ASSESSMENT.md ; ACTIVITY.md complété. Code evidence.mjs/operator.mjs lu, sans modification. README public-apis et sources Google/serpstack consultés. PageSpeed sans clé sur https://audit.vutler.com : HTTP 429 RESOURCE_EXHAUSTED, aucune mesure obtenue. Directory CLI : plugin indisponible ; secours web inaccessible ; sources primaires utilisées. Mémoire hébergée consultée via broker sécurisé. Recommandation : collecte locale bornée et conservation JSON-LD, puis diagnostics Lighthouse ; Search Console ultérieure avec consentement client. Aucune API payante nécessaire ni intégration faite. Aucun achat (0 € cette passe), aucun nouveau contrôleur, aucun changement des ventes, du site ou du watcher. Pas de vérification supplémentaire de disponibilité live ni de livraison dans cette passe de recherche.

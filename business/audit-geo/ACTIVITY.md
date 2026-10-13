@@ -35,3 +35,12 @@ Objectif : domaine final et preuve sandbox. Sites confirme domaine/provider/SSL 
 
 ## 2026-10-13T08:45:17.266Z — Suivi par le superviseur
 Version 9 publiée avec succès, source c3be733dad2dfcf31ecd991a2957676d3445f32d. Exemple enrichi et prompt copiable identique au téléchargement, vérifiés sur audit.vutler.com. Génération des vrais rapports alignée sur cette structure sans forcer de tâches. Quatrième passe échouée au démarrage ; état conservé, aucun retry automatique. Contrôle OAuth sans action réussi ; console redémarrée. Trois passes initiales puis une passe bornée par nouvelle demande humaine, compteurs conservés ; 20 tests ciblés et compilation passent. Question USD en attente ; ventes fermées, 0 € dépensé.
+
+## 2026-10-13 11:39 UTC — réponse EUR et état vérifié
+Objectif : répondre au propriétaire sans répéter les travaux terminés. Offre 9 EUR conservée, question USD résolue. Sites confirme version 9 active ; HTTPS répond 200 ; source locale c3be733dad2dfcf31ecd991a2957676d3445f32d propre. Watcher PID 34505 confirmé par ps, fenêtre initiale conservée. Agrégats locaux : 2 brouillons, 0 éligible, 3/10 tentatives, 0/20 EUR dépensé. Console répondue et message acquitté. Décision EUR persistée via broker hébergé. Prochaine étape : rapport utile revu et capacité avant ouverture ; ventes fermées. Aucun nouveau contrôleur ni achat.
+
+### 2026-10-13T11:43:12.868708+00:00 — Recherche API demandée par le propriétaire
+Objectif : identifier des preuves supplémentaires utiles au rapport à 9 €. Liste public-apis et documentation primaire consultées ; collecte actuelle examinée. Décision proposée : extraction locale plus complète puis diagnostics PageSpeed/Lighthouse. Test PageSpeed sans clé : HTTP 429, aucune mesure. Recherche écrite dans API-ASSESSMENT.md. Aucune intégration ni dépense ; ventes et compteurs inchangés. Prochaine étape : implémenter et valider la collecte enrichie dans une demande de travail distincte.
+
+## 2026-10-13T12:09:54.271Z — Nouvelle mission et budget
+Le propriétaire confie la mission permanente de faire fonctionner et perfectionner l’offre, avec autonomie et 50 € au total. Politique exécutable et mémoire durable en cours de mise à jour ; compteurs conservés, réservations avant achat et reçus réels. Six passes bornées et dix tentatives d’audit par jour de Zurich. Le budget ne fournit pas de moyen de paiement ; aucun achat ni carte ajouté. Tests mission/budget/runtime/console : 27 passent, compilation réussie. Scan StackHawk toujours indisponible : HTTP 402.

@@ -1,5 +1,5 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
-import { readFile, open, readdir } from "node:fs/promises";
+import { readFile, open } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { randomBytes, timingSafeEqual } from "node:crypto";
@@ -7,6 +7,8 @@ import { spawn } from "node:child_process";
 import Database from "better-sqlite3";
 import { appendConsoleMessage, listConsoleMessages, claimedOwnerRequests } from "./console-state.js";
 import { businessEnvironment, redactBusinessOutput } from "./runtime.js";
+import { loadBusinessPolicy, missionPasses, missionCapacity, auditCapacity } from "./policy.js";
+import { businessBudget } from "./budget.js";
 
 const LIMIT = 16_384;
 async function optionalJson(file: string) { try { return JSON.parse(await readFile(file, "utf8")); } catch (e: any) { if (e.code === "ENOENT") return null; throw e; } }
@@ -18,34 +20,30 @@ async function tail(file: string, bytes = 40_000) {
 }
 function alive(pid: unknown) { if (!Number.isSafeInteger(pid) || (pid as number) <= 0) return false; try { process.kill(pid as number, 0); return true; } catch { return false; } }
 function runControl(workspace: string) {
-  if (!existsSync(join(workspace, ".automaton-business/state.db"))) return { runs: 0, claimed: [] as string[] };
+  if (!existsSync(join(workspace, ".automaton-business/state.db"))) return { runs: 0, claimed: [] as string[], history: [] };
   let db;
-  try { db = new Database(join(workspace, ".automaton-business/state.db"), { readonly: true, fileMustExist: true }); const get = (key: string) => (db!.prepare("SELECT value FROM kv WHERE key = ?").get(key) as any)?.value; return { runs: Number(get("business_runs") ?? 0), claimed: claimedOwnerRequests(get("business_owner_requests")) }; }
-  catch (e: any) { if (e.code === "SQLITE_CANTOPEN") return { runs: 0, claimed: [] as string[] }; throw e; }
+  try { db = new Database(join(workspace, ".automaton-business/state.db"), { readonly: true, fileMustExist: true }); const get = (key: string) => (db!.prepare("SELECT value FROM kv WHERE key = ?").get(key) as any)?.value; return { runs: Number(get("business_runs") ?? 0), claimed: claimedOwnerRequests(get("business_owner_requests")), history: missionPasses(get("business_mission_passes")) }; }
+  catch (e: any) { if (e.code === "SQLITE_CANTOPEN") return { runs: 0, claimed: [] as string[], history: [] }; throw e; }
   finally { db?.close(); }
 }
-async function receiptSpend(workspace: string) {
-  const root = join(workspace, ".automaton-business");
-  let names: string[];
-  try { names = await readdir(root); } catch (e: any) { if (e.code === "ENOENT") return 0; throw e; }
-  const receipts = await Promise.all(names.filter(n => /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}\.json$/i.test(n)).map(n => optionalJson(join(root, n))));
-  return receipts.reduce((sum, r) => sum + (Number.isSafeInteger(r?.externalSpendCents) && r.externalSpendCents >= 0 ? r.externalSpendCents : 0), 0);
-}
 export async function consoleSnapshot(workspace: string) {
-  const [status, lock, watcher, ledger, activity, messages, spent, publication] = await Promise.all([
+  const [status, lock, watcher, ledger, activity, messages, budget, publication, policy] = await Promise.all([
     optionalJson(join(workspace, ".automaton-business/status.json")), optionalJson(join(workspace, ".automaton-business/run.lock")),
     optionalJson(join(workspace, "business/audit-geo/.reports/watch-process.json")), optionalJson(join(workspace, "business/audit-geo/.reports/ledger.json")),
-    tail(join(workspace, "business/audit-geo/ACTIVITY.md")), listConsoleMessages(workspace), receiptSpend(workspace), optionalJson(join(workspace, "business/audit-geo/publication.json")),
+    tail(join(workspace, "business/audit-geo/ACTIVITY.md")), listConsoleMessages(workspace), businessBudget(workspace), optionalJson(join(workspace, "business/audit-geo/publication.json")), loadBusinessPolicy(workspace),
   ]);
   const answered = new Set(messages.filter(m => m.kind === "answer").map(m => m.questionId));
   const running = alive(lock?.pid);
   const control = runControl(workspace);
   const freshOwnerRequest = messages.some(m => m.role === "owner" && !m.acknowledged && !control.claimed.includes(m.id));
+  const capacity = missionCapacity(policy, control.history), audits = auditCapacity(ledger, policy);
   let publicSite = "https://audit-geo-pilote.alopez-nevicom.chatgpt.site";
   if (typeof publication?.publicUrl === "string") { try { const url = new URL(publication.publicUrl); if (url.protocol === "https:" && !url.username && !url.password) publicSite = url.href; } catch { /* Preserve the verified fallback if metadata is malformed. */ } }
   return { updatedAt: new Date().toISOString(), status: status ?? { state: "not_started" }, running, staleLock: Boolean(lock && !running),
-    runs: control.runs, maxRuns: 3, canStart: control.runs < 3 || freshOwnerRequest, watcher: { running: alive(watcher?.pid), startedAt: watcher?.startedAt, maxHours: watcher?.maxHours ?? 24 },
-    audit: { attempts: ledger?.attempts ?? 0, maxAttempts: 10, externalSpendCents: Math.max(ledger?.externalSpendCents ?? 0, spent), budgetCents: 2000 },
+    runs: control.runs, maxRuns: 3, canStart: policy.enabled ? capacity.allowed || freshOwnerRequest && capacity.usedToday < policy.passesPerDay : control.runs < 3 || freshOwnerRequest,
+    mission: { enabled: policy.enabled, objective: policy.objective, passesPerDay: policy.passesPerDay, ...capacity },
+    watcher: { running: alive(watcher?.pid), startedAt: watcher?.startedAt, maxHours: watcher?.mode === "mission" ? null : watcher?.maxHours ?? 24 },
+    audit: { attempts: audits.attempts, todayAttempts: audits.today, maxAttempts: policy.auditAttemptsPerDay, externalSpendCents: budget.usedCents, reservedCents: budget.reservedCents, remainingCents: budget.availableCents, budgetCents: budget.budgetCents },
     activity, messages: messages.slice(-250), questions: messages.filter(m => m.kind === "question" && !answered.has(m.id)),
     queuedMessages: messages.filter(m => m.role === "owner" && !m.acknowledged).length,
     publicSite };
@@ -67,7 +65,7 @@ export function createConsoleServer(options: { workspace: string; launch?: () =>
       const state = await consoleSnapshot(workspace);
       if (state.running) return { alreadyRunning: true };
       if (state.staleLock) throw new Error("Verrou ancien détecté : vérifier le processus avant reprise.");
-      if (!state.canStart) throw new Error("Les passes initiales sont utilisées. Envoie une nouvelle demande pour lancer une passe de 20 minutes.");
+      if (!state.canStart) throw new Error(state.mission.enabled ? state.mission.reason ?? "La mission attend son prochain cycle." : "Les passes initiales sont utilisées. Envoie une nouvelle demande pour lancer une passe de 20 minutes.");
       if (options.launch) return await options.launch();
       return await new Promise((accept, reject) => {
         const child = spawn(process.execPath, [join(workspace, "scripts/start-business.mjs")], { cwd: workspace, env: businessEnvironment(process.env), stdio: ["ignore", "pipe", "pipe"] });
