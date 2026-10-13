@@ -1,0 +1,466 @@
+diff --git a/DESIGN.md b/DESIGN.md
+index 90223ce..e0de96c 100644
+--- a/DESIGN.md
++++ b/DESIGN.md
+@@ -1,9 +1,201 @@
+-# Commercial presentation — 13 October 2026
++---
++name: "Audit GEO"
++description: "Cream-paper editorial pages with forest-green actions."
++colors:
++  paper: "#f6f4ed"
++  ink: "#202c26"
++  muted: "#515d55"
++  green: "#245440"
++  tint: "#e6ebe1"
++  rule: "#ccd1c5"
++  white: "#fffef9"
++  error: "#8c2626"
++  nav-hover: "#234537"
++typography:
++  display:
++    fontFamily: "Fraunces, Georgia, serif"
++    fontSize: "clamp(42px, 5.1vw, 68px)"
++    fontWeight: 400
++    lineHeight: 1.08
++    letterSpacing: "-.025em"
++  headline:
++    fontFamily: "Fraunces, Georgia, serif"
++    fontSize: "clamp(30px, 4vw, 44px)"
++    fontWeight: 400
++    lineHeight: 1.16
++    letterSpacing: "-.025em"
++  guide-display:
++    fontFamily: "Fraunces, Georgia, serif"
++    fontSize: "clamp(40px, 5vw, 60px)"
++    fontWeight: 400
++    lineHeight: 1.08
++    letterSpacing: "-.025em"
++  guide-headline:
++    fontFamily: "Fraunces, Georgia, serif"
++    fontSize: "clamp(28px, 3.5vw, 36px)"
++    fontWeight: 400
++    lineHeight: 1.16
++    letterSpacing: "-.025em"
++  body:
++    fontFamily: "Arial, Helvetica, sans-serif"
++    fontSize: "16px"
++    lineHeight: 1.6
++  guide-body:
++    fontFamily: "Arial, Helvetica, sans-serif"
++    fontSize: "18px"
++    lineHeight: 1.75
++  label:
++    fontFamily: "Arial, Helvetica, sans-serif"
++    fontSize: "15px"
++    fontWeight: 600
++  small:
++    fontFamily: "Arial, Helvetica, sans-serif"
++    fontSize: "13px"
++rounded:
++  tag: "4px"
++  control: "8px"
++  surface: "12px"
++spacing:
++  mobile-gutter: "20px"
++  desktop-gutter: "32px"
++  section: "clamp(48px, 7vw, 88px)"
++  guide-block: "clamp(40px, 6vw, 72px)"
++components:
++  button-primary:
++    backgroundColor: "{colors.green}"
++    textColor: "{colors.white}"
++    rounded: "{rounded.control}"
++    padding: "12px 23px"
++  button-primary-hover:
++    backgroundColor: "{colors.ink}"
++  input:
++    backgroundColor: "{colors.white}"
++    textColor: "{colors.ink}"
++    rounded: "{rounded.control}"
++    padding: "10px 12px"
++    height: "52px"
++  report:
++    backgroundColor: "{colors.white}"
++    rounded: "{rounded.surface}"
++    padding: "clamp(24px, 3vw, 38px)"
++  tag:
++    backgroundColor: "{colors.tint}"
++    textColor: "{colors.green}"
++    rounded: "{rounded.tag}"
++    padding: "3px 8px"
++---
+ 
+-Owner-requested commercial redesign within the paper/forest identity: photo-led asymmetric hero, explicit €9 offer stamp, strong request action, three-step purchase journey and readable report preview. Embedded Fraunces and native sans body retained. No framework or dependency added. All copy English; eligibility, no-subscription and measurement boundaries remain visible.
++# Design System: Audit GEO
+ 
+-UI/UX Pro Max design-system and html-tailwind searches completed. Apply responsive imagery, fixed aspect ratio, clear CTA and focus. Reject generated recommendations for testimonials, invented conversion statistics and personalization: the pilot has no evidence for them. Impeccable bolder/craft guidance used for deliberate amplification of the existing identity.
++## Overview
+ 
+-Image: solidpixels, Unsplash photo iq2RzBMj-Wg, published 2021-11-21. https://unsplash.com/photos/a-laptop-computer-sitting-on-top-of-a-wooden-table-iq2RzBMj-Wg . Free commercial-use license checked: https://unsplash.com/license . Illustrative studio photograph, no customer endorsement. Two embedded JPEG sizes (700 and 1400 px) served same-origin, no runtime external image request. Alt text and dimensions prevent layout shifts; no animation.
++**Creative North Star: "Cream paper and forest"**
+ 
+-Controls keep explicit labels, 52px fields, visible focus and required validation. Mobile stacks hero, report and form; request logic and live payment gate unchanged.
++The implemented identity pairs cream paper, dark ink and forest-green actions with embedded Fraunces headings and a native Arial body. Pages use readable editorial spacing, quiet rules and restrained rounded surfaces. All public copy remains English.
++
++The established commercial landing keeps its photo-led asymmetric hero, explicit €9 offer stamp, strong request action, three-step purchase journey and readable report preview. The guide at `/seo-geo-audit` extends this identity as a single-column reading page, reusing the existing header, footer and actions. No framework or dependency was added.
++
++**Key Characteristics:**
++
++- Cream-paper background, forest-green actions and dark-ink text.
++- Fraunces headings paired with native Arial body text.
++- Shared responsive navigation and visible keyboard focus.
++- A commercial landing and a quieter guide using the same visual system.
++
++## Colors
++
++The frontmatter records the implemented CSS palette. The roles below refer to those same source values. The header request action and offer stamp use literal white text. No additional palette or tonal ramp is introduced for the guide.
++
++### Primary
++
++- **Forest Green** (#245440): actions and keyboard focus.
++- **Deep Forest Hover** (#234537): header request-action hover fill.
++
++### Neutral
++
++- **Cream Paper** (#f6f4ed): page background.
++- **Dark Ink** (#202c26): body text and primary-button hover fill.
++- **Muted Ink** (#515d55): supporting copy and helper text.
++- **Pale Botanical Tint** (#e6ebe1): tags, prompt and status blocks.
++- **Paper Rule** (#ccd1c5): borders and dividers.
++- **Warm White** (#fffef9): form/report surfaces and primary-button text.
++- **Error Red** (#8c2626): error text.
++
++## Typography
++
++**Display Font:** Fraunces (with Georgia, serif)
++
++**Body Font:** Arial (with Helvetica, sans-serif)
++
++**Character:** Embedded Fraunces supplies the editorial heading voice; native sans-serif keeps explanations and controls direct. The shared font uses `font-display: swap`, and headings use balanced wrapping.
++
++### Hierarchy
++
++- **Display** (400, 42–68px, line-height 1.08): the landing hero retains its fluid heading and short line length.
++- **Headline** (400, 30–44px, line-height 1.16): shared landing section headings.
++- **Guide Display** (400, 40–60px, line-height 1.08): fluid guide heading capped at (21ch).
++- **Guide Headline** (400, 28–36px, line-height 1.16): guide sections capped at (28ch), with (52px) above and (16px) below.
++- **Body** (16px, line-height 1.6): default interface copy; shared paragraphs are capped at (68ch).
++- **Guide Body** (18px, line-height 1.75): article paragraphs and ordered lists capped at (70ch).
++- **Label** (600, 15px): explicit form-field labels.
++- **Small** (13px): metadata, helper text and scope boundaries.
++
++The report filename bar and prompt use native monospace text, at (12px) and (13px) respectively.
++
++## Layout
++
++The shared header, main and footer are centered within (1200px), with desktop gutters of (32px). At (800px) and below, gutters become (20px), landing grids and the journey stack, the sticky example introduction becomes static and the footer stacks. At (480px) and below, the header wraps, navigation fills its own row and action-group primary buttons fill the available width.
++
++The landing retains its asymmetric two-column hero, responsive studio photograph and three-step journey. The guide uses a main shell capped at (900px), fluid block padding (40–72px), one article and body text capped at (70ch). Its real ordered questions retain native numbering, list padding of (24px), item padding of (6px) and vertical item margins of (18px). Final actions have (32px) above them.
++
++The guide shares the existing responsive header. Navigation links lead to `/seo-geo-audit`, `/#example` and `/#request`; the guide's final actions lead to `/#request` and the explicitly labelled fictional report at `/example.md`.
++
++## Elevation & Depth
++
++Paper color, warm-white containers and thin rules supply most depth. The report preview is flat: its final CSS override removes the earlier shadow. The form retains its implemented subtle shadow. The guide adds no shadows or raised cards.
++
++- **Form** (`box-shadow: 0 12px 36px #202c260a`): subtle separation beneath the existing request form.
++
++## Shapes
++
++Controls and prompt blocks use the control radius; report, form, studio photograph and offer stamp use the surface radius. The illustrative tag uses the smaller tag radius. Straight thin rules separate content; guide copy sits directly on the paper background.
++
++## Components
++
++### Buttons and links
++
++Filled forest-green buttons use warm-white text, semibold type and a minimum height of (48px). The landing hero adds padding of (16px 24px). Hover changes the primary fill to dark ink. Text actions remain underlined, with a minimum height of (44px). Source links retain descriptive labels and an underline offset of (4px). Background/color transitions last (.18s) with `ease`; reduced-motion preferences disable transitions. Disabled buttons use a wait cursor and opacity (.6).
++
++### Report and form
++
++The report keeps its filename bar, illustrative-example tag, separated findings and tinted monospace prompt. Required URL/email fields use explicit labels, helper text, a consent checkbox and a full-width submit action. Fields are (52px) high; hover darkens their rule border to muted ink. Status has a live region. Keyboard focus uses a forest-green outline (3px) with an offset of (5px), shared with links, buttons and disclosure summaries.
++
++### Navigation
++
++The shared header pairs a bold Audit GEO wordmark with underlined links and a filled request action. The supporting brand phrase disappears at the smaller breakpoint; the narrowest breakpoint gives navigation its own row. The skip link becomes visible on focus and targets main content.
++
++### Guide article
++
++One H1, publication metadata, descriptive H2s, ordinary paragraphs and four numbered questions form the article. Source links name the Google and OpenAI documentation. The hypothetical crawler-block example stays explicitly hypothetical. The closing eligibility-check action, labelled fictional report and privacy/scope link keep their established destinations. No imagery or motion is added to the guide.
++
++### Landing photograph
++
++Preserve the existing illustrative studio photograph, aspect ratio (14/11), alt text and explicit dimensions. Two embedded JPEG sizes (700px and 1400px) are served same-origin. Existing attribution: solidpixels, Unsplash photo `iq2RzBMj-Wg`, published 21 November 2021; [photo](https://unsplash.com/photos/a-laptop-computer-sitting-on-top-of-a-wooden-table-iq2RzBMj-Wg) and [license](https://unsplash.com/license). It illustrates a studio, with no customer endorsement or animation.
++
++## Do's and Don'ts
++
++### Do:
++
++- Do preserve the cream-paper/forest identity, Fraunces headings and native Arial body.
++- Do keep the shared responsive header and visible focus treatments on the guide.
++- Do use the implemented guide shell, line lengths, heading sizes and native numbered questions.
++- Do label source links descriptively and identify fictional examples explicitly.
++- Do keep English copy, the €9 one-off offer, eligibility and payment boundaries visible.
++
++### Don't:
++
++- Don't add a separate guide identity, imagery or motion to this reading-page extension.
++- Don't fabricate testimonials, conversion statistics, customer results or ranking promises.
++- Don't equate crawler eligibility with measured search position or consumer AI visibility.
++- Don't imply that submitting a request charges the visitor or bypasses eligibility and delivery-capacity review.
++- Don't promise email notifications or an included managed weekly service from the current public page.
+diff --git a/scripts/test-discovery.mjs b/scripts/test-discovery.mjs
+index fb9a130..14d5f2e 100644
+--- a/scripts/test-discovery.mjs
++++ b/scripts/test-discovery.mjs
+@@ -1,18 +1,27 @@
+ import assert from 'node:assert/strict';
+ import worker from '../worker/index.js';
+ const get=path=>worker.fetch(new Request('https://untrusted-host.example'+path),{});
+-for(const path of ['/','/privacy']){
++for(const path of ['/','/privacy','/seo-geo-audit']){
+  const r=await get(path),body=await r.text();
+  assert.equal(r.status,200);
+  assert.equal(r.headers.get('X-Robots-Tag'),'index, follow');
+  assert.ok(body.includes(`href="https://audit.vutler.com${path}"`));
+  assert.ok(!body.includes('untrusted-host.example'));
++ assert.match(body, /href="\/seo-geo-audit">Audit guide<\/a>/);
++ if(path==='/seo-geo-audit'){
++  assert.equal([...body.matchAll(/<h1>/g)].length,1);
++  assert.match(body,/What can an SEO\/GEO audit actually prove\?/);
++  assert.match(body,/https:\/\/developers\.google\.com\/search\/docs\/appearance\/ai-features/);
++  assert.match(body,/https:\/\/developers\.openai\.com\/api\/docs\/bots/);
++  assert.match(body,/href="\/#request">Request an eligibility check/);
++  assert.match(body,/email notifications are not currently promised/);
++ }
+ }
+ const robots=await get('/robots.txt');assert.equal(robots.status,200);
+ assert.match(await robots.text(),/Disallow: \/request\/\nDisallow: \/api\//);
+ const sitemap=await get('/sitemap.xml'),xml=await sitemap.text();
+ assert.equal(sitemap.status,200);assert.match(sitemap.headers.get('Content-Type'),/application\/xml/);
+-assert.deepEqual([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(x=>x[1]),['https://audit.vutler.com/','https://audit.vutler.com/privacy']);
++assert.deepEqual([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(x=>x[1]),['https://audit.vutler.com/','https://audit.vutler.com/privacy','https://audit.vutler.com/seo-geo-audit']);
+ for(const path of ['/request/'+'a'.repeat(64),'/api/operator/requests','/example.md']){
+  const r=await get(path);assert.equal(r.headers.get('X-Robots-Tag'),'noindex, nofollow');
+ }
+diff --git a/worker/index.js b/worker/index.js
+index 4e304e0..029660e 100644
+--- a/worker/index.js
++++ b/worker/index.js
+@@ -113,9 +113,17 @@ section[id]{scroll-margin-top:24px}summary{min-height:48px}footer a{min-height:4
+ @media(max-width:800px){header,main,footer{padding-inline:20px}header{align-items:flex-start}nav{gap:14px}.brand span{display:none}.hero,.split{grid-template-columns:1fr;gap:34px}.hero{padding-block:48px}h1{max-width:14ch}.report{margin-top:0}.section{padding-block:40px}.form{padding:22px}footer{flex-direction:column;gap:8px}}/* Owner-requested commercial presentation, same product and brand. */
+ .eyebrow{font:600 12px/1.5 Arial,sans-serif;letter-spacing:.1em;color:var(--green);margin:0 0 24px}.hero h1{max-width:15ch;font-size:clamp(42px,5.1vw,68px)}.hero-visual{margin:0;position:relative;align-self:stretch;display:flex;flex-direction:column;justify-content:center}.hero-visual img{display:block;width:100%;height:auto;aspect-ratio:14/11;object-fit:cover;border-radius:12px}.hero-visual figcaption{padding:18px 0 0;display:grid;gap:6px;font-size:14px}.hero-visual figcaption span{color:var(--muted)}.offer-stamp{position:absolute;right:20px;top:20px;background:var(--green);color:white;padding:18px 22px;display:flex;gap:14px;align-items:center;border-radius:12px}.offer-stamp strong{font:600 40px/1 Fraunces,Georgia,serif}.offer-stamp span{font-size:12px;line-height:1.5}.journey{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;padding:32px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}.journey span{color:var(--green);font:600 13px/1 Arial;display:block;margin-bottom:16px}.journey strong{font-size:17px}.journey p{font-size:14px;color:var(--muted);margin-bottom:0}.report{box-shadow:none;background:var(--white);margin-bottom:28px}.hero .button{padding:16px 24px}nav a:last-child{background:var(--green);color:white;padding:12px 18px;border-radius:8px;text-decoration:none}nav a:last-child:hover{background:#234537}.price{font:600 64px/1 Fraunces,Georgia,serif}.price span{font:400 15px/1.5 Arial,sans-serif}#example>div:first-child{position:sticky;top:32px;align-self:start}button,a{cursor:pointer}
+ @media(max-width:800px){.journey{grid-template-columns:1fr;gap:24px}.journey div{display:grid;grid-template-columns:30px 1fr;column-gap:12px}.journey span{grid-row:span 2;margin-top:4px}.journey p{margin-top:6px}.hero-visual{margin-top:8px}#example>div:first-child{position:static}.hero h1{max-width:16ch}.offer-stamp{right:16px;top:16px;padding:14px 16px}.offer-stamp strong{font-size:32px}}
++/* The practical guide extends the existing editorial system. */
++.guide{max-width:900px;padding-block:clamp(40px,6vw,72px);font-size:18px;line-height:1.75}
++.guide h1{max-width:21ch;font-size:clamp(40px,5vw,60px)}
++.guide h2{font-size:clamp(28px,3.5vw,36px);margin:52px 0 16px;max-width:28ch}
++.guide p,.guide ol{max-width:70ch;overflow-wrap:break-word}
++.guide ol{padding-left:24px}.guide li{padding-left:6px;margin-block:18px}
++.guide .actions{margin-top:32px}.guide .actions .text-action{font-size:16px}
+ `;
+ const PUBLIC_ORIGIN='https://audit.vutler.com';
+-function html(body,title='Audit GEO — a clearer next step for your website',publicPath=null){return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A focused SEO/GEO website audit. Get a sourced Markdown report and an actionable prompt for your own agent. €9, one-off pilot."><title>${title}</title>${publicPath!==null?`<link rel="canonical" href="${PUBLIC_ORIGIN}${publicPath}">`:'<meta name="robots" content="noindex, nofollow">'}<style>${CSS}</style></head><body><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="/">Audit GEO <span>/ a useful next step</span></a><nav aria-label="Main navigation"><a href="/#example">See the report</a><a href="/#request">Request an audit</a></nav></header>${body}<footer><span>Independent pilot operated through Vutler · €9 per audit</span><a href="/privacy">Privacy & scope</a></footer></body></html>`;}
++function html(body,title='Audit GEO — a clearer next step for your website',publicPath=null){return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A focused SEO/GEO website audit. Get a sourced Markdown report and an actionable prompt for your own agent. €9, one-off pilot."><title>${title}</title>${publicPath!==null?`<link rel="canonical" href="${PUBLIC_ORIGIN}${publicPath}">`:'<meta name="robots" content="noindex, nofollow">'}<style>${CSS}</style></head><body><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="/">Audit GEO <span>/ a useful next step</span></a><nav aria-label="Main navigation"><a href="/seo-geo-audit">Audit guide</a><a href="/#example">See the report</a><a href="/#request">Request an audit</a></nav></header>${body}<footer><span>Independent pilot operated through Vutler · €9 per audit</span><a href="/privacy">Privacy & scope</a></footer></body></html>`;}
++const GUIDE=html("<main id=\"main\" class=\"guide\"><article><h1>What can an SEO/GEO audit actually prove?</h1><p class=\"small\">Published <time datetime=\"2026-10-14\">14 October 2026</time></p><p>A website check can show an observable barrier or a clearer next step. It cannot establish search rankings or AI recommendations from crawler access alone. Separate the evidence you can inspect today from the outcomes you need to measure over time.</p>\n<h2>Start with access, then check outcomes</h2><p>Google says pages supporting AI Overviews or AI Mode must be indexed and eligible for a search snippet. Meeting those requirements does not guarantee crawling, indexing or appearance. Its existing SEO foundations still apply; there is no special AI schema requirement. See <a href=\"https://developers.google.com/search/docs/appearance/ai-features\">Google’s AI features guidance</a>.</p><p>OpenAI distinguishes OAI-SearchBot, used for search discovery, from GPTBot, used for potential training. Treat their policies separately. Allowing a search crawler is an access decision, not proof that your business will be cited. See <a href=\"https://developers.openai.com/api/docs/bots\">OpenAI’s crawler documentation</a>.</p>\n<h2>Four questions to ask before paying for an audit</h2><ol><li><strong>What was actually collected?</strong> Ask for sampled URLs, dates and relevant excerpts. An unavailable response is unknown. A collector size limit is a collection limitation, not a website defect.</li><li><strong>Does each proposed task follow from its evidence?</strong> A title can describe the wrong offer; an intentional crawler block can be correct. Ask which observation supports the change and when you should leave the page alone.</li><li><strong>What would count as a successful fix?</strong> Define a reproducible check: the intended directive is present, the title describes the verified offer, or the proposed copy matches actual capabilities.</li><li><strong>Which outcomes remain unmeasured?</strong> A technical fix and a customer acquisition result need separate evidence. Ask for denominators and dates before accepting a percentage improvement.</li></ol>\n<h2>A small example: an intentional crawler block</h2><p>Suppose a sampled robots.txt blocks a search crawler. The observation supports checking the owner’s policy. It does not automatically support removing the block. If search discovery is intended, inspect the matching crawler group and hosting controls before proposing a targeted change. If the block is intentional, make no change. This is a hypothetical example, not a customer finding.</p>\n<h2>Measure the result at the right level</h2><p>First reproduce the changed page or directive. For Google search outcomes, compare dated Search Console data over declared periods; Google includes its AI search features in overall Web performance reporting. That aggregate does not isolate an AI-only uplift. For an AI mention check, record the engine, interface, date and prompt sample, retain the actual responses, and report observed mentions over the number of checks. Treat a small sample as a sample, not a universal visibility score.</p>\n<h2>What our €9 pilot covers</h2><p>We sample public HTTPS pages using their initial HTML and check observable foundations and content. JavaScript rendering, search position measurement and consumer AI mention testing are not included in the current collection. A useful report provides up to three supported tasks, sources, verification steps and a prompt for your own agent. If the evidence does not support useful work, we do not invite payment.</p><p>Requests are open. A paid order depends on a reviewed useful report and confirmed delivery capacity. Save your private status page; email notifications are not currently promised.</p><div class=\"actions\"><a class=\"button\" href=\"/#request\">Request an eligibility check</a><a class=\"text-action\" href=\"/example.md\">Read the fictional report example</a></div><p class=\"small\">No ranking, citation or revenue guarantee. <a href=\"/privacy\">Privacy and scope</a></p></article></main>\n","What can an SEO/GEO audit actually prove? | Audit GEO","/seo-geo-audit");
+ const PAGE=html(`<main id="main"><section class="hero"><div><p class="eyebrow">SEO + AI SEARCH FOUNDATIONS</p><h1>Turn website questions<br>into a clear next step.</h1><p>Know what to improve, why it matters, and what to ask your agent to do. A focused website audit, with sources and up to three useful tasks.</p><div class="actions"><a class="button" href="#request">Request an audit · €9</a><a class="text-action" href="#example">See what you get</a></div><p class="small">One website. One report. No subscription.<br>We confirm eligibility before asking for payment.</p></div><figure class="hero-visual"><img src="/assets/studio.jpg" srcset="/assets/studio-small.jpg 700w, /assets/studio.jpg 1400w" sizes="(max-width:800px) 100vw, 50vw" width="1400" height="1100" fetchpriority="high" alt="A website open on a laptop in a bright independent studio"><figcaption><strong>Your website. Your agent. A useful next step.</strong><span>A sourced report + a prompt you can put to work.</span></figcaption><div class="offer-stamp"><strong>€9</strong><span>One-off audit<br>No subscription</span></div></figure></section><section class="journey" aria-label="How the audit works"><div><span>01</span><strong>Share your website</strong><p>One public URL. No access to your accounts.</p></div><div><span>02</span><strong>We check for useful work</strong><p>Evidence first. Pay only after eligibility is confirmed.</p></div><div><span>03</span><strong>Give your agent a plan</strong><p>Get a Markdown report and an executable prompt.</p></div></section><section class="section split" id="example"><div><h2>A report you can<br>actually use.</h2><p>Keep it as Markdown, or hand the included prompt to Codex, Claude or your preferred agent with access to your website.</p><div class="demo-actions"><a class="text-action" href="/example.md" download>Download example .md</a><button class="text-action" id="copy-prompt" type="button" style="background:none;border:0;text-decoration:underline">Copy agent prompt</button></div><p id="copy-status" role="status" class="small"></p></div><div><article class="report" aria-label="Illustrative report preview"><div class="file-bar"><span>fieldnote-audit.md</span><span class="tag">Illustrative example</span></div><h2>Evidence. A plan.<br>A way to verify it.</h2><div class="finding"><strong>AI search crawler access</strong><p>A blocked search crawler can limit discovery. Check the real robots.txt against your intended policy.</p></div><div class="finding"><strong>Make the offer easier to understand</strong><p>Explain who your product helps, using factual use cases and clear answers.</p></div><div class="finding"><strong>A title that matches the offer</strong><p>Three conditional tasks, with before/after examples and clear acceptance checks.</p></div><p class="prompt">Evidence register → prioritized tasks<br>Implementation checks → weekly review<br>One complete prompt for your own agent</p><p class="small">Fictional demonstration, not a measured customer result.</p></article><div class="row"><strong>Evidence before advice</strong><p>Public pages, titles, indexing directives and search crawler rules, with sources and explicit unknowns.</p></div><div class="row"><strong>Up to three supported tasks</strong><p>A narrow next step for your own agent. No invented tactics just to fill a report.</p></div><div class="row"><strong>Clear measurement boundaries</strong><p>Technical eligibility is not visibility. We don't claim to measure your Google position or ChatGPT and Claude mentions without the relevant data.</p></div></div></section><section class="section split" id="request"><div><h2>Start with one website.</h2><p class="price">€9<span>one-off pilot price</span></p><p>Send your public website and an email for your request record. You will go straight to a private page to check progress and download your report. This pilot does not send email notifications. We check whether the audit can be useful before you pay.</p><p class="small">The pilot is taking requests. Paid orders open only after eligibility and delivery capacity are confirmed. No automatic charge, no recurring billing.</p></div><form class="form" id="audit-form" action="/api/requests" method="post" aria-label="Audit request"><div class="field"><label for="website">Website to audit (required)</label><input id="website" name="website" type="url" aria-describedby="website-help" placeholder="https://your-website.com" required maxlength="500" autocomplete="url"><p class="small" id="website-help">A public HTTPS website that you own or manage.</p></div><div class="field"><label for="email">Your email (required)</label><input id="email" name="email" aria-describedby="email-help" type="email" placeholder="you@your-company.com" required maxlength="254" autocomplete="email"><p class="small" id="email-help">Stored with your request. No email notifications are sent during this pilot. Save your private status page to access the report.</p></div><div class="trap" aria-hidden="true"><label for="company">Leave this empty</label><input id="company" name="company" tabindex="-1" autocomplete="off"></div><label class="check"><input type="checkbox" name="consent" required><span>I own or manage this website and agree to have these details used to process this audit request. <a href="/privacy">Privacy & scope</a></span></label><button class="button" type="submit">Submit audit request</button><div id="form-status" role="status" aria-live="polite"></div></form></section><section class="section"><h2>A few honest answers.</h2><details><summary>Will this make ChatGPT recommend my business?</summary><p>No guarantee. This audit checks your website's foundations and identifies supported improvements. Crawling, citation and recommendation are separate things.</p></details><details><summary>Does it measure my SEO position or LLM visibility?</summary><p>The initial €9 pilot covers technical foundations and actionable content findings. Search Console positions need your export. LLM mention testing needs a declared prompt sample, engine and date; API samples would be labelled separately from the ChatGPT and Claude consumer interfaces.</p></details><details><summary>Can my agent execute the plan each week?</summary><p>Yes, if it can access your repository or CMS. It should verify previous work and new evidence first. Sometimes the right weekly recommendation is to make no change.</p></details><details><summary>When do I pay and receive the report?</summary><p>We first confirm eligibility and a delivery date. You then get a Stripe payment link for €9. A report is released only after payment is verified. This page does not collect payment details.</p></details></section></main><script src="/app.js" defer></script>`,undefined,'/');
+ const SCRIPT=`const form=document.querySelector('#audit-form'),status=document.querySelector('#form-status');form.addEventListener('submit',async event=>{event.preventDefault();const button=form.querySelector('button[type=submit]');button.disabled=true;form.setAttribute('aria-busy','true');status.className='notice';status.textContent='Saving your request…';try{const f=new FormData(form);const res=await fetch('/api/requests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({website:f.get('website'),email:f.get('email'),consent:f.get('consent')==='on',company:f.get('company')})});const data=await res.json();if(!res.ok)throw new Error(data.error||'Unable to save your request. Please try again.');status.replaceChildren();const p=document.createElement('p');p.textContent='Request saved. Keep your private tracking link to check for updates. No payment has been taken.';const a=document.createElement('a');a.href=data.tracking;a.textContent='Open your request';if(typeof data.tracking!=='string'||!new RegExp('^/request/[a-f0-9]{64}$').test(data.tracking))throw new Error('The server did not return a valid tracking link.');status.append(p,a);form.reset();window.location.assign(data.tracking);}catch(error){status.className='notice error';status.textContent=error.message;}finally{button.disabled=false;form.removeAttribute('aria-busy');}});document.querySelector('#copy-prompt').addEventListener('click',async()=>{const o=document.querySelector('#copy-status');try{await navigator.clipboard.writeText(${JSON.stringify(AGENT_PROMPT)});o.textContent='Prompt copied. Attach your report before running it.';}catch{o.textContent='Clipboard unavailable. Download the Markdown example to copy its prompt.';}});`;
+ const PRIVACY=html(`<main id="main" class="page"><h1>Privacy & scope</h1><p>This pilot stores your email, public website URL, request identifier and processing status solely to handle your audit request. It does not add you to a marketing list. Do not submit passwords, API keys or private URLs.</p><p>Keep your private tracking link secure. It gives access to your request status and, when available, your report. Use the deletion button on that page to withdraw an unpaid request.</p><p>Unpaid requests expire after 30 days. Report data expires after 90 days. Expired data is removed during operator processing or when accessed. Payment records, if any, are held separately by Stripe. No analytics or advertising cookies are used by this application.</p><p>The €9 pilot covers public technical SEO and AI search foundations, a Markdown report and an agent prompt. It does not include guaranteed rankings, consumer LLM visibility scores, private Search Console access, or publishing changes to your website.</p><p>We confirm eligibility, the scope and a delivery date before asking for payment through Stripe under Vutler. No subscription or recurring charge.</p><a class="text-action" href="/">Back to the pilot</a></main>`,'Privacy & scope — Audit GEO','/privacy');
+@@ -209,13 +217,14 @@ Disallow: /request/
+ Disallow: /api/
+ Sitemap: ${PUBLIC_ORIGIN}/sitemap.xml
+ `;
+-const SITEMAP=`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/','/privacy'].map(path=>`<url><loc>${PUBLIC_ORIGIN}${path}</loc></url>`).join('')}</urlset>`;
++const SITEMAP=`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/','/privacy','/seo-geo-audit'].map(path=>`<url><loc>${PUBLIC_ORIGIN}${path}</loc></url>`).join('')}</urlset>`;
+ export default{async fetch(request,env){const u=new URL(request.url),path=u.pathname;
+ if(request.method==='GET'&&path==='/robots.txt')return response(ROBOTS,200,'text/plain; charset=utf-8');
+ if(request.method==='GET'&&path==='/sitemap.xml')return response(SITEMAP,200,'application/xml; charset=utf-8');
+ if(request.method==='GET'&&['/assets/studio.jpg','/assets/studio-small.jpg'].includes(path)){const bytes=Uint8Array.from(atob(path.includes('-small')?STUDIO_SMALL_IMAGE:STUDIO_IMAGE),c=>c.charCodeAt(0));return new Response(bytes,{headers:{'Content-Type':'image/jpeg','Cache-Control':'public, max-age=86400','X-Content-Type-Options':'nosniff'}});}
+ if(path.startsWith('/api/sandbox/'))return sandboxReceiver(request,env);
+ if(request.method==='GET'&&path==='/')return response(notificationsReady(env)?PAGE.replace('This pilot does not send email notifications.','We will email your verified summary and payment link, then send the full report link after payment.').replace('Stored with your request. No email notifications are sent during this pilot.','We use this address for your summary, payment link and verified report delivery.'):PAGE,200,'text/html; charset=utf-8',{'X-Robots-Tag':'index, follow'});
++if(request.method==='GET'&&path==='/seo-geo-audit')return response(GUIDE,200,'text/html; charset=utf-8',{'X-Robots-Tag':'index, follow'});
+ if(request.method==='GET'&&path==='/app.js')return response(SCRIPT,200,'text/javascript; charset=utf-8');
+ if(request.method==='GET'&&path==='/privacy')return response(PRIVACY,200,'text/html; charset=utf-8',{'X-Robots-Tag':'index, follow'});
+ if(request.method==='GET'&&path==='/example.md')return response(DEMO,200,'text/markdown; charset=utf-8',{'Content-Disposition':'attachment; filename="audit-geo-example.md"'});
+diff --git a/.impeccable/design.json b/.impeccable/design.json
+new file mode 100644
+index 0000000..4fdd8ff
+--- /dev/null
++++ b/.impeccable/design.json
+@@ -0,0 +1,176 @@
++{
++  "schemaVersion": 2,
++  "generatedAt": "2026-10-13T23:46:43.530Z",
++  "title": "Design System: Audit GEO",
++  "extensions": {
++    "colorMeta": {
++      "paper": {
++        "role": "neutral",
++        "displayName": "Cream Paper"
++      },
++      "ink": {
++        "role": "neutral",
++        "displayName": "Dark Ink"
++      },
++      "muted": {
++        "role": "neutral",
++        "displayName": "Muted Ink"
++      },
++      "green": {
++        "role": "primary",
++        "displayName": "Forest Green"
++      },
++      "tint": {
++        "role": "neutral",
++        "displayName": "Pale Botanical Tint"
++      },
++      "rule": {
++        "role": "neutral",
++        "displayName": "Paper Rule"
++      },
++      "white": {
++        "role": "neutral",
++        "displayName": "Warm White"
++      },
++      "error": {
++        "role": "neutral",
++        "displayName": "Error Red"
++      },
++      "nav-hover": {
++        "role": "primary",
++        "displayName": "Deep Forest Hover"
++      }
++    },
++    "typographyMeta": {
++      "display": {
++        "displayName": "Landing Display",
++        "purpose": "Commercial landing hero."
++      },
++      "headline": {
++        "displayName": "Shared Headline",
++        "purpose": "Landing sections."
++      },
++      "guide-display": {
++        "displayName": "Guide Display",
++        "purpose": "Reading-page H1, capped at 21ch."
++      },
++      "guide-headline": {
++        "displayName": "Guide Headline",
++        "purpose": "Reading-page H2, capped at 28ch."
++      },
++      "body": {
++        "displayName": "Body",
++        "purpose": "Default interface copy."
++      },
++      "guide-body": {
++        "displayName": "Guide Body",
++        "purpose": "Article paragraphs and ordered questions, capped at 70ch."
++      },
++      "label": {
++        "displayName": "Label",
++        "purpose": "Explicit form-field labels."
++      },
++      "small": {
++        "displayName": "Small",
++        "purpose": "Publication metadata, scope and helper copy."
++      }
++    },
++    "shadows": [
++      {
++        "name": "form",
++        "value": "0 12px 36px #202c260a",
++        "purpose": "Existing form surface; the report preview and guide are flat."
++      }
++    ],
++    "motion": [
++      {
++        "name": "action-state",
++        "value": ".18s ease",
++        "purpose": "Existing button background-color and text-action color transitions; disabled by prefers-reduced-motion."
++      }
++    ],
++    "breakpoints": [
++      {
++        "name": "stacked",
++        "value": "800px"
++      },
++      {
++        "name": "wrapped-header",
++        "value": "480px"
++      }
++    ]
++  },
++  "components": [
++    {
++      "name": "Primary Action",
++      "kind": "button",
++      "refersTo": "button-primary",
++      "description": "Shared forest-green action; guide links to the eligibility form.",
++      "html": "<a class=\"ds-button\" href=\"/#request\">Request an eligibility check</a>",
++      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 23px;background:var(--green,#245440);color:var(--white,#fffef9);border:0;border-radius:8px;font:600 16px/1.6 Arial,Helvetica,sans-serif;text-decoration:none;cursor:pointer;transition:background-color .18s ease}.ds-button:hover{background:var(--ink,#202c26)}.ds-button:focus-visible,.ds-text-action:focus-visible,.ds-input:focus-visible,.ds-nav a:focus-visible{outline:3px solid var(--green,#245440);outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}}"
++    },
++    {
++      "name": "Text Action",
++      "kind": "button",
++      "description": "Underlined report-example action, explicitly labelled fictional.",
++      "html": "<a class=\"ds-text-action\" href=\"/example.md\">Read the fictional report example</a>",
++      "css": ".ds-text-action{display:inline-flex;align-items:center;min-height:44px;padding-block:12px;font:16px/1.75 Arial,Helvetica,sans-serif;color:var(--ink,#202c26);text-decoration:underline;text-underline-offset:4px;transition:color .18s ease}.ds-text-action:hover{color:var(--green,#245440)}.ds-button:focus-visible,.ds-text-action:focus-visible,.ds-input:focus-visible,.ds-nav a:focus-visible{outline:3px solid var(--green,#245440);outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-text-action{transition:none}}"
++    },
++    {
++      "name": "Website Field",
++      "kind": "input",
++      "refersTo": "input",
++      "description": "Existing explicitly labelled required URL field.",
++      "html": "<div class=\"ds-field\"><label class=\"ds-label\" for=\"ds-website\">Website to audit (required)</label><input class=\"ds-input\" id=\"ds-website\" type=\"url\" placeholder=\"https://your-website.com\" required maxlength=\"500\" autocomplete=\"url\" aria-describedby=\"ds-website-help\"><p class=\"ds-small\" id=\"ds-website-help\">A public HTTPS website that you own or manage.</p></div>",
++      "css": ".ds-field{font:16px/1.6 Arial,Helvetica,sans-serif;margin-bottom:24px}.ds-label{display:block;font-size:15px;font-weight:600;margin-bottom:7px}.ds-input{width:100%;height:52px;border:1px solid var(--rule,#ccd1c5);border-radius:8px;background:var(--white,#fffef9);padding:10px 12px;color:var(--ink,#202c26);font:inherit}.ds-input::placeholder{color:var(--muted,#515d55)}.ds-input:hover{border-color:var(--muted,#515d55)}.ds-small{font-size:13px;color:var(--muted,#515d55);margin:8px 0 0}.ds-button:focus-visible,.ds-text-action:focus-visible,.ds-input:focus-visible,.ds-nav a:focus-visible{outline:3px solid var(--green,#245440);outline-offset:5px}"
++    },
++    {
++      "name": "Shared Navigation",
++      "kind": "nav",
++      "description": "Existing guide, report and request destinations; wraps at the narrow breakpoint.",
++      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a href=\"/seo-geo-audit\">Audit guide</a><a href=\"/#example\">See the report</a><a href=\"/#request\">Request an audit</a></nav>",
++      "css": ".ds-nav{display:flex;gap:24px;font:14px/1.6 Arial,Helvetica,sans-serif}.ds-nav a{color:var(--ink,#202c26);padding-block:10px;text-underline-offset:4px}.ds-nav a:hover{color:var(--green,#245440)}.ds-nav a:last-child{background:var(--green,#245440);color:white;padding:12px 18px;border-radius:8px;text-decoration:none}.ds-nav a:last-child:hover{background:#234537}.ds-button:focus-visible,.ds-text-action:focus-visible,.ds-input:focus-visible,.ds-nav a:focus-visible{outline:3px solid var(--green,#245440);outline-offset:5px}@media(max-width:800px){.ds-nav{gap:14px}}@media(max-width:480px){.ds-nav{width:100%;justify-content:space-between}.ds-nav a{min-height:44px}}"
++    },
++    {
++      "name": "Illustrative Example Tag",
++      "kind": "chip",
++      "refersTo": "tag",
++      "description": "Existing report-preview label; no customer-result implication.",
++      "html": "<span class=\"ds-tag\">Illustrative example</span>",
++      "css": ".ds-tag{display:inline;background:var(--tint,#e6ebe1);padding:3px 8px;border-radius:4px;font:12px/1.6 Arial,sans-serif;color:var(--green,#245440)}"
++    },
++    {
++      "name": "Report Preview",
++      "kind": "card",
++      "refersTo": "report",
++      "description": "Existing flat warm-white fictional report preview.",
++      "html": "<article class=\"ds-report\" aria-label=\"Illustrative report preview\"><div class=\"ds-file-bar\"><span>fieldnote-audit.md</span><span class=\"ds-report-tag\">Illustrative example</span></div><h2>Evidence. A plan.<br>A way to verify it.</h2><p class=\"ds-report-small\">Fictional demonstration, not a measured customer result.</p></article>",
++      "css": ".ds-report{background:var(--white,#fffef9);color:var(--ink,#202c26);border-radius:12px;padding:clamp(24px,3vw,38px);box-shadow:none;margin:0 0 28px;font:16px/1.6 Arial,Helvetica,sans-serif}.ds-file-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font:12px monospace;border-bottom:1px solid var(--rule,#ccd1c5);padding-bottom:16px}.ds-report-tag{background:var(--tint,#e6ebe1);padding:3px 8px;border-radius:4px;font:12px Arial,sans-serif;color:var(--green,#245440)}.ds-report h2{font:400 30px/1.2 Fraunces,Georgia,serif;letter-spacing:-.025em;text-wrap:balance;margin:26px 0 22px}.ds-report-small{font-size:13px;color:var(--muted,#515d55)}@media(max-width:480px){.ds-report h2{font-size:27px}}"
++    }
++  ],
++  "narrative": {
++    "northStar": "Cream paper and forest",
++    "overview": "The implemented identity pairs cream paper, dark ink and forest-green actions with embedded Fraunces headings and a native Arial body. Pages use readable editorial spacing, quiet rules and restrained rounded surfaces. All public copy remains English.\n\nThe established commercial landing keeps its photo-led asymmetric hero, explicit €9 offer stamp, strong request action, three-step purchase journey and readable report preview. The guide at `/seo-geo-audit` extends this identity as a single-column reading page, reusing the existing header, footer and actions. No framework or dependency was added.",
++    "keyCharacteristics": [
++      "Cream-paper background, forest-green actions and dark-ink text.",
++      "Fraunces headings paired with native Arial body text.",
++      "Shared responsive navigation and visible keyboard focus.",
++      "A commercial landing and a quieter guide using the same visual system."
++    ],
++    "rules": [],
++    "dos": [
++      "Do preserve the cream-paper/forest identity, Fraunces headings and native Arial body.",
++      "Do keep the shared responsive header and visible focus treatments on the guide.",
++      "Do use the implemented guide shell, line lengths, heading sizes and native numbered questions.",
++      "Do label source links descriptively and identify fictional examples explicitly.",
++      "Do keep English copy, the €9 one-off offer, eligibility and payment boundaries visible."
++    ],
++    "donts": [
++      "Don't add a separate guide identity, imagery or motion to this reading-page extension.",
++      "Don't fabricate testimonials, conversion statistics, customer results or ranking promises.",
++      "Don't equate crawler eligibility with measured search position or consumer AI visibility.",
++      "Don't imply that submitting a request charges the visitor or bypasses eligibility and delivery-capacity review.",
++      "Don't promise email notifications or an included managed weekly service from the current public page."
++    ]
++  }
++}
