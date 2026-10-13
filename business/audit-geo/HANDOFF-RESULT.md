@@ -1,25 +1,25 @@
-# Execution receipt — bounded collection improvement
+# Execution receipt — optional Lighthouse evidence
 
-Date: 2026-10-13T12:20:47.885519+00:00
+Date: 2026-10-13T12:39:25.513778+00:00
 
 ## Completed
-- Implemented local collector enrichment in evidence.mjs: title, descriptions, H1, canonical and robots metadata, JSON-LD extracted before script cleanup. JSON parsing does not imply schema correctness.
-- Added at most four same-origin linked/sitemap pages; query URLs, obvious assets and external origins excluded. Original SSRF DNS pinning, HTTPS, response size, timeout and redirect protections preserved. Cross-origin redirected evidence excluded.
-- Body truncation, oversized/invalid JSON-LD, raw HTML/rendered DOM boundary and incomplete crawl scope explicitly recorded.
-- Existing operator imports this collector directly; no public-site deployment was needed. Pre-existing operator.mjs/watch.mjs changes preserved.
+- Added bounded mobile PageSpeed extraction to the local evidence pipeline: five laboratory metrics with units, up to 12 failing diagnostics with estimated savings, Lighthouse version/run URLs and date, separate page and origin field evidence.
+- Missing numbers remain null; runtime errors, quota refusal, malformed JSON and responses exceeding 2 MB remain unavailable. Screenshots and DOM payloads are not retained. Suggestions explicitly require validation; lab scores are not ranking or real-user proof.
+- Existing --pagespeed option uses this extractor. Watcher configuration unchanged; repeated quota failures are not automatically introduced into each run. No site publication required.
+- Owner console message acknowledged without copying payment details to artifacts or memory. No payment method configured by this pass, no purchase.
 
 ## Evidence
-- node --test business/audit-geo/evidence.test.mjs: 6/6 pass (JSON-LD present/absent/invalid/oversized, truncation, discovery exclusions, bounded crawl/failure, cross-origin redirect and private URL rejection).
-- Real public collection on https://audit.vutler.com: home 200, privacy 200, example.md 200; robots.txt/sitemap.xml 404. No JSON-LD observed in fetched HTML; no claim about rendered DOM.
-- Existing operator --once completed: prepared 0, cumulative attempts 3, payment not requested. No new inference consumed or checkout enabled.
-- Console inbox empty at checkpoints; progress/results sent in French. Hosted broker recall succeeded with network authorization.
+- node --test business/audit-geo/evidence.test.mjs: 8/8 tests pass, including zero values, missing metrics, field scope, runtime failure, malformed/oversized responses and HTTP 429.
+- Live unauthenticated PageSpeed request for audit.vutler.com: HTTP 429; no performance score obtained.
+- operator.mjs --once --pagespeed: prepared 0, lifetime attempts 3, external purchase spend 0, payment not requested.
+- git diff --check passed. Hosted memory recall and durable learning persistence succeeded through the safe broker.
+- Console inbox empty at final checkpoint. No controller, watcher or schedule created; counters preserved.
 
-## Limits and next actions
-- No eligible customer report or real paid delivery demonstrated this pass. Payment gates unchanged.
-- PageSpeed detailed diagnostics remain unimplemented; previous quota failure is not a score. Next: bounded Lighthouse diagnostics and review a genuinely useful report when a request arrives.
-- Raw HTML extraction is deliberately conservative, not a full HTML parser or rendered-browser audit. First links are a sample, not a claim of page relevance or exhaustive coverage. Sitemap indexes are not followed.
-- HawkScan skill consulted; historical HTTP 402 access blocker not repeated; no DAST scan performed.
-- No controller/watcher or schedule created, no credential file read manually, no customer data included here.
+## Remaining dependencies and next actions
+- No useful eligible customer report reviewed or real paid fulfillment established this pass; sales gate unchanged.
+- For actual Lighthouse measurements, investigate a free local browser-backed run or secure provider quota setup; do not buy an API without a demonstrated benefit.
+- Review the next incoming eligible report against its cited evidence before checkout. Existing sandbox proof remains separate from a real sale.
+- HawkScan skill consulted; previously documented HTTP 402 blocker not repeated, no DAST scan performed.
 
 ## Cost
-External purchases this pass: **0 EUR / 0 cents**. Budget and cumulative counters preserved.
+External purchases THIS PASS: **0 EUR / 0 cents**. Mission budget remains cumulative EUR 50, no new reservation.

@@ -64,6 +64,33 @@ export function internalCandidates(body,base,{sitemap=false}={}) {
   }
   return result;
 }
+// Keep API evidence bounded; missing lab/field measurements are never zero scores.
+export function summarizePageSpeed(data,source) {
+  const lh=data?.lighthouseResult;
+  if(!lh || lh.runtimeError || !lh.audits || typeof lh.audits!=='object') throw Error('Lighthouse result unavailable');
+  const finite=v=>typeof v==='number'&&Number.isFinite(v)?v:null;
+  const short=v=>typeof v==='string'?v.slice(0,600):null;
+  const score=finite(lh.categories?.performance?.score);
+  const metrics=['first-contentful-paint','largest-contentful-paint','speed-index','total-blocking-time','cumulative-layout-shift'].map(id=>{
+    const a=lh.audits[id];return {id,value:finite(a?.numericValue),unit:short(a?.numericUnit),displayValue:short(a?.displayValue)};
+  });
+  const diagnostics=Object.entries(lh.audits).filter(([id,a])=>a&&typeof a==='object'&&finite(a.score)!==null&&a.score<1&&!['notApplicable','manual','informative','error'].includes(a.scoreDisplayMode)&&!metrics.some(m=>m.id===id))
+    .sort((a,b)=>a[1].score-b[1].score).slice(0,12).map(([id,a])=>({id,title:short(a.title),description:short(a.description),score:a.score,displayValue:short(a.displayValue),savingsMs:finite(a.details?.overallSavingsMs),savingsBytes:finite(a.details?.overallSavingsBytes)}));
+  const field=e=>!e?.metrics?{status:'unavailable'}:{status:'available',scope:short(e.id),overallCategory:short(e.overall_category),metrics:Object.entries(e.metrics).slice(0,10).map(([id,m])=>({id,percentile:finite(m?.percentile),category:short(m?.category)}))};
+  return {status:'available',observedAt:new Date().toISOString(),source,strategy:'mobile',performanceScore:score!==null&&score>=0&&score<=1?score:null,lighthouseVersion:short(lh.lighthouseVersion),fetchTime:short(lh.fetchTime),requestedUrl:short(lh.requestedUrl),finalUrl:short(lh.finalUrl),metrics,diagnostics,field:{page:field(data.loadingExperience),origin:field(data.originLoadingExperience)},limitations:['Single mobile laboratory run; not real-user Core Web Vitals or ranking proof','Origin field data is not page-specific; absent field data is unknown','Diagnostic suggestions require validation before changes']};
+}
+export async function collectPageSpeed(url,{fetchApi=fetch}={}) {
+  const api=new URL('https://www.googleapis.com/pagespeedonline/v5/runPagespeed');
+  api.searchParams.set('url',url);api.searchParams.set('strategy','mobile');
+  try {
+    const r=await fetchApi(api,{signal:AbortSignal.timeout(25000),redirect:'error'});
+    if(!r.ok)throw Error(`HTTP ${r.status}`);
+    // Lighthouse responses can be large; do not retain screenshot/DOM payloads.
+    const reader=r.body.getReader();let size=0;const chunks=[];
+    try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>2000000)throw Error('PageSpeed response exceeds 2 MB');chunks.push(value);}}finally{await reader.cancel();}
+    return summarizePageSpeed(JSON.parse(Buffer.concat(chunks).toString('utf8')),api.href);
+  }catch(e){return {status:'unavailable',observedAt:new Date().toISOString(),source:api.href,reason:e.message};}
+}
 export async function collectEvidence(website,{pagespeed=false,fetchPage=publicFetch}={}) {
   const url=new URL(website);
   const raw=new Map();
@@ -82,6 +109,6 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
   const selected=[...new Set(candidates)].filter(u=>!resources.includes(u)&&u!==homepage?.url).slice(0,4);
   for(const target of selected)observations.push(await observe(target,'page'));
   let performance={status:'not_requested'};
-  if(pagespeed){try{const api=new URL('https://www.googleapis.com/pagespeedonline/v5/runPagespeed');api.searchParams.set('url',url.href);api.searchParams.set('strategy','mobile');const r=await fetch(api,{signal:AbortSignal.timeout(25000),redirect:'error'});if(!r.ok)throw Error(`HTTP ${r.status}`);const j=await r.json();performance={status:'available',observedAt:new Date().toISOString(),source:api.href,performanceScore:j.lighthouseResult?.categories?.performance?.score??null};}catch(e){performance={status:'unavailable',observedAt:new Date().toISOString(),reason:e.message};}}
+  if(pagespeed)performance=await collectPageSpeed(url.href);
   return {website,observations,performance,scope:{maxAdditionalPages:4,selectedPages:selected,selection:'First unique same-origin HTML links, then sitemap URLs; no query strings',limitations:['Bounded sample, not a complete crawl','Sitemap indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
 }

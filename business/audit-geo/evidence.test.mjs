@@ -24,3 +24,18 @@ test('public fetch rejects private literals and non-HTTPS before network',async(
  for(const u of ['http://example.com','https://127.0.0.1','https://[::1]','https://user:pass@example.com','https://example.com:444'])await assert.rejects(publicFetch(u));
  for(const ip of ['127.0.0.1','10.0.0.1','169.254.169.254','::1','fc00::1'])assert.equal(publicAddress(ip),false);
 });
+
+test('Lighthouse preserves zero, units, bounded diagnostics and separate field scope',async()=>{
+ const {summarizePageSpeed}=await import('./evidence.mjs');
+ const audits={'cumulative-layout-shift':{id:'cumulative-layout-shift',numericValue:0,numericUnit:'unitless',score:1},slow:{id:'slow',score:0,title:'Slow',details:{overallSavingsMs:123}},unknown:{score:null},manual:{score:0,scoreDisplayMode:'manual'}};
+ const e=summarizePageSpeed({lighthouseResult:{audits,categories:{performance:{score:0}}},originLoadingExperience:{id:'https://example.com',metrics:{LCP:{percentile:2300,category:'FAST'}}}},'api');
+ assert.equal(e.performanceScore,0);assert.equal(e.metrics[4].value,0);assert.equal(e.metrics[0].value,null);assert.equal(e.diagnostics.length,1);assert.equal(e.diagnostics[0].savingsMs,123);assert.equal(e.field.page.status,'unavailable');assert.equal(e.field.origin.status,'available');
+ assert.throws(()=>summarizePageSpeed({lighthouseResult:{runtimeError:{code:'FAILED'},audits:{}}},'api'));
+});
+test('PageSpeed quota, malformed and oversized responses never become scores',async()=>{
+ const {collectPageSpeed}=await import('./evidence.mjs');
+ for(const response of [new Response('',{status:429}),new Response('{bad'),new Response('x'.repeat(2000001)),Response.json({})]){
+ const e=await collectPageSpeed('https://example.com/',{fetchApi:async()=>response});assert.equal(e.status,'unavailable');assert.equal(e.performanceScore,undefined);
+ }
+ const e=await collectPageSpeed('https://example.com/',{fetchApi:async()=>Response.json({lighthouseResult:{audits:{},categories:{performance:{score:0.9}}}})});assert.equal(e.performanceScore,0.9);
+});
