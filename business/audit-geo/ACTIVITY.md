@@ -74,3 +74,12 @@ Heartbeat existant ACTIVE toutes les 20 minutes ; plafond de contrôleur porté 
 
 ## 2026-10-13T13:41:32.468Z — Revue du superviseur
 Collecte robots et contrat de recommandations vérifiés indépendamment : 20 tests passent. Correction générique du contrôle de citation : E10 ou un identifiant incorporé ne satisfait plus une référence E1. Références exactes, revue de pertinence et validation des paiements restent obligatoires. Aucun achat ni ouverture des ventes. Prochaine passe confiée au contrôleur existant.
+
+## 2026-10-13T13:44:39.023509+00:00 — geo-seo-claude source assessment
+Owner link evaluated through connected GitHub at 989cae01e8ebbc42a9ec798eb9e7cb423f5ec89c; six source files inspected and official crawler roles verified. Selective content/report ideas recommended, heuristic scores and unsafe wholesale fetcher adoption rejected. Assessment and receipt written; safe hosted memory recalled/persisted. No runtime changes, inference attempts, deployment, purchase or controller; counters preserved. Next: safe browser rendering and useful report review. This pass spend: 0 cents.
+
+## 2026-10-13T14:12:41.432Z — Correction du parcours de demande
+Le superviseur a reproduit le défaut de confirmation : aucune notification email configurée, lien de suivi trop facile à manquer, génération structurée insuffisamment contrainte. Version 10 publiée, source 9c72916ade4761460617dc47bcaf8ebcb31e6e8d, déploiement réussi. Formulaire navigateur live : enregistrement et navigation vers le suivi confirmés ; demande QA supprimée. POST natif sans JS et scripts servis vérifiés ; quatre suites Worker passent. Schéma Codex natif ajouté au rapport, puis limite de longueur native après dépassement observé ; rejet visible en needs_review, aucune demande de paiement. Tests OAuth et boucle : 10 passent ; 20 tests de preuves passent. Demande réelle en cours de reprise ; aucune dépense.
+
+## 2026-10-13T14:21:36.482Z — Reprise vérifiée
+Une demande réelle du propriétaire a atteint prepared : rapport complet et borné, références validées, revue indépendante de soutien et pertinence effectuée. Aperçu privé remis au propriétaire sans paiement ; ce n’est pas une vente ni une livraison payée. 7 tentatives cumulées conservées, 0 € dépensé. Watcher existant repris après correction, sans doublon. Régressions complémentaires : rapports tronqués ou sans mesure/no-action refusés ; quota inchangé. Aucun fournisseur email connecté ; choix du compte d’envoi demandé au propriétaire.

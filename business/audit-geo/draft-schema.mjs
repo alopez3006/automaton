@@ -1,0 +1,4 @@
+// Shape enforcement complements, and never replaces, reference/usefulness validation.
+const text={type:'string'};
+const reference={type:'object',additionalProperties:false,required:['evidenceId','url','observedAt','field','excerpt'],properties:{evidenceId:{type:'string',pattern:'^E[1-9][0-9]*$'},url:text,observedAt:text,field:text,excerpt:text}};
+export const draftSchema={type:'object',additionalProperties:false,required:['report','eligible','taskCount','reason','tasks'],properties:{report:{type:'string',pattern:'^#[\\s\\S]{0,7999}$'},eligible:{type:'boolean'},taskCount:{type:'integer',minimum:0,maximum:3},reason:text,tasks:{type:'array',maxItems:3,items:{type:'object',additionalProperties:false,required:['title','references'],properties:{title:text,references:{type:'array',minItems:1,maxItems:10,items:reference}}}}}};

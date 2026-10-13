@@ -20,6 +20,24 @@ describe("Codex OAuth boundary", () => {
   it("fails closed when the executable cannot start", async () => {
     await expect(createCodexOAuthClient({ executable: "/nonexistent/codex" }).chat([{ role: "user", content: "test" }])).rejects.toThrow("Cannot start");
   });
+  it("applies the requested payload schema and preserves structured content", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "codex-schema-fixture-"));
+    const executable = join(dir, "fake-codex.mjs");
+    const responseSchema = { type: "object", additionalProperties: false, required: ["tasks"], properties: { tasks: { type: "array", items: { type: "string" } } } };
+    try {
+      await writeFile(executable, `#!/usr/bin/env node
+import fs from 'node:fs';
+const schema=JSON.parse(fs.readFileSync(process.argv[process.argv.indexOf('--output-schema')+1],'utf8'));
+const output=process.argv[process.argv.indexOf('-o')+1];
+fs.writeFileSync(output,JSON.stringify({content:{tasks:schema.properties.content.required.includes('tasks')?['schema applied']:[]},tool_calls:[]}));
+process.stdin.resume();
+`, { mode: 0o700 });
+      const result = await createCodexOAuthClient({ executable, responseSchema }).chat([{ role: "user", content: "test" }]);
+      expect(JSON.parse(result.message.content!)).toEqual({ tasks: ["schema applied"] });
+      expect(result.toolCalls).toBeUndefined();
+      await expect(createCodexOAuthClient({ executable, responseSchema }).chat([{ role: "user", content: "test" }], { tools })).rejects.toThrow("does not allow tool calls");
+    } finally { await rm(dir, { recursive: true, force: true }); }
+  });
   it("does not forward the operator's API credentials to Codex", async () => {
     const dir = await mkdtemp(join(tmpdir(), "codex-env-fixture-"));
     const executable = join(dir, "fake-codex.mjs");

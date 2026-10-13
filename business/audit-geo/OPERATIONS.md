@@ -4,7 +4,7 @@
 On 13 October the owner assigned the ongoing mission to operate and perfect the audit offer with a €50 TOTAL purchase budget. MISSION.md and mission.json supersede historical setup limits below. The runtime now permits independent 20-minute passes, up to 72 per Zurich day, with failure backoff. The incoming watcher operates continuously while enabled, with ten audit inference attempts per Zurich day and cumulative counters retained. Thread-heartbeat supervision every 20 minutes owns continuation and watcher recovery; current native schedule metadata is in autonomy-schedule.json after creation. Purchases require budget reservations and actual receipts. No general purchase-payment method is configured; this ceiling is not wallet funding. Existing EUR 9 offer and customer payment gates remain. Sales readiness is decided from actual report usefulness and delivery capacity under the new authority.
 
 Public page: https://audit.vutler.com (the original free hostname remains available).
-Current verified publication: version 9, source c3be733dad2dfcf31ecd991a2957676d3445f32d, deployment succeeded with runtime environment revision 6. See LAUNCH-STATUS.md for the reconciled result after the third controller's time limit. Earlier details below describe their dated steps and do not override this current status.
+Current verified publication: version 10, source 9c72916ade4761460617dc47bcaf8ebcb31e6e8d, deployment succeeded with runtime environment revision 6. See LAUNCH-STATUS.md for the reconciled result after the third controller's time limit. Earlier details below describe their dated steps and do not override this current status.
 
 ## What runs today
 
@@ -58,3 +58,10 @@ npm exec --yes --package=lighthouse@12.8.2 -- lighthouse https://audit.vutler.co
 ```
 
 Use only public, authorized HTTPS targets. Keep raw browser diagnostics temporary; retain bounded non-secret summaries. Local browser runs require their own target-access validation before integration into the customer collector; this command is not an automatic customer pipeline. The single simulated mobile baseline is in LIGHTHOUSE-BASELINE.json. No field data or ranking proof. Next investigate CSP-blocked inline script and the 404 resource, then responsive studio.jpg delivery (estimated 190463 wasted bytes). Do not relax CSP blindly.
+
+## Intake and report recovery — 13 October 2026
+The public form now posts natively when JavaScript is unavailable and opens the private tracking page automatically after JSON submission. Email addresses are stored with the request; no email notification provider is connected. State this explicitly instead of promising mail. Tracking pages show receipt/review status and a refresh link. Private tokens remain hashed in storage and must not enter public artifacts or memory.
+
+Report inference now uses a native Codex response schema, including a bounded report string, while scalar source references and usefulness still require independent validation. Invalid drafts move to needs_review without inviting checkout or blocking every queued request. After diagnosing and correcting the cause, node business/audit-geo/operator.mjs --once --retry-review can retry review-needed jobs once, within the existing daily quota. Never use that flag for blind periodic retries. Preserve cumulative attempts and money counters.
+
+Completeness verification also requires scope, evidence, tasks, measurement and a no-action condition, plus a finished sentence. The native payload is bounded and instructions reserve room for the full task and follow-up instead of blindly truncating a long response. One real owner request passed source validation and independent review after this repair, supplied only as a private owner preview. This is not paid-delivery proof. The external budget remains EUR 50; all seven inference attempts are retained.
