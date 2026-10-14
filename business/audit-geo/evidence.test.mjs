@@ -8,6 +8,27 @@ test('JSON-LD survives cleanup; malformed and oversized blocks remain explicit',
 test('absence and truncation are scoped to raw HTML',()=>{
  const e=extractHtml('<div id="app"></div>'+ 'x'.repeat(17000));assert.equal(e.structuredData.status,'not_observed_in_raw_html');assert.equal(e.bodyTruncated,true);assert.ok(e.limitations.length);
 });
+test('late pricing and answer sections survive opening-excerpt truncation',()=>{
+ const e=extractHtml('<h1>Service</h1>'+'<p>Introduction</p>'.repeat(1500)+'<h2>Pricing</h2><p>EUR 9 once, no subscription.</p><h3>What is measured?</h3><p>Sampled public HTML.</p>');
+ assert.equal(e.bodyTruncated,true);assert.ok(!e.body.includes('EUR 9'));
+ assert.equal(e.sections[1].heading,'Pricing');assert.equal(e.sections[1].text,'EUR 9 once, no subscription.');
+ assert.equal(e.sections[2].text,'Sampled public HTML.');assert.equal(e.sectionCoverage.omitted,0);
+});
+test('section coverage is bounded across a long document, with explicit omissions',()=>{
+ const e=extractHtml(Array.from({length:40},(_,i)=>`<h2>Section ${i}</h2><p>${'x'.repeat(900)}</p>`).join(''));
+ assert.equal(e.sections.length,12);assert.equal(e.sections[0].headingIndex,0);assert.equal(e.sections.at(-1).headingIndex,39);
+ assert.equal(e.sectionCoverage.headingCount,40);assert.equal(e.sectionCoverage.omitted,28);
+ assert.ok(e.sections.every(s=>s.text.length===700&&s.textTruncated));
+ assert.equal(new Set(e.sections.map(s=>s.headingIndex)).size,12);
+});
+test('scripts/styles cannot create sections; no headings produce no invented passages',()=>{
+ const e=extractHtml('<script>"<h2>Fake</h2> secret"</script><style><h2>Fake</h2></style><p>Unsectioned</p>');
+ assert.deepEqual(e.sections,[]);assert.equal(e.sectionCoverage.headingCount,0);
+ const real=extractHtml('<H4 class="x">'+ 'Long'.repeat(100)+'</H4><p>Verified <b>answer</b>.</p><h5>Empty</h5>');
+ assert.equal(real.sections[0].heading.length,200);assert.equal(real.sections[0].headingTruncated,true);
+ assert.equal(real.sections[0].level,4);assert.equal(real.sections[0].text,'Verified answer .');
+ assert.equal(real.sections[1].text,'');assert.equal(real.sections[1].textTruncated,false);
+});
 test('discovery excludes external, query, private scheme, assets and duplicate fragments',()=>{
  assert.deepEqual(internalCandidates('<a href="/about#one"><a href="/about#two"><a href="https://evil.test/x"><a href="http://127.0.0.1/x"><a href="/x?q=a"><a href="/a.pdf"><a href="/services">','https://example.com/'),['https://example.com/about','https://example.com/services']);
  assert.deepEqual(internalCandidates('<urlset><loc>https://example.com/a</loc><loc>https://evil.test/x</loc></urlset>','https://example.com/',{sitemap:true}),['https://example.com/a']);

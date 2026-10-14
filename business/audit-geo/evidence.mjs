@@ -65,6 +65,25 @@ function attributes(tag) {
   return result;
 }
 function textContent(value) { return value.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,1000); }
+// Sample across the fetched document, rather than only its opening markup.
+// These excerpts establish presence, never absence or complete DOM coverage.
+export function extractSections(clean) {
+  const headings=[...clean.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)];
+  const count=Math.min(headings.length,12);
+  const sections=Array.from({length:count},(_,i)=>{
+    const index=count===1?0:Math.round(i*(headings.length-1)/(count-1));
+    const h=headings[index];
+    const heading=textContent(h[2]);
+    const passage=clean.slice(h.index+h[0].length,headings[index+1]?.index??clean.length)
+      .replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+    return {heading:heading.slice(0,200),headingTruncated:heading.length>200,
+      level:Number(h[1]),headingIndex:index,text:passage.slice(0,700),
+      textTruncated:passage.length>700};
+  });
+  return {sections,sectionCoverage:{headingCount:headings.length,retained:count,
+    omitted:headings.length-count,selection:'Up to 12 evenly spaced headings in document order; up to 700 text characters per section',
+    limitations:['Raw HTML heading sections only; content before the first heading is not sampled here','Omitted or truncated passages cannot support absence claims; HTML entities are not decoded']}};
+}
 export function extractHtml(body) {
   const structuredData=[];
   let jsonLdCount=0;
@@ -87,6 +106,7 @@ export function extractHtml(body) {
     h1:[...clean.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].slice(0,20).map(m=>textContent(m[1])),
     structuredData:{status:jsonLdCount?'observed':'not_observed_in_raw_html',blockCount:jsonLdCount,blocks:structuredData,truncated:jsonLdCount>10},
     body:clean.slice(0,16000),bodyTruncated:clean.length>16000,
+    ...extractSections(clean),
     limitations:['Raw HTML only; JavaScript-rendered content is unmeasured','Parsed JSON is not schema correctness or rich-result eligibility']
   };
 }

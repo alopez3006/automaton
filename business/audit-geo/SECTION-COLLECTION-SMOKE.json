@@ -1,0 +1,52 @@
+{
+  "observedAt": "2026-10-14T00:17:48.194Z",
+  "url": "https://audit.vutler.com/",
+  "status": 200,
+  "method": "Bounded public HTTPS GET, raw HTML; no inference",
+  "bodyTruncated": false,
+  "sectionCoverage": {
+    "headingCount": 5,
+    "retained": 5,
+    "omitted": 0,
+    "selection": "Up to 12 evenly spaced headings in document order; up to 700 text characters per section",
+    "limitations": [
+      "Raw HTML heading sections only; content before the first heading is not sampled here",
+      "Omitted or truncated passages cannot support absence claims; HTML entities are not decoded"
+    ]
+  },
+  "retainedSections": [
+    {
+      "heading": "Turn website questions into a clear next step.",
+      "headingIndex": 0,
+      "textCharacters": 623,
+      "textTruncated": false
+    },
+    {
+      "heading": "A report you can actually use.",
+      "headingIndex": 1,
+      "textCharacters": 197,
+      "textTruncated": false
+    },
+    {
+      "heading": "Evidence. A plan. A way to verify it.",
+      "headingIndex": 2,
+      "textCharacters": 700,
+      "textTruncated": true
+    },
+    {
+      "heading": "Start with one website.",
+      "headingIndex": 3,
+      "textCharacters": 700,
+      "textTruncated": true
+    },
+    {
+      "heading": "A few honest answers.",
+      "headingIndex": 4,
+      "textCharacters": 700,
+      "textTruncated": true
+    }
+  ],
+  "claims": [
+    "Owned-page collector smoke only; not customer review or SEO performance proof"
+  ]
+}

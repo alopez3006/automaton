@@ -4,6 +4,16 @@ import {validateDraft,canRequestPayment} from './validate-draft.mjs';
 import {approveFixture} from './task-review-fixture.mjs';
 const evidence={observations:[{id:'E1',url:'https://example.org/',observedAt:'2026-10-13T00:00:00Z',status:200,title:'Example',descriptions:[''],body:'Observed public offer'}]};
 const make=()=>({report:'Improve description — E1',eligible:true,reason:'Useful',taskCount:1,tasks:[{title:'Improve description',references:[{evidenceId:'E1',url:'https://example.org/',observedAt:'2026-10-13T00:00:00Z',field:'descriptions.0',excerpt:''}]}]});
+test('section citations require exact retained scalar and existing index, and still need review',()=>{
+ const e={observations:[{...evidence.observations[0],sections:[{heading:'Pricing',text:'EUR 9 once'}]}]};
+ for(const field of ['sections.0.heading','sections.0.text']){
+  const d=make();Object.assign(d.tasks[0].references[0],{field,excerpt:field.endsWith('heading')?'Pricing':'EUR 9'});
+  assert.equal(validateDraft(d,e).sourceReferencesValid,true);assert.equal(canRequestPayment(d,e),false);
+ }
+ for(const patch of [{field:'sections.1.text',excerpt:'EUR 9'},{field:'sections.0.text',excerpt:'Free'},{field:'sections.0.__proto__',excerpt:''},{field:'sectionCoverage.omitted',excerpt:'0'}]){
+  const d=make();Object.assign(d.tasks[0].references[0],patch);assert.throws(()=>validateDraft(d,e));
+ }
+});
 test('observed empty description is supported but needs usefulness review',()=>{const d=make();assert.equal(validateDraft(d,evidence).sourceReferencesValid,true);assert.equal(canRequestPayment(d,evidence),false);approveFixture(d,evidence);assert.equal(canRequestPayment(d,evidence),true);});
 test('invented identity, dates, fields and excerpts fail closed',()=>{for(const patch of [{evidenceId:'E99'},{url:'https://other.org/'},{observedAt:'yesterday'},{field:'__proto__.title'},{field:'descriptions.1'},{field:'title',excerpt:'Invented'},{field:'title',excerpt:''}]){const d=make();Object.assign(d.tasks[0].references[0],patch);assert.throws(()=>validateDraft(d,evidence));assert.equal(canRequestPayment(d,evidence),false);}});
 test('failed fetch cannot support a task',()=>{assert.throws(()=>validateDraft(make(),{observations:[{...evidence.observations[0],error:'Unavailable'}]}));});

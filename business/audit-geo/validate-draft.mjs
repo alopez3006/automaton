@@ -12,7 +12,7 @@ export function validateDraft(draft,evidence) {
       const o=observations.get(ref.evidenceId);
       if(typeof ref.evidenceId!=='string'||!/^E[1-9]\d*$/.test(ref.evidenceId)||!o||o.error||ref.url!==o.url||ref.observedAt!==o.observedAt||!new RegExp(`\\b${ref.evidenceId}\\b`).test(draft.report))fail('unknown or mismatched observation');
       // Only observed scalar fields; no prototype traversal or model-defined fields.
-      if(typeof ref.field!=='string'||!/^(status|title|body|descriptions\.\d+|h1\.\d+|canonicals\.\d+|robots\.\d+\.(agent|content)|structuredData\.status|structuredData\.blocks\.\d+\.status|headers\.x-robots-tag)$/.test(ref.field))fail('unsupported evidence field');
+      if(typeof ref.field!=='string'||!/^(status|title|body|sections\.\d+\.(heading|text)|descriptions\.\d+|h1\.\d+|canonicals\.\d+|robots\.\d+\.(agent|content)|structuredData\.status|structuredData\.blocks\.\d+\.status|headers\.x-robots-tag)$/.test(ref.field))fail('unsupported evidence field');
       let value=o;
       for(const part of ref.field.split('.')){if(value===null||typeof value!=='object'||!Object.hasOwn(value,part))fail('unobserved field');value=value[part];}
       const scalar=typeof value==='string'?value:typeof value==='number'?String(value):null;
