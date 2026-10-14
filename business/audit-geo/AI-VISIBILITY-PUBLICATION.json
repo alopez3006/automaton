@@ -1,0 +1,98 @@
+{
+  "observedAt": "2026-10-14T11:02:13.785Z",
+  "hypothesis": "An actionable sourced checklist for Google and ChatGPT search creates a distinct useful discovery entry alongside the audit evidence guide.",
+  "projectId": "appgprj_6acd6192fcac8191b47b7b9538517608",
+  "version": 17,
+  "commit": "8a31e613d1ae1fce0158402dd31ef91db94aca28",
+  "deploymentId": "appgdep_6acf6106b9188191b705cb3437b9116c",
+  "deploymentStatus": "succeeded",
+  "environmentRevision": 9,
+  "publicUrl": "https://audit.vutler.com/ai-search-visibility",
+  "checks": [
+    {
+      "path": "/ai-search-visibility",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "robots": "index, follow",
+      "passed": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "robots": "index, follow",
+      "passed": true
+    },
+    {
+      "path": "/seo-geo-audit",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "robots": "index, follow",
+      "passed": true
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "contentType": "application/xml; charset=utf-8",
+      "robots": "noindex, nofollow",
+      "passed": true
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8",
+      "robots": "noindex, nofollow",
+      "passed": true
+    }
+  ],
+  "articleMatchesLocalSource": true,
+  "localValidation": [
+    "discovery and private noindex",
+    "14 attribution controls",
+    "intake and payment gates",
+    "14 mocked launch/delivery scenarios",
+    "build and artifact validation"
+  ],
+  "sourcesChecked": [
+    "https://developers.google.com/search/docs/appearance/ai-features",
+    "https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl",
+    "https://developers.openai.com/api/docs/bots"
+  ],
+  "followUp": "On/after 21 October: bounded discovery check including new URL. Next genuine guide-labelled request: retained total and usefulness after independent review. Indexing proof requires accessible verified Search Console property.",
+  "limits": [
+    "Publication is not Google indexing, ranking, traffic or AI-citation proof.",
+    "No live customer request, email, payment, inference or purchase.",
+    "Guide entry totals combine both educational pages; no page-specific attribution claimed.",
+    "Browser visual QA not run; existing guide layout reused."
+  ],
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T11:17:35.968Z",
+    "nativeVersion": 17,
+    "audience": "public",
+    "role": "owner",
+    "environmentRevision": 9,
+    "disabledFlags": [
+      "RESEND_EMAILS_ENABLED",
+      "PAYMENTS_ENABLED",
+      "SANDBOX_ENABLED"
+    ],
+    "preservedSecretPresence": [
+      "TRACKING_LINK_SECRET",
+      "RESEND_API_KEY",
+      "STRIPE_WEBHOOK_SECRET"
+    ],
+    "publicGETs": 5,
+    "articleComparison": "Exact local article inclusion, excluding platform HTML suffix",
+    "localControls": [
+      "discovery and private noindex",
+      "intake, authorization and payment gates",
+      "14 entry-attribution controls",
+      "built ESM validation"
+    ],
+    "managedSourceClean": true,
+    "buildInputsMatch": true,
+    "officialSourceReview": "Google AI features and recrawl guidance, OpenAI bots read through agent-reach/Jina; distinctions in article supported",
+    "boundary": "Publication verified; indexing, traffic, AI citations and real customer payment-to-delivery remain unproved"
+  }
+}

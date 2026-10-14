@@ -3,6 +3,22 @@ import assert from 'node:assert/strict';
 import {evaluateRobots} from './robots.mjs';
 const observation=body=>({url:'https://example.com/robots.txt',status:200,observedAt:'2026-10-13T13:00:00Z',body});
 const evaluate=(body,path='/')=>evaluateRobots(observation(body),['https://example.com'+path]).evaluations;
+test('successful non-text robots responses remain unknown instead of permissive',()=>{
+ for(const type of ['application/json','text/html; charset=utf-8','application/xhtml+xml','application/xml','image/png','application/octet-stream','', ['text/plain','application/json']]){
+  for(const body of ['{"error":"unauthorized"}','<div>Sign in</div>','User-agent: *\nAllow: /']){
+   const result=evaluateRobots({...observation(body),headers:{'content-type':type}},['https://example.com/']);
+   assert.equal(result.status,'unknown');assert.deepEqual(result.evaluations,[]);
+   assert.match(result.reason,/content type/);
+  }
+ }
+});
+test('plain robots MIME with casing and charset preserves actual disallow rules',()=>{
+ for(const type of ['text/plain','TEXT/PLAIN; charset=UTF-8',' text/plain ; charset=utf-8']){
+  const result=evaluateRobots({...observation('User-agent: *\nDisallow: /'),headers:{'content-type':type}},['https://example.com/']);
+  assert.equal(result.status,'evaluated');assert.ok(result.evaluations.every(x=>x.status==='disallowed_according_to_robots_txt'));
+ }
+ assert.equal(evaluate('User-agent: *\nDisallow: /')[0].status,'disallowed_according_to_robots_txt');
+});
 test('search and training groups remain independent; wildcard is fallback, not merged',()=>{
  const e=evaluate('User-agent: *\nDisallow: /\nUser-agent: GPTBot\nDisallow: /\nUser-agent: OAI-SearchBot\nAllow: /');
  assert.equal(e.find(e=>e.agent==='OAI-SearchBot').status,'allowed_according_to_robots_txt');

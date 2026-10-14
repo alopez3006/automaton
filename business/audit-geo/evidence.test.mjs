@@ -130,6 +130,12 @@ test('robots policy uses complete fetched rules and stable observation IDs',asyn
  assert.equal(e.robotsPolicy.evaluations.find(o=>o.agent==='GPTBot').status,'disallowed_according_to_robots_txt');
  assert.ok(e.observations.every(o=>o.method&&o.observedAt&&o.limitations.length));
 });
+test('collector retains successful JSON robots evidence without inferring bot permission',async()=>{
+ const e=await collectEvidence('https://example.com/',{fetchPage:async url=>({url,status:200,observedAt:'2026-10-14T10:57:00Z',headers:{'content-type':url.endsWith('/robots.txt')?'application/json':'text/html'},body:url.endsWith('/robots.txt')?'{"error":"unauthorized"}':'<h1>Public offer</h1>'})});
+ assert.equal(e.observations[1].status,200);assert.equal(e.observations[1].body,'{"error":"unauthorized"}');
+ assert.equal(e.robotsPolicy.status,'unknown');assert.deepEqual(e.robotsPolicy.evaluations,[]);
+ assert.equal(e.robotsPolicy.evidenceId,'E2');assert.equal(e.observations[0].title,'');
+});
 test('public fetch rejects private literals and non-HTTPS before network',async()=>{
  for(const u of ['http://example.com','https://127.0.0.1','https://[::1]','https://user:pass@example.com','https://example.com:444'])await assert.rejects(publicFetch(u));
  for(const ip of ['127.0.0.1','10.0.0.1','169.254.169.254','::1','fc00::1'])assert.equal(publicAddress(ip),false);

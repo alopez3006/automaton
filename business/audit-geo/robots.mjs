@@ -13,6 +13,12 @@ function normalize(value) {
 const specificity=path=>normalize(path).replace(/[*$]/g,'').replace(/%[0-9A-F]{2}/g,'x').length;
 export function evaluateRobots(observation, targets) {
   const limitations=['Policy according to the observed robots.txt only; not actual crawler access, indexing or AI citations','CDN, firewall, crawler caches and bot-specific behavior are unmeasured'];
+  const contentType=observation?.headers?.['content-type'];
+  // A successful JSON/login/binary response is not an empty permissive policy.
+  // Missing headers remain compatible with retained legacy observations.
+  const incompatibleType=contentType!==undefined&&contentType!==null&&
+    (typeof contentType!=='string'||contentType.split(';')[0].trim().toLowerCase()!=='text/plain');
+  if(incompatibleType)return {status:'unknown',source:observation?.url,observedAt:observation?.observedAt,reason:'Observed robots response has incompatible content type; no bot access conclusion',limitations,evaluations:[]};
   if(!observation || observation.error || observation.status!==200 || observation.bodyTruncated || /<\s*(?:html|!doctype)/i.test(observation.body??''))
     return {status:'unknown',source:observation?.url,observedAt:observation?.observedAt,reason:'Complete successful plain robots rules unavailable; no bot access conclusion',limitations,evaluations:[]};
   const groups=[];let current=null,hasRules=false;

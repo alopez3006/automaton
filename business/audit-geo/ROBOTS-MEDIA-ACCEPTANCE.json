@@ -1,0 +1,33 @@
+{
+  "observedAt": "2026-10-14T11:03:30.713307+00:00",
+  "hypothesis": "Avoid false permissive crawler conclusions from HTTP 200 non-robots response formats.",
+  "reproducedBefore": "200 application/json error was marked allowed for all five bots.",
+  "action": "Explicit non-text/plain content type now yields unknown with no per-bot permission; raw evidence retained.",
+  "verification": {
+    "focusedTests": 55,
+    "failed": 0,
+    "integration": "JSON robots body/status/E2 retained; policy unknown",
+    "controls": "plain MIME casing/charset and legacy missing headers preserve matching rules"
+  },
+  "limits": [
+    "Static policy only, no actual bot-access/indexing/citation proof.",
+    "Missing MIME remains compatible with old snapshots; unsupported media type is conservative unknown."
+  ],
+  "deployment": "Local operator module; no Site deployment needed.",
+  "followUp": "Next genuine report: count incompatible robots responses and actual tasks revised or removed after independent review.",
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T11:17:35.968Z",
+    "focusedTests": 55,
+    "failed": 0,
+    "suites": [
+      "evidence.test.mjs",
+      "network.test.mjs",
+      "robots.test.mjs",
+      "validate-draft.test.mjs"
+    ],
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "boundary": "Conservative static policy assessment only; no actual crawler-access outcome or private snapshot migration"
+  }
+}
