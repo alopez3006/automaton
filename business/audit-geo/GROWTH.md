@@ -1,5 +1,7 @@
 # Proactive business candidates
 
+Production triage, 14 October 04:17 UTC: connected Sites error logs returned a capped newest-100 sample (180-minute query): 99 HTTP 404, one HTTP 401, all Worker outcomes ok. Anonymous aggregate in PRODUCTION-TRIAGE.json. No actionable customer-path failure established, no complete incident/traffic claim. Favicon cosmetic work rejected as lower value and publication-dependent. Do not repeat unchanged sampling; revisit on incident or deployment.
+
 Current authority: MISSION.md and mission.json. The owner wants independent decisions that make the offer work and bring qualified demand. An empty queue is not a business strategy. Choose the most useful action, execute it and measure the actual result; do not merely expand this document. Fulfillment incidents take precedence.
 
 ## Initial candidates — 14 October 2026

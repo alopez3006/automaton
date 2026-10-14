@@ -1,0 +1,26 @@
+{
+  "queriedAt": "2026-10-14T04:16:49.100Z",
+  "windowMinutes": 180,
+  "limit": 100,
+  "returned": 100,
+  "statuses": {
+    "401": 1,
+    "404": 99
+  },
+  "groups": {
+    "favicon": 4,
+    "other unmatched routes": 94,
+    "operator auth": 1,
+    "root non-GET": 1
+  },
+  "workerOutcomes": [
+    "ok"
+  ],
+  "earliestReturned": "2026-10-14T02:09:02.720Z",
+  "latestReturned": "2026-10-14T04:08:51.463Z",
+  "limits": [
+    "Errors-only newest events; capped sample is not complete incident inventory.",
+    "Includes probes and operator/browser checks; no customer or visitor denominator.",
+    "No request headers, addresses, query strings or private paths persisted."
+  ]
+}
