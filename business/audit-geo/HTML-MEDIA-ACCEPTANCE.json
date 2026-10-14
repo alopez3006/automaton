@@ -1,0 +1,43 @@
+{
+  "observedAt": "2026-10-14T12:18:41.916413+00:00",
+  "hypothesis": "Exact MIME classification avoids omitted or falsely attributed HTML SEO evidence.",
+  "artifact": "business/audit-geo/evidence.mjs",
+  "sourceSha256": "7e2265e9202b7637078766f12767150c36b428f0c30ad45ca557d0ddb4fd6eec",
+  "reproduction": {
+    "previousFalseNegatives": [
+      "Text/HTML; Charset=UTF-8",
+      "application/xhtml+xml"
+    ],
+    "previousFalsePositives": [
+      "text/plain; note=text/html",
+      "application/not-text/html"
+    ]
+  },
+  "verification": {
+    "command": "node --test business/audit-geo/evidence.test.mjs business/audit-geo/network.test.mjs business/audit-geo/robots.test.mjs business/audit-geo/report.test.mjs",
+    "passed": 52,
+    "failed": 0,
+    "positiveMimeVariants": 5,
+    "negativeMimeVariants": 6,
+    "syntax": "passed",
+    "diffCheck": "passed"
+  },
+  "limits": [
+    "Injected deterministic responses, no new customer collection",
+    "Existing raw HTML regex extractor is not a complete XHTML/XML parser",
+    "No rendering, schema validity, indexing or AI citation proof",
+    "Existing private evidence and reviews remain immutable"
+  ],
+  "followUp": "On next genuine request count HTML/XHTML pages recognized and actual tasks retained/revised after independent review.",
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T12:31:40.816Z",
+    "passed": 52,
+    "failed": 0,
+    "command": "node --test business/audit-geo/evidence.test.mjs business/audit-geo/network.test.mjs business/audit-geo/robots.test.mjs business/audit-geo/report.test.mjs",
+    "sourceHashMatch": true,
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "boundary": "Injected local media-type controls only; no complete XHTML parsing, new evidence collection, snapshot migration, deployment or customer outcome"
+  }
+}

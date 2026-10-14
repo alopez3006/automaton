@@ -230,7 +230,10 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
     try{const r=await fetchPage(target);
       if(new URL(r.url).origin!==url.origin)return {url:target,observedAt:r.observedAt,error:'Cross-origin redirect excluded from evidence'};
       raw.set(target,r);
-      const html=String(r.headers['content-type']??'').includes('text/html');
+      // Media types are case-insensitive; parameters do not identify the format.
+      // Exact matching avoids treating JSON or lookalike types as HTML evidence.
+      const mediaType=String(r.headers['content-type']??'').split(';',1)[0].trim().toLowerCase();
+      const html=['text/html','application/xhtml+xml'].includes(mediaType);
       return {...r,kind,...(html?extractHtml(r.body):{body:r.body.slice(0,16000),bodyTruncated:r.body.length>16000}),headers:{'content-type':r.headers['content-type'],'x-robots-tag':r.headers['x-robots-tag']??null}};
     }catch(e){return {url:target,kind,observedAt:new Date().toISOString(),error:e.message};}
   }

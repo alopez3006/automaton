@@ -1,6 +1,27 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('collector recognizes exact case-insensitive HTML and XHTML media types',async()=>{
+ const body='<title>Evidence</title><meta name="description" content="Supported"><link rel="canonical" href="https://example.com/"><h1>Offer</h1><script type="application/ld+json">{"@type":"Service"}</script>';
+ for(const contentType of ['text/html','Text/HTML; Charset=UTF-8',' TEXT/HTML ; charset=utf-8','application/xhtml+xml','Application/XHTML+XML; charset=utf-8']){
+  const result=await collectEvidence('https://example.com/',{fetchPage:async url=>({url,status:200,headers:{'content-type':url.endsWith('/')?contentType:'text/plain'},body:url.endsWith('/')?body:'',observedAt:'2026-10-14T00:00:00Z'})});
+  const page=result.observations[0];
+  assert.equal(page.title,'Evidence',contentType);assert.deepEqual(page.descriptions,['Supported']);
+  assert.deepEqual(page.canonicals,['https://example.com/']);assert.deepEqual(page.h1,['Offer']);
+  assert.equal(page.structuredData.blocks[0].value['@type'],'Service');
+  assert.equal(page.headers['content-type'],contentType);
+  assert.equal(result.observations.length,3);
+ }
+});
+test('collector does not infer HTML from missing, non-HTML or lookalike media types',async()=>{
+ for(const contentType of [undefined,'application/json','text/plain; note=text/html','application/not-text/html','text/html-extra','application/xhtml+xml-invalid']){
+  const body='<title>Not established HTML</title><h1>Not established heading</h1>';
+  const result=await collectEvidence('https://example.com/',{fetchPage:async url=>({url,status:200,headers:{'content-type':contentType},body,observedAt:'2026-10-14T00:00:00Z'})});
+  assert.equal(result.observations[0].title,undefined,String(contentType));
+  assert.equal(result.observations[0].structuredData,undefined);
+  assert.equal(result.observations[0].body,body);
+ }
+});
 test('text references yield readable evidence without interpreting encoded markup',()=>{
  const e=extractHtml('<title>Caf&#233; &amp; tea</title><meta name="description" content="&#x1F600; &quot;offer&quot;"><h1>Price&nbsp;&lt;strong&gt;9&#8364;&lt;/strong&gt;</h1><p>It&apos;s <b>ready</b> &amp;amp; safe.</p>');
  assert.equal(e.title,'Café & tea');assert.deepEqual(e.descriptions,['😀 "offer"']);
