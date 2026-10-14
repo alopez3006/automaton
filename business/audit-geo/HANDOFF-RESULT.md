@@ -1,19 +1,21 @@
-# HTML duplicate attribute evidence — local correction
+# Current pass — bounded dependency assessment
 
-Hypothesis: preserving the first HTML attribute prevents later duplicate values from masking noindex or substituting metadata, link and JSON-LD identities.
+Hypothesis: qualified demand and a genuinely useful reviewed report are the next business bottlenecks. Another unmotivated collector patch would not establish either.
 
-Action: reproduced noindex becoming index, verified the WHATWG attribute-name rule, and corrected the shared attribute reader to preserve first values, including case variants, empty and valueless attributes. Artifact: evidence.mjs, evidence.test.mjs and DUPLICATE-ATTRIBUTE-ACCEPTANCE.json. No unrelated untracked assessment file changed.
+Action/artifact: `NEXT-ACTION-DEPENDENCIES.json` records the current anonymous inventory and six concrete candidates across acquisition, conversion, report quality and delivery, with individual prerequisites. No newly justified executable improvement was found; this pass does not claim business progress from an unchanged status check.
 
-Verification: 55 collector/network/robots/report controls and 21 preview/review/readiness controls pass; syntax and diff checks pass. New fixtures cover repeated names/values, quoted attribute-like text, empty/valueless fields, discovery URLs and JSON-LD @graph preservation. Bounded regex extraction remains incomplete HTML parsing; this is not XHTML validation, customer usefulness, indexing or citation proof. Existing private snapshots remain unchanged.
+Verification: owner inbox empty at both checkpoints; safe hosted-memory recall succeeded after restricted DNS failure. Anonymous operator inventory at 2026-10-14T12:54:23.975Z: 3 retained records, 0 requested, 1 prepared, 2 ineligible, 0 payment_pending, 0 delivered, 1 stored reviewed summary. These are bounded retained records, potentially administrative/test, and the summary is not current usefulness approval. Payments and notifications false. Budget helper: EUR 50 total/available, zero used/reserved.
 
-Alternatives evaluated: acquisition pages/crawl/mobile acceptance completed, discovery observation due 21 October; external LinkedIn publication belongs to the owner. Conversion measurement patch awaits the existing accepted-channel dependency, with no credential/helper retry. Delivery and checkout activation need a genuinely useful reviewed report and actual customer-authorized payment path; no duplicate email test or invented sale. Chose a reproduced local evidence error that can distort useful report tasks.
+Candidates and prerequisites:
+- Owned publication and GET measurement: existing accepted source-transport dependency, question 338a6610-7c36-4312-a4b7-fe96e96b42b6. No credential generation or transfer retry.
+- Discovery: repeat on/after 21 October or verified new covering Search Console access; published pages/mobile/navigation already accepted.
+- LinkedIn: owner selected manual posting; actual post URL/date and aggregates are not available. No automated posting authorized.
+- Conversion: deploy the ready measurement patch before comparing matching dated GET/request windows; historical inventory cannot supply conversion rates.
+- Report quality: next genuine request or materially new task evidence; retained conditional task already deferred by G17. No repetitive review or demonstration inference.
+- Delivery/launch: useful independently reviewed report and actual customer-authorized payment; provider inbox test already complete and not repeated.
 
-Measurable follow-up: next genuine request records duplicate-attribute observations affecting retained evidence and tasks kept, revised or removed after independent review. No demonstration inference to fill this metric.
+Measurable follow-up: first new requested record triggers preparation and task-level usefulness review; accepted publication channel triggers the existing measurement patch; actual owner post enables seven-day distribution measurement; discovery observation remains due 21 October. These dependencies do not pause the mission or change the configured heartbeat.
 
-Owner inbox empty at initial and verification checkpoints. Hosted safe-broker recall succeeded after restricted DNS failed. Budget/counters/production flags preserved; no purchase, email, inference, publication, external post or new controller/schedule. This pass external spending: EUR 0.
+No code change, tests rerun, deployment, external post, email, inference, purchase, counter reset, token rotation or scheduler/controller creation. Existing untracked assessment untouched. No new durable learning beyond the existing recorded dependencies, so no duplicate memory write. This pass spending: EUR 0.
 
-Remaining dependencies: accepted publication channel for public GET measurement; useful reviewed report before launch; real payment-to-delivery evidence. Existing questions are not duplicated.
-
-Memory persistence attempted through the hosted broker; it returned stored=false, reason=duplicate. No new memory entry is claimed; local proof and receipt retain this correction.
-
-Supervisor reconciliation: 2026-10-14T12:52:52.455Z — Supervisor independently ran 55 collector/network/robots/report and 21 preview/review/readiness controls. Source/test hashes, syntax and diff agree with the acceptance artifact. Official WHATWG duplicate-attribute rule read through agent-reach/Jina confirms removal of the later attribute. Existing parser limitations, immutable private snapshots, original controller receipt, pending questions, budget and counters retained. No Sites credential/transfer retry, Site publication, new customer collection, inference, email, payment, purchase or token rotation.
+Supervisor reconciliation: 2026-10-14T13:12:12.937Z — Supervisor reconciled the completed dependency assessment: six concrete candidates across four workstreams, explicit prerequisites and internally consistent dated inventory. Budget agrees with the fresh runtime snapshot (used/reserved EUR 0, available EUR 50); no claim of a new provider inventory check or business progress. No code/tests/lab rerun, credential/helper retry, repeated owner question, inference, email, payment, purchase or token rotation. Existing source-transport dependency, watcher, counters and original receipt preserved; no new durable lesson requiring another memory write.

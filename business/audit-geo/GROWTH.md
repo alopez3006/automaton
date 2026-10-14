@@ -140,3 +140,7 @@ Local collector corrected: case-insensitive exact text/html and application/xhtm
 ## G30 — First HTML attribute evidence, 2026-10-14T12:35:14.431Z
 
 Reproduced duplicate content replacing noindex with index. Shared local attribute reader now preserves first case-insensitive names, including empty/valueless fields. WHATWG attribute-name rule verified. 55 collector/network/robots/report and 21 review/preview/readiness controls pass; syntax/diff clean. DUPLICATE-ATTRIBUTE-ACCEPTANCE.json. Bounded regex, not complete HTML/XHTML parsing or customer usefulness. No snapshot migration, inference, publication, email or spending. Next genuine request: affected evidence and independently reviewed task corrections; no demo inference. Public-channel dependency unchanged.
+
+## Dependency assessment — 2026-10-14T12:55:07.218414+00:00
+
+See NEXT-ACTION-DEPENDENCIES.json for six concrete candidates and their prerequisites. No new safe useful execution identified this pass; no completed candidate reopened, parser busywork added or rejected transfer retried. Actual anonymous inventory has no requested/payment-pending record. Prioritize new genuine demand/usefulness, accepted publication channel and owner-post evidence; discovery remains due 21 October. This assessment is not acquisition or conversion improvement.
