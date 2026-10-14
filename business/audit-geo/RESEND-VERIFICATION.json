@@ -1,9 +1,9 @@
 {
-  "observedAt": "2026-10-14T07:19:00Z",
+  "observedAt": "2026-10-14T07:39:14.613429+00:00",
   "domain": "vutler.com",
-  "action": "Verify DNS Records clicked once",
-  "before": "Not Started",
-  "after": "Pending",
+  "action": "Read authenticated existing domain UI; no verification click",
+  "before": "Pending",
+  "after": "Verified",
   "publicDnsRequirementsMatched": true,
   "receivingEnabled": false,
   "runtimeNotificationsConfigured": false,
@@ -11,8 +11,16 @@
   "providerAcceptance": null,
   "inboxDelivery": null,
   "limitations": [
-    "Pending is not Verified",
+    "Verified domain is not provider email acceptance or inbox delivery",
     "No mail.vutler.com verification inferred",
-    "No key or email created"
-  ]
+    "No key or email created",
+    "Scoped runtime credential still requires secure configuration"
+  ],
+  "sendingEnabled": true,
+  "dkimStatus": "Verified",
+  "spfCnameStatuses": [
+    "Verified",
+    "Verified"
+  ],
+  "plannedSender": "Audit GEO <audits@vutler.com>"
 }

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "observedAt": "2026-10-14T07:53:37.222706+00:00",
+  "projectId": "appgprj_6acd6192fcac8191b47b7b9538517608",
+  "siteVersion": 13,
+  "sourceCommit": "4bf6e0435a0ea4cfd8c38bc2dda196aa139848aa",
+  "savedVersionId": "appgprj_6acd6192fcac8191b47b7b9538517608~appgver_d81e8ba035c48191bd6328332acde185",
+  "deploymentId": "appgdep_6acf34ef1d7881919915a580d0c775bb",
+  "deploymentStatus": "succeeded",
+  "environmentRevision": 8,
+  "from": "Audit GEO <audits@vutler.com>",
+  "emailsEnabled": false,
+  "resendApiKeyConfigured": false,
+  "trackingLinkSecretPreserved": true,
+  "updatedKeys": [
+    "RESEND_FROM",
+    "RESEND_EMAILS_ENABLED"
+  ],
+  "credentialState": "Owner-created key visible in Resend UI after prepared Sending access / vutler.com form; value hidden; not transferred to Sites",
+  "blocker": "Automatic approval review rejected the alternate encrypted credential-transfer mechanism as a security-control workaround; no retry after rejection",
+  "providerAcceptance": null,
+  "inboxDelivery": null,
+  "externalSpendCents": 0
+}
