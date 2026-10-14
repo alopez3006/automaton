@@ -33,3 +33,28 @@ test('hidden punctuation cannot finish a truncated prose ending',()=>{
   }
   assert.ok(assembleReport(complete+'\n```html\n<span>Example</span>\n```').includes('Prompt for your agent'));
 });
+test('comments extending to end of input cannot supply completion requirements',()=>{
+  const missing=complete.replace(' No-action condition: skip if accurate.','');
+  assert.throws(()=>assembleReport(missing+'\n<!-- No-action: skip if accurate.'),/incomplete report/);
+  assert.throws(()=>assembleReport(complete.slice(0,-1)+'\n<!-- Finished.'),/incomplete report/);
+  assert.throws(()=>assembleReport(complete.replace('Record the deployed title and check it next week.','<!-- Record the title.')),/incomplete report/);
+  assert.throws(()=>assembleReport(complete+'\n<!-- Unfinished administrative note'),/incomplete report/);
+  assert.ok(assembleReport(complete.replace('Public page only.','<!-- Closed note. -->\nPublic page only.')).includes('Prompt for your agent'));
+});
+test('comment delimiters inside fenced examples do not consume following report sections',()=>{
+  for(const fence of ['```','~~~~']){
+    for(const info of ['html','html <!-- Literal opener information']){
+      const report=complete.replace('Public page only.',`Public page only.\n${fence}${info}\n<!-- Literal unfinished comment example\n${fence}`);
+      assert.ok(assembleReport(report).includes('Prompt for your agent'));
+    }
+  }
+});
+test('unfinished comments or fences cannot capture the appended agent prompt',()=>{
+  for(const tail of ['<!-- Unfinished note','```text\nExample.','~~~~html\nExample.']){
+    assert.throws(()=>assembleReport(complete+'\n'+tail),/incomplete report/);
+  }
+});
+test('fence-like text inside a closed comment cannot open a report example',()=>{
+  const report=complete.replace('Public page only.','<!-- Hidden note.\n```html\nNo-action: hidden instruction.\n-->\nPublic page only.');
+  assert.ok(assembleReport(report).includes('Prompt for your agent'));
+});

@@ -41,7 +41,7 @@ test('fresh task approval cannot authorize an empty or example-only report secti
 });
 test('fresh task approval cannot invite payment with a hidden no-action instruction or ending',()=>{
  const original=make();
- for(const hidden of ['<!-- No-action: keep accurate wording. -->','```text\nNo-action: keep accurate wording.\n```','### No-action: keep accurate wording.']){
+ for(const hidden of ['<!-- No-action: keep accurate wording. -->','<!-- No-action: keep accurate wording.','```text\nNo-action: keep accurate wording.\n```','### No-action: keep accurate wording.']){
   const report=original.report.replace(' No-action condition: keep accurate wording.','')+'\n'+hidden+'\nFinished.';
   const d=approveFixture({...structuredClone(original),report},evidence);
   assert.equal(validateTaskReview(d,evidence).approved,true);
@@ -50,4 +50,19 @@ test('fresh task approval cannot invite payment with a hidden no-action instruct
  const d=approveFixture({...structuredClone(original),report:original.report.slice(0,-1)+'\n<!-- Finished. -->'},evidence);
  assert.equal(validateTaskReview(d,evidence).approved,true);
  assert.equal(canRequestPayment(d,evidence),false);
+});
+test('complete reviewed prose with a literal comment example remains eligible',()=>{
+ const original=make();
+ const report=original.report.replace('## Evidence','```html\n<!-- Literal unfinished comment example\n```\n\n## Evidence');
+ const d=approveFixture({...structuredClone(original),report},evidence);
+ assert.equal(validateTaskReview(d,evidence).approved,true);
+ assert.equal(canRequestPayment(d,evidence),true);
+});
+test('fresh task approval cannot invite payment with unfinished trailing markup',()=>{
+ const original=make();
+ for(const tail of ['<!-- Unfinished note','```text\nExample.','~~~~html\nExample.']){
+  const d=approveFixture({...structuredClone(original),report:original.report+'\n'+tail},evidence);
+  assert.equal(validateTaskReview(d,evidence).approved,true);
+  assert.equal(canRequestPayment(d,evidence),false);
+ }
 });

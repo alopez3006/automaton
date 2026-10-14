@@ -1,0 +1,58 @@
+{
+  "observedAt": "2026-10-14T16:26:18.182333+00:00",
+  "hypothesis": "Completion requirements must not be supplied by comments extending to end of input.",
+  "reproduction": "Before correction, a report missing visible no-action text was accepted when an unclosed comment supplied it.",
+  "action": "Exclude HTML comments through closing delimiter or end of input in shared report prose extraction.",
+  "files": {
+    "report.mjs": "8dd8e5ff4a0e4f09f7fd3e2fa3e0a6ffcc46369f0d350e6ed4e10a04d8699ba6",
+    "report.test.mjs": "e52707153a5b1c6c8260a9ed3541a8f2fbef0481b32e4de1708b63207bd0e707",
+    "task-review.test.mjs": "6c582e3ae851045d48ae299b5d425e2308d0e3a01835d3824dda602e65d6f946"
+  },
+  "verification": {
+    "targetedTestsPassed": 30,
+    "mockedLaunchScenariosPassed": 14,
+    "diffCheck": "passed",
+    "controls": [
+      "hidden no-action",
+      "hidden ending",
+      "comment-only section",
+      "valid complete report with trailing comment",
+      "closed comment followed by visible prose",
+      "fresh digest-bound approval cannot bypass completion"
+    ]
+  },
+  "limits": [
+    "Local structural proof only, not semantic usefulness or customer delivery.",
+    "No private snapshot migration, inference, deployment, email or purchase."
+  ],
+  "followUp": "On next genuine draft count comment-related completion refusals, repairs and independent re-reviews before payment invitation.",
+  "externalSpendCents": 0,
+  "supervisorAcceptance": {
+    "at": "2026-10-14T16:44:20.728Z",
+    "priorControllerAcceptance": "Historical 30-control result on the prior source; superseded by the following source hashes and checks.",
+    "regressionsReproduced": [
+      "Literal unfinished comment in a closed fenced example caused rejection of valid following report sections.",
+      "An unfinished trailing report comment or fence was accepted and could capture the appended agent prompt."
+    ],
+    "correction": "Process comment and code-fence context together. Comment delimiters inside fenced examples do not affect later prose. Reject incomplete comment/fence markup before appending the agent prompt.",
+    "targetedTestsPassed": 35,
+    "mockedLaunchScenariosPassed": 14,
+    "sourceHashes": {
+      "report.mjs": "b7a42d57f404b2171834db01b171c1deb8a35399238cfe6e07e76a8744f03067",
+      "report.test.mjs": "b58d67e290b181a427732734d93bea0896ee823ea1692626f54dd54e52b90389",
+      "task-review.test.mjs": "801865910af448f132f899c0cc2e5adc11ad7ccce2e9a909ab4e498a04ff412f"
+    },
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "newControls": [
+      "Backtick and tilde examples including literal comment delimiters in opener information",
+      "Fences inside comments remain hidden",
+      "Incomplete trailing comment/fence denies admission and new payment invitation after fresh review",
+      "Complete visible reviewed report with literal comment example remains eligible"
+    ],
+    "limits": [
+      "Bounded structural extraction is not a complete Markdown/HTML parser or semantic usefulness review.",
+      "No private snapshot migration, paid entitlement rewrite, inference, real customer payment, email, Site deployment or purchase."
+    ]
+  }
+}
