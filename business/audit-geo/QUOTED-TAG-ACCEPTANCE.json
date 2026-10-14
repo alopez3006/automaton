@@ -1,0 +1,76 @@
+{
+  "observedAt": "2026-10-14T17:19:09.042833+00:00",
+  "status": "local_acceptance",
+  "hypothesis": "Preserving quoted tag boundaries prevents missing noindex evidence and false metadata/link candidates before independent review.",
+  "reproduction": {
+    "input": "<meta name=\"robots\" data-note=\"a > b\" content=\"noindex\">",
+    "before": [
+      {
+        "agent": "robots",
+        "content": ""
+      }
+    ],
+    "after": [
+      {
+        "agent": "robots",
+        "content": "noindex"
+      }
+    ]
+  },
+  "action": "Shared quote-aware ordered tag extraction for meta, link and anchor opening tags.",
+  "checks": {
+    "tests": 81,
+    "passed": 81,
+    "failed": 0,
+    "command": "node --test business/audit-geo/evidence.test.mjs business/audit-geo/network.test.mjs business/audit-geo/validate-draft.test.mjs business/audit-geo/task-review.test.mjs business/audit-geo/robots.test.mjs",
+    "controls": [
+      "double/single quoted greater-than characters",
+      "tag-like quoted attribute values",
+      "tag-name lookalikes and closing tags",
+      "existing duplicate attributes, JSON-LD, comments, network, citations and payment review regressions"
+    ],
+    "syntax": true,
+    "diffWhitespace": true
+  },
+  "sha256": {
+    "evidence.mjs": "f7663043897b21c91a781a683320bc8cd5fff6965d2ce0803408aeeb27e276a9",
+    "evidence.test.mjs": "ecfad7676f8c9e57afb9afec592f379f00ec3dc04ac98cb5a351c7880ab97c4a"
+  },
+  "inventory": {
+    "observedAt": "2026-10-14T17:18:24.242Z",
+    "total": 3,
+    "requested": 0,
+    "prepared": 1,
+    "ineligible": 2,
+    "payment_pending": 0,
+    "delivered": 0,
+    "includesAdministrativeOrTestRecords": true,
+    "payments": false,
+    "notifications": false
+  },
+  "limits": [
+    "Bounded regex; not full HTML/DOM parsing",
+    "Only metadata/link opening-tag selection changed; raw-text, headings and sitemap parsers remain bounded",
+    "Local fixtures are not a semantic benchmark, deployed website change or customer result"
+  ],
+  "followUp": "On next genuine request count affected metadata/link evidence and independently retained/revised/removed tasks; no demonstration inference.",
+  "externalSpendCents": 0,
+  "supervisorAcceptance": {
+    "at": "2026-10-14T17:37:00.048Z",
+    "sourceHashesMatch": true,
+    "sourceHashes": {
+      "evidence.mjs": "f7663043897b21c91a781a683320bc8cd5fff6965d2ce0803408aeeb27e276a9",
+      "evidence.test.mjs": "ecfad7676f8c9e57afb9afec592f379f00ec3dc04ac98cb5a351c7880ab97c4a"
+    },
+    "testsPassed": 81,
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "sourceChangedBySupervisor": false,
+    "inventoryBoundary": "Dated anonymous controller inventory retained; no independent provider re-fetch.",
+    "limits": [
+      "Only ordered opening-tag selection for meta, link and anchor changes.",
+      "Existing raw-text, heading, text and sitemap extraction remains bounded; this is not full HTML/DOM parsing.",
+      "Local acceptance does not establish a useful customer task, deployed Site, ranking, AI citation, sale or inbox delivery."
+    ]
+  }
+}

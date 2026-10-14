@@ -67,6 +67,12 @@ export function createPublicFetcher({resolveHost=lookup,get=https.get,totalTimeo
 }
 export const publicFetch=createPublicFetcher();
 // Raw HTML evidence only: this is not a rendered-browser or schema-validity audit.
+// Consume complete tags in order so quoted delimiters and tag-like attribute
+// values cannot terminate a tag or seed an extra metadata/discovery tag.
+function openingTags(markup,name) {
+  return [...markup.matchAll(/<\/?([a-z][a-z0-9:-]*)(?=[\s/>])(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi)]
+    .filter(m=>m[0][1]!=='/'&&m[1].toLowerCase()===name).map(m=>m[0]);
+}
 function attributes(tag) {
   const result=Object.create(null);
   // HTML discards later duplicate attributes, including case variants.
@@ -131,8 +137,8 @@ export function extractHtml(body) {
     try{structuredData.push({status:'parsed',value:JSON.parse(content)});}
     catch{structuredData.push({status:'invalid_json',excerpt:content.slice(0,500)});}
   });
-  const meta=[...clean.matchAll(/<meta\b[^>]*>/gi)].map(m=>attributes(m[0]));
-  const links=[...clean.matchAll(/<link\b[^>]*>/gi)].map(m=>attributes(m[0]));
+  const meta=openingTags(clean,'meta').map(attributes);
+  const links=openingTags(clean,'link').map(attributes);
   return {
     title:textContent(clean.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]??''),
     descriptions:meta.filter(m=>m.name?.toLowerCase()==='description').map(m=>decodeTextReferences(m.content??'')),
@@ -155,7 +161,7 @@ function canonicalCandidate(value,base) {
 }
 export function internalCandidates(body,base,{sitemap=false}={}) {
   const markup=sitemap?body.replace(/<!--[\s\S]*?(?:-->|$)/g,' '):activeMarkup(body);
-  const matches=sitemap?[...markup.matchAll(/<loc\b[^>]*>([^<]+)<\/loc>/gi)].map(m=>m[1]):[...markup.matchAll(/<a\b[^>]*>/gi)].map(m=>attributes(m[0]).href);
+  const matches=sitemap?[...markup.matchAll(/<loc\b[^>]*>([^<]+)<\/loc>/gi)].map(m=>m[1]):openingTags(markup,'a').map(tag=>attributes(tag).href);
   const result=[];
   for(const value of matches){
     if(typeof value!=='string')continue;

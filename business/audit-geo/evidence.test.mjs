@@ -1,6 +1,23 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('quoted tag delimiters preserve metadata and discovered links',()=>{
+ const html=`<META data-note="a > b" name="robots" content="noindex"><meta data-note='x > y' name=description content="Real description"><link data-note="a > b" rel=canonical href="/real"><a title='x > y' href="/pricing">Pricing</a>`;
+ const e=extractHtml(html);
+ assert.deepEqual(e.robots,[{agent:'robots',content:'noindex'}]);
+ assert.deepEqual(e.descriptions,['Real description']);assert.deepEqual(e.canonicals,['/real']);
+ assert.deepEqual(internalCandidates(html,'https://example.com/'),['https://example.com/pricing']);
+});
+test('tag-like quoted attribute values do not seed metadata or discovery',()=>{
+ const html=`<div data-example='<meta name="robots" content="noindex"><link rel="canonical" href="/fake"><a href="/fake">'>Example</div><meta name="robots" content="index"><a href="/real">Real</a>`;
+ const e=extractHtml(html);assert.deepEqual(e.robots,[{agent:'robots',content:'index'}]);
+ assert.deepEqual(e.canonicals,[]);assert.deepEqual(internalCandidates(html,'https://example.com/'),['https://example.com/real']);
+});
+test('tag-name lookalikes and closing tags do not supply metadata or links',()=>{
+ const html='<meta-extra name="robots" content="noindex"><link:example rel="canonical" href="/fake"><a-example href="/fake"></meta name="robots" content="noindex"></a href="/fake"><meta name="robots" content="index">';
+ assert.deepEqual(extractHtml(html).robots,[{agent:'robots',content:'index'}]);
+ assert.deepEqual(extractHtml(html).canonicals,[]);assert.deepEqual(internalCandidates(html,'https://example.com/'),[]);
+});
 test('duplicate attributes preserve the first metadata value including case variants',()=>{
  const e=extractHtml('<meta name="robots" NAME="description" content="noindex" CONTENT="index"><meta name="description" content="Original" content="Replacement"><link rel="canonical" href="/original" HREF="/replacement">');
  assert.deepEqual(e.robots,[{agent:'robots',content:'noindex'}]);
