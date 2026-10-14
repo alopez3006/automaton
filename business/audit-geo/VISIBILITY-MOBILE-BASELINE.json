@@ -1,0 +1,160 @@
+{
+  "observedAt": "2026-10-14T11:19:41.561Z",
+  "url": "https://audit.vutler.com/ai-search-visibility",
+  "siteVersion": 17,
+  "hypothesis": "The newly published discovery page should remain readable and technically accessible on simulated mobile before more content or speculative performance changes.",
+  "action": "Ran documented Lighthouse 12.8.2 public-page audit in temporary Chrome profile; checked response latency with three sequential public GETs.",
+  "categories": {
+    "performance": 97,
+    "accessibility": 100,
+    "best-practices": 93,
+    "seo": 100
+  },
+  "audits": [
+    {
+      "id": "first-contentful-paint",
+      "title": "First Contentful Paint",
+      "score": 0.85,
+      "numericValue": 1979.8575,
+      "numericUnit": "millisecond",
+      "displayValue": "2.0 s"
+    },
+    {
+      "id": "largest-contentful-paint",
+      "title": "Largest Contentful Paint",
+      "score": 0.97,
+      "numericValue": 1979.8575,
+      "numericUnit": "millisecond",
+      "displayValue": "2.0 s"
+    },
+    {
+      "id": "speed-index",
+      "title": "Speed Index",
+      "score": 0.89,
+      "numericValue": 3392.7749961967465,
+      "numericUnit": "millisecond",
+      "displayValue": "3.4 s"
+    },
+    {
+      "id": "total-blocking-time",
+      "title": "Total Blocking Time",
+      "score": 1,
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "0 ms"
+    },
+    {
+      "id": "cumulative-layout-shift",
+      "title": "Cumulative Layout Shift",
+      "score": 1,
+      "numericValue": 0,
+      "numericUnit": "unitless",
+      "displayValue": "0"
+    },
+    {
+      "id": "server-response-time",
+      "title": "Reduce initial server response time",
+      "score": 0,
+      "numericValue": 1712.859,
+      "numericUnit": "millisecond",
+      "displayValue": "Root document took 1,710 ms"
+    },
+    {
+      "id": "errors-in-console",
+      "title": "Browser errors were logged to the console",
+      "score": 0,
+      "numericValue": null,
+      "numericUnit": null,
+      "displayValue": null
+    },
+    {
+      "id": "is-crawlable",
+      "title": "Page isn’t blocked from indexing",
+      "score": 1,
+      "numericValue": null,
+      "numericUnit": null,
+      "displayValue": null
+    },
+    {
+      "id": "canonical",
+      "title": "Document has a valid `rel=canonical`",
+      "score": 1,
+      "numericValue": null,
+      "numericUnit": null,
+      "displayValue": null
+    },
+    {
+      "id": "document-title",
+      "title": "Document has a `<title>` element",
+      "score": 1,
+      "numericValue": null,
+      "numericUnit": null,
+      "displayValue": null
+    },
+    {
+      "id": "meta-description",
+      "title": "Document has a meta description",
+      "score": 1,
+      "numericValue": null,
+      "numericUnit": null,
+      "displayValue": null
+    }
+  ],
+  "latencyControls": [
+    {
+      "sample": 1,
+      "status": 200,
+      "headersMs": 222,
+      "totalMs": 235
+    },
+    {
+      "sample": 2,
+      "status": 200,
+      "headersMs": 75,
+      "totalMs": 83
+    },
+    {
+      "sample": 3,
+      "status": 200,
+      "headersMs": 75,
+      "totalMs": 77
+    }
+  ],
+  "publicResponse": {
+    "uncompressedBytes": 113034,
+    "cacheControl": "no-store",
+    "contentEncoding": "gzip"
+  },
+  "decision": "No speculative source change: good mobile lab result, slow initial Lighthouse response not reproduced in bounded GET sample. Existing platform-injected inline-script CSP error does not justify relaxing script policy.",
+  "inventory": {
+    "total": 3,
+    "requested": 0,
+    "prepared": 1,
+    "ineligible": 2,
+    "delivered": 0,
+    "payments": false,
+    "notifications": false
+  },
+  "limits": [
+    "One simulated mobile lab navigation, not field Core Web Vitals or customer usability proof.",
+    "Three GETs are a tiny same-location sample, not global latency or a cold/warm causal experiment.",
+    "Lighthouse SEO score is not Google indexing, ranking, traffic or AI citation evidence.",
+    "No source changes, deployment, customer requests, inference, email, payments, purchase or new controller."
+  ],
+  "followUp": "After a material page/platform change or real incident, compare same tool/version and metrics. On/after 21 October measure bounded discovery including the new page; next genuine guide request measure independently reviewed usefulness.",
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T11:31:46.562Z",
+    "method": "Read-only comparison with retained temporary Lighthouse JSON",
+    "lighthouseVersion": "12.8.2",
+    "formFactor": "mobile",
+    "requestedAndFinalURLMatch": true,
+    "runtimeErrorPresent": false,
+    "allCategoryScoresMatch": true,
+    "allRetainedAuditValuesMatch": true,
+    "fetchTimeMatches": true,
+    "latencyControls": "Controller-recorded three public GETs; no independent rerun",
+    "boundary": "One simulated lab navigation only; no field performance, usability, indexing, citation or conversion proof",
+    "newLabRun": false
+  }
+}

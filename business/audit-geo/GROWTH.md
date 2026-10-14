@@ -120,3 +120,7 @@ Published version 17: https://audit.vutler.com/ai-search-visibility, source 8a31
 ## G26 — Robots response media type, 2026-10-14T11:03:30.713307+00:00
 
 Reproduced local defect: HTTP 200 JSON error was interpreted as permissive for all five bots. Explicit incompatible media type now returns unknown, retaining raw evidence. Fifty-five focused controls pass including collector integration, MIME casing/charset, legacy missing-header behavior and rule matching. ROBOTS-MEDIA-ACCEPTANCE.json. No extra request, snapshot migration or site deployment required. Next real report: incompatible-format count and independently reviewed task corrections; static policy is not crawler/indexing/citation proof.
+
+## G25 — Version 17 mobile discovery baseline, 14 October 2026
+
+Executed missing mobile lab acceptance for the newly published checklist: Lighthouse 12.8.2 performance 97, accessibility 100, SEO 100, best practices 93. Initial 1713 ms response did not repeat in three GET controls (222/75/75 ms headers). No speculative patch or CSP relaxation; existing injected-script issue retained. VISIBILITY-MOBILE-BASELINE.json records metrics and limits. Completed measurement, not indexing/ranking/citation or field-performance proof. Repeat only after material change/incident; discovery check remains on/after 21 October. Next genuine guide request: reviewed usefulness with denominator unknown. No spending or activation.
