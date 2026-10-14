@@ -1,0 +1,15 @@
+{
+  "observedAt": "2026-10-14T22:43:15.783126+00:00",
+  "hypothesis": "An actually callable Search Console connection may provide owned-domain discovery evidence independently of blocked Sites source publication.",
+  "action": "Called connected GSC list_properties once; checked exact owned host and parent domain coverage without querying unrelated property data.",
+  "verification": {
+    "propertiesReturned": 6,
+    "ownedHostCovered": false,
+    "parentDomainCovered": false,
+    "propertyCreated": false,
+    "searchAnalyticsQueried": false
+  },
+  "outcome": "No covering verified property in this connected account; no indexing conclusion follows.",
+  "followUp": "Use existing Bing discovery measurement on or after 2026-10-21; use GSC only if a covering property becomes available.",
+  "externalSpendCents": 0
+}

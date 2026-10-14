@@ -1,3 +1,19 @@
+# Execution receipt — 2026-10-14T22:43:15.783126+00:00
+
+Status: completed (bounded connected discovery capability check). External spend this pass: EUR 0.
+
+Hypothesis: a callable Search Console connector could unlock owned-domain discovery measurement without the blocked Sites publication transport. Action: called list_properties once. Six properties returned; none covers audit.vutler.com or its parent domain. No unrelated analytics queried, property created or owner identity inferred. Artifact: GSC-COVERAGE-RESULT.json. This verifies account coverage only, not indexing or search performance.
+
+Fresh authorized metrics at 2026-10-14T22:42:47.862Z: four retained first-page records, zero requested/payment-pending/delivered, one prepared and three ineligible. Includes administrative/tests; not a lifetime customer cohort. Notifications true, payments false. Budget EUR 0 used/reserved, EUR 50 available. Hosted broker recall succeeded through authorized networking after sandbox DNS failure; no provider outage established. Console inbox empty at both checkpoints.
+
+Four workstreams evaluated: acquisition — owned guides/navigation/sitemap already published, Bing measurement due 21 October; newly checked GSC coverage absent, manual LinkedIn measurement requires an actual owner post and aggregates. Conversion — accepted GET measurement patch awaits supported accepted Sites source transport; another unchanged copy edit has no evidenced benefit. Offer quality — no new request; previous no-action review and collector acceptance remain completed, without another synthetic report. Delivery — native fallback already provider-delivered; automatic runtime fault remains unresolved, and locally accepted diagnostic requires accepted source publication. No duplicate send, exhaustion reset, unchanged log poll or credential transfer attempted.
+
+Concrete next candidates/prerequisites: (1) deploy GET metrics and notification diagnostics when an accepted Sites source transport exists; (2) measure Bing indexed priority URLs/impressions on or after 21 October; (3) measure owner-post results when its URL and aggregates exist; (4) independently review the next genuine useful report before checkout; (5) verify actual customer-authorized payment and delivery only after that gate and current capacity. No useful unblocked commercial action established beyond today's new capability check. No acquisition uplift, sale, deployment, email, inference, purchase or runtime repair claimed. Existing supervisor, watcher and counters preserved; no new schedule.
+
+Measurable follow-up: covering GSC property availability is currently false; avoid repeating this unchanged check. Prioritize new genuine demand or changed publication access; after accepted deployment observe the next natural fixed notification failure category with prior native-receipt reconciliation. No new durable workflow learned, so no duplicate memory persisted.
+
+---
+
 # Supervisor acceptance — 2026-10-14T22:40:57.258Z
 
 2026-10-14T22:40:57.258Z — Supervisor verified G45 source hashes before correction and reproduced one diagnostic gap: retry exhaustion overwrote the fixed send-failure category. Local markers now retain lastFailureReason separately from the terminal stop reason. Nine diagnostic cases, 32 direct/poll attempt/window exhaustion controls, the existing notification suite and 14 launch scenarios pass; syntax/diff clean. Provider bodies/messages and customer data remain excluded, accepted/exhausted markers and payment entitlement retained. Source publication is still blocked on the existing accepted Sites transport dependency; no credential replay, deployment, actual send, inference or spending. Historical production root cause and automatic sending remain unresolved; native fallback receipts preserved.
