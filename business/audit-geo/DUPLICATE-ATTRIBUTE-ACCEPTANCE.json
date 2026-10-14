@@ -1,0 +1,43 @@
+{
+  "createdAt": "2026-10-14T12:35:14.431Z",
+  "hypothesis": "Preserving the first HTML attribute prevents later duplicate values from masking indexing directives or substituting evidence identities.",
+  "reproduction": {
+    "input": "<meta name=\"robots\" content=\"noindex\" content=\"index\">",
+    "before": "index",
+    "after": "noindex"
+  },
+  "source": "https://html.spec.whatwg.org/multipage/parsing.html#attribute-name-state",
+  "artifact": "evidence.mjs",
+  "sha256": "fbd487c9570ad353e530b200623220b4e8ac879e8b84efd81952c781d103b9fe",
+  "testSha256": "b88f67036878aa56d5ba452ee7e61077541db8b2b8f1adbc96f5952b19862645",
+  "checks": {
+    "collectorNetworkRobotsReport": 55,
+    "previewReviewReadiness": 21,
+    "failed": 0,
+    "syntax": true,
+    "diff": true
+  },
+  "limits": [
+    "Bounded regex extraction, not complete HTML parsing or XHTML validation",
+    "Synthetic fixtures, not customer usefulness or indexing proof",
+    "Existing evidence snapshots and reviews unchanged"
+  ],
+  "followUp": "On next genuine request count duplicate-attribute observations affecting retained evidence and actual tasks kept/revised/removed after independent review.",
+  "deployed": false,
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T12:52:52.455Z",
+    "collectorNetworkRobotsReport": 55,
+    "previewReviewReadiness": 21,
+    "failed": 0,
+    "sourceAndTestHashesMatch": true,
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "officialRuleRead": {
+      "source": "https://html.spec.whatwg.org/multipage/parsing.html#attribute-name-state",
+      "backend": "agent-reach/Jina",
+      "firstAttributeRuleConfirmed": true
+    },
+    "boundary": "Local synthetic extraction proof; incomplete HTML parser, no XHTML validation, customer usefulness, indexing or citation proof"
+  }
+}

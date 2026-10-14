@@ -67,8 +67,13 @@ export function createPublicFetcher({resolveHost=lookup,get=https.get,totalTimeo
 export const publicFetch=createPublicFetcher();
 // Raw HTML evidence only: this is not a rendered-browser or schema-validity audit.
 function attributes(tag) {
-  const result={};
-  for(const m of tag.matchAll(/([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g)) result[m[1].toLowerCase()]=m[2]??m[3]??m[4];
+  const result=Object.create(null);
+  // HTML discards later duplicate attributes, including case variants.
+  // Consume valueless attributes too so a later value cannot replace them.
+  for(const m of tag.matchAll(/([^\s"'<>\/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g)) {
+    const name=m[1].toLowerCase();
+    if(!Object.hasOwn(result,name))result[name]=m[2]??m[3]??m[4]??'';
+  }
   return result;
 }
 // Decode once, after removing markup: encoded angle brackets are text, not tags.

@@ -136,3 +136,7 @@ Local implementation accepted; publication blocked by automatic approval rejecti
 ## G29 — Exact HTML evidence media types, 2026-10-14T12:18:41.916413+00:00
 
 Local collector corrected: case-insensitive exact text/html and application/xhtml+xml recognition with parameters removed; lookalike types no longer extracted as HTML. Five positive and six negative MIME fixtures plus collector/network/robots/report controls: 52 pass. HTML-MEDIA-ACCEPTANCE.json. No snapshot migration, inference, deployment, email or spending. Follow-up on next genuine request: recognized pages and independently reviewed task changes; bounded regex is not complete XHTML parsing. Prior public GET publication dependency unchanged.
+
+## G30 — First HTML attribute evidence, 2026-10-14T12:35:14.431Z
+
+Reproduced duplicate content replacing noindex with index. Shared local attribute reader now preserves first case-insensitive names, including empty/valueless fields. WHATWG attribute-name rule verified. 55 collector/network/robots/report and 21 review/preview/readiness controls pass; syntax/diff clean. DUPLICATE-ATTRIBUTE-ACCEPTANCE.json. Bounded regex, not complete HTML/XHTML parsing or customer usefulness. No snapshot migration, inference, publication, email or spending. Next genuine request: affected evidence and independently reviewed task corrections; no demo inference. Public-channel dependency unchanged.

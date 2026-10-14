@@ -1,6 +1,22 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('duplicate attributes preserve the first metadata value including case variants',()=>{
+ const e=extractHtml('<meta name="robots" NAME="description" content="noindex" CONTENT="index"><meta name="description" content="Original" content="Replacement"><link rel="canonical" href="/original" HREF="/replacement">');
+ assert.deepEqual(e.robots,[{agent:'robots',content:'noindex'}]);
+ assert.deepEqual(e.descriptions,['Original']);assert.deepEqual(e.canonicals,['/original']);
+});
+test('valueless and empty attributes cannot be overwritten and quoted values stay intact',()=>{
+ const e=extractHtml('<meta name="description" content content="Replacement"><meta name="description" content="" content="Replacement"><meta name="description" content="name=robots content=noindex"><meta name=robots content=noindex content=index>');
+ assert.deepEqual(e.descriptions,['','','name=robots content=noindex']);
+ assert.deepEqual(e.robots,[{agent:'robots',content:'noindex'}]);
+});
+test('duplicate link and JSON-LD attributes cannot substitute later identities',()=>{
+ assert.deepEqual(internalCandidates('<a href="/original" href="/replacement">Offer</a><a href href="/hidden">Empty</a>','https://example.com/'),['https://example.com/original']);
+ const e=extractHtml('<script type="text/javascript" type="application/ld+json">{"fake":true}</script><script TYPE="application/ld+json" type="text/javascript">{"@graph":[{"@type":"Service"}]}</script>');
+ assert.equal(e.structuredData.blockCount,1);
+ assert.deepEqual(e.structuredData.blocks[0].value,{'@graph':[{'@type':'Service'}]});
+});
 test('collector recognizes exact case-insensitive HTML and XHTML media types',async()=>{
  const body='<title>Evidence</title><meta name="description" content="Supported"><link rel="canonical" href="https://example.com/"><h1>Offer</h1><script type="application/ld+json">{"@type":"Service"}</script>';
  for(const contentType of ['text/html','Text/HTML; Charset=UTF-8',' TEXT/HTML ; charset=utf-8','application/xhtml+xml','Application/XHTML+XML; charset=utf-8']){
