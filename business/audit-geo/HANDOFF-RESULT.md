@@ -1,3 +1,9 @@
+# Latest supervisor update — executor startup failure
+
+2026-10-14T15:02:46.423Z — Supervisor attempted one scheduled controller pass; it exited as failed before producing a receipt. First consecutive failure, existing retry backoff until 2026-10-14T15:26:05.270Z. Original watcher remains active; no spend, reservation or inference increment. CLI version/options, saved ChatGPT login status and ordinary account usage metadata checked; no required enabled MCP server. Exact cause remains unknown because raw executor stderr is intentionally discarded. No immediate retry, source/security change, fabricated receipt or counter reset. Private startup-diagnostic.json retains bounded evidence; next eligible scheduled pass remains subject to mission/backoff guards.
+
+## Prior completed controller receipt (historical)
+
 # Business execution receipt — 2026-10-14T14:40:31.797998+00:00
 
 Status: completed (bounded decision pass); mission remains enabled. External spending this pass: EUR 0.
