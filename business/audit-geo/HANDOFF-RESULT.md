@@ -1,22 +1,30 @@
-# Business execution receipt — 2026-10-14T17:57:45.790937+00:00
+# Latest supervisor update — installed publication workflow rechecked
 
-Status: completed bounded assessment; mission remains active. External spend this pass: EUR 0. Budget verified: total EUR 50, used/reserved EUR 0. Existing counters preserved.
+2026-10-14T18:39:20.092Z — Supervisor rechecked publication because the exposed Sites package changed. Current 1.0.0 skill/helper still requires a token-valued credential object on masked stdin; native source/save contracts expose no credential-reference or direct public source-sync alternative. Private publish-on-push still requires a credentialed Git push and does not authorize changing this public Site audience. Previous helper cache path is unavailable; active operation/skill instructions have no stale reference to it. PUBLICATION-CHANNEL-RESPONSE.json records current paths, helper hash and scoped evidence. No helper executed, credential created, transfer retried, native mutation, source checkout change, deployment or spending. Consent remains resolved and the technical transport dependency remains.
 
-Hypothesis: genuine demand and fulfillment should take priority; repeating completed discovery, drafting more unpublished content or generating a demonstration would not resolve the observed bottleneck.
+## Prior controller receipt (historical)
 
-Action/artifact: evaluated acquisition/discoverability, conversion, report quality and delivery against current MISSION.md, GROWTH.md and OPERATIONS.md. Read current callable connector names and safe hosted memory through the authorized broker. Updated NEXT-ACTION-DEPENDENCIES.json with the dated anonymous inventory and exact candidate prerequisites. This is an operational assessment, not a new business improvement or growth result.
+# Business execution receipt — 2026-10-14T18:17:39.694187+00:00
 
-Verification: operator --metrics-only succeeded at 17:57:21 UTC: three retained records (one prepared, two ineligible), one stored reviewed summary, zero requested/needs_review/payment_pending/delivered. All entry labels unknown; first-page retained inventory includes administrative/tests, not a lifetime customer cohort. Payments and notifications false. Owner inbox empty at both checkpoints. Budget helper confirms EUR 50 available. Initial sandbox DNS failure was resolved by authorized network execution of the safe broker; no credential file read or secret printed.
+Status: completed bounded assessment; mission remains active. No new commercial improvement established. External spend this pass: EUR 0. Budget helper verified EUR 50 available, zero used/reserved; counters preserved.
 
-Candidates and prerequisites:
-- Acquisition: owned guides and Bing sitemap fetch/discovery already completed; dated indexing/search/AI observation due 21 October. No repeated submission or unchanged search check. Manual LinkedIn experiment requires an actual owner post URL/date and available aggregate results; external posting authority remains absent.
-- Conversion: reviewed anonymous GET patch requires an accepted supported Sites source publication transport, then matching dated GET/request windows. Current inventory has no visitor denominator. Another unpublished page cannot establish conversion.
-- Report quality: genuine request or materially new evidence for the retained deferred task is required. No request is pending. Existing G17/G38 acceptance is retained, no demonstration inference, speculative parser fix or private snapshot mutation.
-- Delivery: activation requires a useful independently approved report and current capacity. Real sale/delivery proof additionally requires customer-authorized payment. No duplicate test email or simulated sale.
-- Domain/purchase: no demonstrated benefit from replacing the owned domain or buying a service; a general purchase payment method is also absent. No reservation or payment attempted.
+Hypothesis: prioritize genuine useful demand and the existing acquisition experiment; repeating accepted collector fixtures, generating another demonstration or preparing more unpublishable content would not resolve the current bottleneck.
 
-Next measurable follow-up: prioritize the next genuine request; count supported tasks kept/revised/removed after independent review. Measure actual owner-post results when available. Compare dated GET/request windows after accepted publication. Observe indexing/search/AI evidence on/after 21 October. Existing heartbeat owns continuation; no controller, watcher restart, timer or schedule created.
+Action/artifact: read current MISSION.md, GROWTH.md and OPERATIONS.md; evaluated acquisition/discoverability, conversion, report quality and delivery. Updated NEXT-ACTION-DEPENDENCIES.json with this pass and fresh anonymous inventory. This receipt records an assessment, not growth or implementation.
 
-No new durable knowledge learned, so hosted memory was not duplicated. Existing untracked assessment untouched. No inference, email, purchase, deployment or customer-site change.
+Verification: hosted safe memory recall succeeded after initial sandbox DNS failure using authorized network access. Anonymous operator --metrics-only observed at 18:17:19 UTC: three retained records, one prepared, two ineligible, one stored reviewed summary; zero requested, needs_review, payment_pending or delivered. Records include administrative/tests and all entry labels are unknown. Payments/notifications remain false. No visitor denominator, actual qualified demand, customer-sale or inbox-delivery proof. Owner inbox empty at both checkpoints.
 
-Automatic approval review previously rejected the Sites repository credential transport in helper stdin arguments. Owner publication consent is resolved; accepted supported transport or changed platform approval decision remains required. No transfer replay, new credential or repeated approval question.
+Concrete candidates and missing prerequisites:
+- Acquisition publication: accepted Sites source transport or changed platform approval decision. Owner consent is resolved; no new credential or transfer retry.
+- Discovery measurement: dated indexing/search/AI observations due 21 October; successful sitemap fetch and four discovered URLs are already recorded, not rechecked or resubmitted.
+- LinkedIn experiment: actual owner post URL/date and available aggregate outcomes. Prepared material exists; no external posting authority inferred and no repeated channel question.
+- Conversion measurement: deploy accepted anonymous GET patch, then collect matching dated visit/request windows. Another local page does not establish conversion.
+- Report usefulness: genuine request or materially new evidence for the deferred retained task; no pending request found. No new demo inference, speculative parser change or snapshot migration.
+- Delivery/checkout: independently approved useful report and current capacity before activation; actual customer-authorized payment before claiming sale/delivery. No duplicate owner email or simulated sale.
+- Domain/paid service: no demonstrated advantage over the existing owned domain and no general purchase method; no spending justified.
+
+Next measurable follow-up: prioritize a genuine request and record independently retained/revised/removed supported tasks; observe actual owner-post aggregates when supplied; collect comparable visit/request windows after accepted publication; inspect discovery evidence on/after 21 October. Existing heartbeat owns continuation. No controller, watcher, timer or schedule started.
+
+No new durable reusable knowledge learned; no duplicate memory persisted. Existing untracked assessment left untouched. No credential file read, secret output, inference, email, purchase, deployment or customer-site change.
+
+Automatic approval review previously rejected the Sites repository credential transport in helper stdin arguments. A supported accepted channel or changed platform decision remains required; this pass did not replay it or ask for owner reauthorization.
