@@ -1,6 +1,28 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('comments and script/style strings cannot supply metadata, headings, JSON-LD or discovery',()=>{
+ const fake='<title>Fake</title><meta name="description" content="Fake"><meta name="robots" content="noindex"><link rel="canonical" href="/fake"><h1>Fake</h1><a href="/fake">';
+ const html=`<!-- ${fake}<script type="application/ld+json">{"fake":true}</script> --><SCRIPT>const x = '${fake}';</SCRIPT ><style>${fake}</style><title>Real</title><meta name="description" content="Real"><meta name="robots" content="index"><link rel="canonical" href="/real"><h1>Real</h1><a href="/real">Real</a>`;
+ const e=extractHtml(html);
+ assert.equal(e.title,'Real');assert.deepEqual(e.descriptions,['Real']);assert.deepEqual(e.robots,[{agent:'robots',content:'index'}]);
+ assert.deepEqual(e.canonicals,['/real']);assert.deepEqual(e.h1,['Real']);assert.equal(e.structuredData.blockCount,0);
+ assert.equal(e.sections.length,1);assert.ok(!e.body.includes('Fake'));
+ assert.deepEqual(internalCandidates(html,'https://example.com/'),['https://example.com/real']);
+});
+test('JSON-LD comment-like strings survive while commented blocks and sitemap entries are excluded',()=>{
+ const value={description:'Keep <!-- literal --> text',example:'<meta name="robots" content="noindex">'};
+ const e=extractHtml(`<script type="application/ld+json">${JSON.stringify(value)}</script>`);
+ assert.deepEqual(e.structuredData.blocks[0].value,value);assert.deepEqual(e.robots,[]);
+ assert.deepEqual(internalCandidates('<!-- <loc>https://example.com/fake</loc> --><loc>https://example.com/real</loc>','https://example.com/',{sitemap:true}),['https://example.com/real']);
+});
+test('unterminated comment and raw-text blocks cannot seed false evidence after real markup',()=>{
+ for(const tail of ['<!--','<script>','<style>']) {
+  const html='<h1>Real</h1><a href="/real">Real</a>'+tail+'<h1>Fake</h1><meta name="robots" content="noindex"><a href="/fake">';
+  const e=extractHtml(html);assert.deepEqual(e.h1,['Real']);assert.deepEqual(e.robots,[]);
+  assert.deepEqual(internalCandidates(html,'https://example.com/'),['https://example.com/real']);
+ }
+});
 test('sample covers distinct path groups before repeating a dominant section',()=>{
  const base='https://example.com/';
  const paths=['/docs/a','/docs/b','/docs/c','/docs/d','/pricing','/services/consulting','/about'];

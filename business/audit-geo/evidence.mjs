@@ -72,6 +72,15 @@ function attributes(tag) {
   return result;
 }
 function textContent(value) { return value.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,1000); }
+// Walk comments and raw script/style blocks in document order. Comment-like
+// strings inside JSON-LD stay intact; commented-out scripts are never evidence.
+// This remains bounded regex extraction, not a browser HTML parser.
+function activeMarkup(body,onScript=()=>{}) {
+  return body.replace(/<!--[\s\S]*?(?:-->|$)|<(script|style)\b([^>]*)>([\s\S]*?)(?:<\/\1\s*>|$)/gi,(_block,kind,attrs,content)=>{
+    if(kind?.toLowerCase()==='script')onScript(attrs,content);
+    return ' ';
+  });
+}
 // Sample across the fetched document, rather than only its opening markup.
 // These excerpts establish presence, never absence or complete DOM coverage.
 export function extractSections(clean) {
@@ -94,17 +103,16 @@ export function extractSections(clean) {
 export function extractHtml(body) {
   const structuredData=[];
   let jsonLdCount=0;
-  for(const m of body.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
-    if(attributes(m[1]).type?.toLowerCase()!=='application/ld+json') continue;
+  const clean=activeMarkup(body,(attrs,content)=>{
+    if(attributes(attrs).type?.toLowerCase()!=='application/ld+json') return;
     jsonLdCount++;
-    if(structuredData.length>=10) continue;
-    if(m[2].length>12000){structuredData.push({status:'too_large',characters:m[2].length});continue;}
-    try{structuredData.push({status:'parsed',value:JSON.parse(m[2])});}
-    catch{structuredData.push({status:'invalid_json',excerpt:m[2].slice(0,500)});}
-  }
-  const meta=[...body.matchAll(/<meta\b[^>]*>/gi)].map(m=>attributes(m[0]));
-  const links=[...body.matchAll(/<link\b[^>]*>/gi)].map(m=>attributes(m[0]));
-  const clean=body.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,'');
+    if(structuredData.length>=10) return;
+    if(content.length>12000){structuredData.push({status:'too_large',characters:content.length});return;}
+    try{structuredData.push({status:'parsed',value:JSON.parse(content)});}
+    catch{structuredData.push({status:'invalid_json',excerpt:content.slice(0,500)});}
+  });
+  const meta=[...clean.matchAll(/<meta\b[^>]*>/gi)].map(m=>attributes(m[0]));
+  const links=[...clean.matchAll(/<link\b[^>]*>/gi)].map(m=>attributes(m[0]));
   return {
     title:textContent(clean.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]??''),
     descriptions:meta.filter(m=>m.name?.toLowerCase()==='description').map(m=>m.content??''),
@@ -114,7 +122,7 @@ export function extractHtml(body) {
     structuredData:{status:jsonLdCount?'observed':'not_observed_in_raw_html',blockCount:jsonLdCount,blocks:structuredData,truncated:jsonLdCount>10},
     body:clean.slice(0,16000),bodyTruncated:clean.length>16000,
     ...extractSections(clean),
-    limitations:['Raw HTML only; JavaScript-rendered content is unmeasured','Parsed JSON is not schema correctness or rich-result eligibility']
+    limitations:['Raw HTML only; JavaScript-rendered content is unmeasured','Bounded regex extraction excludes comments and script/style blocks; not a complete HTML parser','Parsed JSON is not schema correctness or rich-result eligibility']
   };
 }
 // URL validation is shared; HTML entity decoding belongs only to discovery.
@@ -126,7 +134,8 @@ function canonicalCandidate(value,base) {
   }catch{return null;}
 }
 export function internalCandidates(body,base,{sitemap=false}={}) {
-  const matches=sitemap?[...body.matchAll(/<loc\b[^>]*>([^<]+)<\/loc>/gi)].map(m=>m[1]):[...body.matchAll(/<a\b[^>]*>/gi)].map(m=>attributes(m[0]).href);
+  const markup=sitemap?body.replace(/<!--[\s\S]*?(?:-->|$)/g,' '):activeMarkup(body);
+  const matches=sitemap?[...markup.matchAll(/<loc\b[^>]*>([^<]+)<\/loc>/gi)].map(m=>m[1]):[...markup.matchAll(/<a\b[^>]*>/gi)].map(m=>attributes(m[0]).href);
   const result=[];
   for(const value of matches){
     if(typeof value!=='string')continue;

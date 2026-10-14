@@ -74,3 +74,7 @@ One complete reference-valid retained draft independently assessed, sole conditi
 ## G18 — Redirect provenance, 2026-10-14T06:20:43.132279+00:00
 
 Implemented locally: successful raw fetches retain requestedUrl and ordered followed-hop URL/status/nextUrl/date; final URL remains the content evidence identity. Direct/no-follow responses have no followed hops. Existing DNS/HTTPS/three-hop/deadline/byte limits and cross-origin content exclusion unchanged. 41 focused controls pass. Citation fields unchanged; no redirect defect inferred and failed fetches remain unavailable. No Site publication required for the local collector; existing private snapshots are not migrated. Follow-up on next genuine report: count hops and tasks revised/removed because target/final URL ambiguity was resolved. No demonstration inference or commercial outcome claimed.
+
+## G19 — Exclude false markup evidence, 2026-10-14T06:41:14.971Z
+
+Reproduced and fixed locally: comments and script/style strings no longer supply metadata, canonicals, headings, sections or HTML links; commented XML loc entries excluded. Actual JSON-LD, including comment-like strings, preserved. 60 collector/network/reference/review/report controls pass; syntax/diff checks clean. Still regex extraction, not a complete parser or rendered DOM. No new inference, snapshot migration, email, deployment or purchase. Next genuine report: actual task corrections from excluded fake markup and fake-link sample slots avoided when observed; no demonstration inference.
