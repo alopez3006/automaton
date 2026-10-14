@@ -1,6 +1,6 @@
 # Notification reconciliation verification — 14 October 2026
 
-Status: verified locally, not deployed. Site project remains `appgprj_6acd6192fcac8191b47b7b9538517608`; source base remains version-12 commit `fa72c3f5b7190cbb196c8bdc60c4d2eb663f3ade`.
+Status: **published in version 13**, source `4bf6e0435a0ea4cfd8c38bc2dda196aa139848aa`, deployment `appgdep_6acf29af5a188191920694dd869cd485` succeeded with unchanged environment revision 7. Site project remains `appgprj_6acd6192fcac8191b47b7b9538517608`. The retained patch's historical source base is version-12 commit `fa72c3f5b7190cbb196c8bdc60c4d2eb663f3ade`; see `../PUBLICATION-V13.json` for release proof.
 
 `notification-reconciliation.patch` retains only the notification module and its test changes. The managed checkout also retains the independently reviewed guide changes; preserve both through the official Sites workflow. No manual Site source commit or credential transfer occurred during this acceptance.
 
@@ -8,6 +8,6 @@ Paid report notifications receive priority within the existing first 50 retained
 
 Independent checks passed: notification assertions (including three cooling messages followed by a paid report and a receipt), payment and signed-webhook suites, integrated synthetic launch, module syntax and whitespace checks. The official local Sites build passed; built modules import as ESM and match their source bytes. Patch reverse-applicability check passed against the retained source changes. All providers/storage/payments in these checks are mocked; no real email, customer sale or payment activation occurred.
 
-Publication still requires the accepted secure Sites channel already recorded in GUIDE-VERIFICATION.md and the existing owner-console question. No retry or alternate transfer of the previously rejected credential was attempted. Actual transactional sending additionally requires verified scoped Resend configuration and separate provider acceptance/inbox evidence. The existing DAST provider prerequisite is unchanged and was not retried; no scan result or security certification is claimed.
+The owner explicitly authorized the official temporary site-scoped credential through masked stdin for this release; both source-open and publication operations were accepted, the source was pushed, and version 13 was saved/deployed. No credential was displayed or saved, and no alternate transport was used. Actual transactional sending still requires verified scoped Resend configuration and separate provider acceptance/inbox evidence. The existing DAST provider prerequisite is unchanged and was not retried; no scan result or security certification is claimed.
 
 After publication and provider verification, measure paid-transition-to-provider-acceptance delay on genuine orders, then verify inbox receipt separately. Do not generate a payment or repeated demonstration to populate this metric.

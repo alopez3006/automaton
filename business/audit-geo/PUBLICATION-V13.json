@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "observedAt": "2026-10-14T07:06:21.605Z",
+  "projectId": "appgprj_6acd6192fcac8191b47b7b9538517608",
+  "siteVersion": 13,
+  "sourceCommit": "4bf6e0435a0ea4cfd8c38bc2dda196aa139848aa",
+  "savedVersionId": "appgprj_6acd6192fcac8191b47b7b9538517608~appgver_d81e8ba035c48191bd6328332acde185",
+  "deploymentId": "appgdep_6acf29af5a188191920694dd869cd485",
+  "deploymentStatus": "succeeded",
+  "environmentRevision": 7,
+  "publicOrigin": "https://audit.vutler.com",
+  "guideUrl": "https://audit.vutler.com/seo-geo-audit",
+  "sourceWorkflow": "Official Sites helper; one-off explicit owner authorization; masked stdin; credential not displayed or saved; cleared after use",
+  "included": [
+    "English SEO/GEO guide, navigation and public sitemap",
+    "Paid notification priority and retry cooldown fairness"
+  ],
+  "checks": {
+    "observedAt": "2026-10-14T07:06:21.605Z",
+    "responses": [
+      {
+        "path": "/",
+        "status": 200
+      },
+      {
+        "path": "/seo-geo-audit",
+        "status": 200
+      },
+      {
+        "path": "/sitemap.xml",
+        "status": 200
+      },
+      {
+        "path": "/example.md",
+        "status": 200
+      }
+    ],
+    "englishGuide": true,
+    "guideCanonical": true,
+    "guideRequestCTA": true,
+    "homepageNavigation": true,
+    "publicSitemapURLs": 3,
+    "exampleNoindex": true,
+    "customerSubmissions": 0,
+    "payments": 0,
+    "emailsSent": 0
+  },
+  "limits": [
+    "Publication and bounded HTTP checks only; indexing, traffic and qualified demand unknown",
+    "Notification code published; provider acceptance, inbox receipt and real paid delivery remain unverified",
+    "Payment and email settings not changed; existing environment revision retained",
+    "Failed automated controller startup and retry backoff remain distinct from this supervisor-completed release",
+    "One-off credential use does not grant future blanket transfer authority"
+  ],
+  "externalSpendCents": 0
+}
