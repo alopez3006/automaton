@@ -19,6 +19,12 @@ test('stale review and fabricated excerpts fail distinct diagnostics',()=>{
  assert.equal(diagnoseReadiness(d,evidence).referencesValid,false);
  assert.equal(diagnoseReadiness(null,null).locallyReady,false);
 });
+test('a current review of a complete zero-task report never implies payment readiness',()=>{
+ const d=approveFixture({report:'# Audit\n## Scope\nSample.\n## Evidence\nE1 Observed.\n## Tasks\nNo supported changes. No-action: retain current content.\n## Measurement\nCheck new evidence next week.',eligible:false,reason:'No useful task',taskCount:0,tasks:[]},evidence);
+ assert.deepEqual(diagnoseReadiness(d,evidence),{referencesValid:true,reportComplete:true,currentReviewApproved:true,locallyReady:false});
+ d.review.usefulnessApproved=false;
+ assert.equal(diagnoseReadiness(d,evidence).currentReviewApproved,false);
+});
 test('inventory emits only aggregates, leaves files unchanged and rejects symlink/missing pairs',async()=>{
  const dir=await mkdtemp(join(tmpdir(),'review-readiness-'));
  try{

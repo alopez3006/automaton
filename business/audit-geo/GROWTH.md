@@ -39,3 +39,9 @@ Implemented selectSitemap and sequential discovery: homepage/robots remain concu
 ## G12 — Citable JSON-LD values, 14 October 2026
 
 Implemented local source-validator paths for parsed JSON-LD scalar leaves (eight segments maximum, own properties, prototype-key denial), with inference instructions matching the new contract. Previously only JSON-LD statuses were citable despite retained parsed values. 46 focused evidence/reference/review/report controls pass. This is traceability, not schema-validity or semantic-quality proof; independent review/payment gates remain mandatory. No private snapshot migration, inference or deployment. Next genuine report: count accepted structured-data references and actual task corrections/removals after review; do not repeat a demonstration for this metric.
+
+## G13 — Complete deliverable before invitation, 14 October 2026
+
+Local payment gate now reuses report completion validation even after a fresh independent review. Missing scope/evidence/tasks/measurement heading, no-action condition or finished ending denies a new invitation. 28 focused controls and one synthetic integrated launch test pass; no private report changed, sale, email or deployment. Next genuine review: count incomplete drafts repaired and re-reviewed before invitations. Do not repeat acceptance without new changes.
+
+Supervisor acceptance corrected a diagnostic regression through a shared current-review helper: review approval, report completeness and final payment readiness remain separate. All 33 affected controls, including readiness and synthetic integrated launch, pass. A current approved zero-task report remains payment-ineligible; an approved incomplete report remains locally unready. Actual anonymous inventory unchanged, with private input bytes preserved. No semantic acceptance or external delivery inferred.

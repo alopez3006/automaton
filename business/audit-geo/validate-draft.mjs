@@ -1,3 +1,4 @@
+import {assembleReport} from './report.mjs';
 import {validateTaskReview} from './task-review.mjs';
 function structuredValueField(field,o){
   if(typeof field!=='string'||field.length>300)return false;
@@ -28,6 +29,10 @@ export function validateDraft(draft,evidence) {
   }
   return {version:1,sourceReferencesValid:true,semanticSupportReviewed:false};
 }
+// Review-contract status alone never authorizes payment or proves a complete deliverable.
+export function hasCurrentApprovedReview(draft,evidence){
+  try{return draft?.review?.usefulnessApproved===true&&draft?.review?.sourceSupportApproved===true&&validateTaskReview(draft,evidence).approved;}catch{return false;}
+}
 export function canRequestPayment(draft,evidence){
-  try{validateDraft(draft,evidence);return draft.eligible&&draft.taskCount>0&&draft.review?.usefulnessApproved===true&&draft.review?.sourceSupportApproved===true&&validateTaskReview(draft,evidence).approved;}catch{return false;}
+  try{validateDraft(draft,evidence);assembleReport(draft.report);return draft.eligible&&draft.taskCount>0&&hasCurrentApprovedReview(draft,evidence);}catch{return false;}
 }

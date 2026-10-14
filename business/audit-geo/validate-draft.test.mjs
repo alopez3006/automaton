@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {validateDraft,canRequestPayment} from './validate-draft.mjs';
 import {approveFixture} from './task-review-fixture.mjs';
 const evidence={observations:[{id:'E1',url:'https://example.org/',observedAt:'2026-10-13T00:00:00Z',status:200,title:'Example',descriptions:[''],body:'Observed public offer'}]};
-const make=()=>({report:'Improve description — E1',eligible:true,reason:'Useful',taskCount:1,tasks:[{title:'Improve description',references:[{evidenceId:'E1',url:'https://example.org/',observedAt:'2026-10-13T00:00:00Z',field:'descriptions.0',excerpt:''}]}]});
+const make=()=>({report:'# Audit\n\n## Scope\nSampled public page.\n\n## Evidence\nE1: observed source.\n\n## Tasks\nImprove description — E1. No-action condition: keep accurate wording.\n\n## Measurement\nVerify the intended description after execution.',eligible:true,reason:'Useful',taskCount:1,tasks:[{title:'Improve description',references:[{evidenceId:'E1',url:'https://example.org/',observedAt:'2026-10-13T00:00:00Z',field:'descriptions.0',excerpt:''}]}]});
 test('section citations require exact retained scalar and existing index, and still need review',()=>{
  const e={observations:[{...evidence.observations[0],sections:[{heading:'Pricing',text:'EUR 9 once'}]}]};
  for(const field of ['sections.0.heading','sections.0.text']){

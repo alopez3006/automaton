@@ -1,7 +1,7 @@
 import {readFile,readdir,lstat} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {validateDraft,canRequestPayment} from './validate-draft.mjs';
+import {validateDraft,canRequestPayment,hasCurrentApprovedReview} from './validate-draft.mjs';
 import {assembleReport} from './report.mjs';
 
 // Only fixed categories leave private storage; never echo report text or exceptions.
@@ -9,9 +9,9 @@ export function diagnoseReadiness(draft,evidence){
  let references=false,complete=false;
  try{validateDraft(draft,evidence);references=true;}catch{}
  try{assembleReport(draft?.report);complete=true;}catch{}
- const reviewed=references&&canRequestPayment(draft,evidence);
+ const reviewed=references&&hasCurrentApprovedReview(draft,evidence);
  return {referencesValid:references,reportComplete:complete,currentReviewApproved:reviewed,
-  locallyReady:references&&complete&&reviewed};
+  locallyReady:canRequestPayment(draft,evidence)};
 }
 async function privateJson(path){
  const stat=await lstat(path);
