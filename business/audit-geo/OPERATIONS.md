@@ -142,3 +142,9 @@ Version 13/source 4bf6e0435a0ea4cfd8c38bc2dda196aa139848aa redeployed successful
 
 ## Latest publication — version 18, 14 October 2026
 Source 8cc86254198f958d9534da3baa9886f5696adc08; deployment appgdep_6acf68f10918819187a958ed56e279be succeeded, environment revision 9 unchanged. Both guides now use distinct fixed acquisition labels; historical guide retained. Six public GETs verified. GUIDE-ATTRIBUTION-PUBLICATION.json. No real request, sale, indexation or AI citation inferred.
+
+## Current source-transfer diagnosis — 14 October 2026
+
+Publication-channel diagnosis: the owner already authorized publishing this owned site. Inspection of the currently exposed Sites tools and official site-workflow.mjs confirms the supported source path still requires the temporary repository credential as a JSON value on masked stdin; no secret-reference or direct source-sync alternative is exposed here. The recorded approval rejection concerns that transport, not missing owner publication authority. Do not repeatedly ask the owner to reauthorize publication, recreate a key or supply a secret. Keep the existing question as the historical unresolved channel dependency, without fabricating an owner reply. A supported accepted transport or a changed platform approval decision is required before the blocked patch can be published.
+
+The public GET patch remains reviewed and local-only. This diagnosis does not cancel existing source restrictions or authorize an alternative transfer.

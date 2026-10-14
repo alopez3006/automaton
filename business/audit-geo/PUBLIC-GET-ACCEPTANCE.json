@@ -44,5 +44,17 @@
     "correction": "Remote date output now requires real calendar strings and a consecutive newest-first seven-day window; array coercion, impossible dates, gaps and reversed windows refused. Leap-day/year and both Zurich DST boundaries accepted.",
     "publication": "Not attempted; existing automatic-review rejection and console question retained",
     "boundary": "Local fixture proof only, not deployed page counts, visitors, conversion or customer outcomes"
+  },
+  "channelReview": {
+    "at": "2026-10-14T12:26:00.542Z",
+    "method": "Read official Sites skill/helper and currently exposed native tool contracts",
+    "supportedFlow": "Temporary repository credential value through official helper masked stdin",
+    "acceptedAlternativeExposed": false,
+    "ownerPublicationAuthority": "Already granted",
+    "blocker": "Recorded automatic-review rejection of raw credential in tool arguments",
+    "newCredentialCreated": false,
+    "transferRetried": false,
+    "secretDisplayedOrPersisted": false,
+    "ownerQuestionDuplicated": false
   }
 }
