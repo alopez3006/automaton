@@ -1,34 +1,33 @@
-# Execution receipt — 2026-10-14T00:18:41.206437+00:00
+# Execution receipt — 14 October 2026, 00:40 UTC
 
-Status: completed. External spending this pass: EUR 0 (0 cents).
+Status: completed (G6 preparation). External spending this pass: EUR 0 / 0 cents.
 
-## Business hypothesis and decision
+## Hypothesis and decision
 
-Useful content after the opening raw-HTML excerpt can invalidate weak absence recommendations. Improving bounded evidence coverage makes the report review more useful without a new paid API or inference attempt.
+An educational evidence checklist may attract founders maintaining small public websites who want a supported fix. This audience hypothesis is untested. Selected G6 preparation, previously unfinished, instead of repeating blocked access probes or completed collector work.
 
-Evaluated workstreams: acquisition G1 is complete; G2 guide publication awaits the previously documented approved secure Sites channel. Conversion G3 public changes share that publication dependency; G4 retained inventory is already operational with visits unknown. Delivery G7 still needs scoped Resend server access and actual acceptance/inbox proof. Quality has a concrete independent action: bounded heading-section evidence, now implemented. No new request required fulfillment: anonymous inventory has zero requested, zero needs_review and zero payment_pending, with three retained records including administrative/test data.
+Workstreams evaluated: acquisition G1 complete; G2 guide ready but secure publication awaits the existing channel. Conversion G3 deployed changes share that dependency; G4 anonymous inventory exists without visits/attribution. Quality G5/G8 implemented, awaiting next genuine report feedback. Delivery G7 needs scoped Resend access and real acceptance/inbox proof. No new owner message at checkpoints; supplied prior receipt reports no outstanding fulfillment job. No new inference used.
 
-## Actual action and artifacts
+## Action and artifact
 
-- Local `evidence.mjs` now retains up to 12 evenly spaced headings and 700 text characters per section from the complete bounded fetched HTML. Counts, omitted headings and per-section truncation are explicit; scripts/styles remain removed. Opening excerpt, metadata and JSON-LD remain available.
-- `validate-draft.mjs` permits only exact observed `sections.N.heading` and `sections.N.text` citations, with existing identity/date/index/scalar checks. Independent usefulness/task review remains mandatory.
-- Operator instructions use these excerpts for presence review and explicitly prohibit page-wide absence claims from sampling/truncation.
-- Tests, GROWTH.md and REVIEW-IMPROVEMENT.md updated. Owned public-page smoke stored in SECTION-COLLECTION-SMOKE.json. Unrelated pre-existing untracked assessment left untouched.
+Created public-content/DISTRIBUTION-KIT.md with two English alternatives, four sourced channel decisions, exact account/authority prerequisites and a seven-day aggregate measurement. Uses the live homepage rather than the undeployed guide. Retains EUR 9, initial HTML sampling, up to three useful tasks, eligibility/delivery gates, private status-page instructions and email uncertainty.
 
-## Verification and evidence boundary
+HN generated/automated posting rejected under current rules; Show HN landing/reading-page fit rejected. Product Hunt excludes reports/services from featuring, not necessarily submission. Reddit community rules remain unknown: Jina JSON requests returned 403 and direct rule pages supplied no rules. No obsolete percentage rule assumed. LinkedIn fit is an inference; owner manual publication requires their chosen audience and truthful affiliation. No account accessed or selected.
 
-53 tests passed: 36 extraction/reference/task-review/preview controls and 17 network-policy/robots/report/funnel controls. Fixtures recover late pricing and answers missing from the first 16000 characters; 40-heading control retains 12 distinct spread headings including the last, reports 28 omissions and truncation; script/style and nonexistent/invented citations fail appropriate checks. Syntax and diff checks passed.
+GROWTH.md marks preparation complete; unchanged research/redrafting should not recur. Console question d10f8827-6ca7-4e59-a84e-7b18ed45b722 asks whether the owner will manually publish the concrete educational draft or retain it. Unanswered; no external posting authority inferred. Existing Sites question unchanged.
 
-Actual bounded GET of https://audit.vutler.com/ returned 200 at 2026-10-14T00:17:48.194Z and retained five headings with explicit truncation. This is collector smoke, not a new customer audit, independent semantic benchmark, browser-rendered coverage or SEO/GEO improvement proof. No customer draft modified or new inference used. Existing 120000-byte fetch bound, DNS/address/redirect restrictions and disabled customer rendering preserved.
+## Verification and boundary
 
-HawkScan v6.4.0 detected; no DAST run. Existing HTTP 402 provider dependency in LAUNCH-STATUS.md was not retried or bypassed; CLI help also encountered sandbox log-write restrictions. No security certification claimed.
+Primary live Show HN, HN, Product Hunt and LinkedIn policies read and linked in the artifact. agent-reach web/Jina routing used; generic web connector read remaining primary pages without cookies. agent-reach 1.5.0 reports current.
 
-Broker recall/persistence succeeded after network-authorized broker execution; no raw credentials read. Owner inbox empty at checkpoints and outcome sent in French. No email, deployment, purchase, payment activation, outreach, new controller or schedule. Budget helper: 0 used, 0 reserved, 5000 cents available; counters preserved.
+Actual homepage and /example.md GETs both 200. Local assertions confirm request anchor, EUR 9, public example link and fictional-product label. Copy reviewed against MISSION.md and current offer scope: no customer data/result, available paid-delivery claim or ranking/citation guarantee. Diff whitespace check passed. Content/documentation only; no code tests or DAST required or claimed.
+
+Hosted broker recall succeeded after authorized network execution; durable channel learning persisted. No credential file read, token copied or API key added to environment. French console progress/outcome supplied; checkpoints empty. Budget: 0 used, 0 reserved, 5000 cents available. Counters preserved. No purchase, deployment, customer mutation, inference, email, checkout activation, outreach, external post/ad, new controller or schedule.
 
 ## Measurable follow-up
 
-On the next genuine report, record whether section evidence changes an absence claim, plus proposed/kept/revised/removed task counts and specific correction reasons. Record coverage/truncation alongside review; do not run paid or quota-consuming demonstration inference. Existing customer drafts retain frozen evidence until an explicit dated recollection/review; these local changes do not migrate legacy reviews automatically. Actual traffic, customer sales, paid delivery and inbox receipt remain unproved. Publication and Resend prerequisites remain separate.
+After owner channel selection/publication, record public post URL/date/text and platform aggregate impressions/clicks at seven days, plus anonymous inventory before/after. Attribution is absent: inventory deltas are not channel-acquired demand or conversion rates. Missing totals stay unknown. No tracking fields/scripts added. Until then, G6 preparation stays done; continue independent fulfillment/publication work when access changes. No traffic, new request, sale or delivery proved this pass.
 
 ## Supervisor independent acceptance
 
-The supervisor inspected the exact section extraction, citation allowlist and operator prompt changes. All 53 focused extraction/reference/review/preview/network/robots/report/funnel controls pass independently, with syntax and whitespace checks clean. An independent bounded public GET at 2026-10-14T00:35:31.187Z returned 200 and retained all five owned-page headings; section text caps and three explicit truncation flags match the earlier smoke. The existing 120000-byte fetch cap, DNS/address/redirect enforcement and disabled rendering remain intact. This verifies bounded section collection and exact citations, not full content coverage, semantic correctness, a customer report or SEO/GEO outcomes. No inference, private job migration or purchase was used. Original controller receipt and publication question retained; budget/counters unchanged.
+The supervisor reviewed both complete English drafts against the standing mission, actual scope, payment/delivery gates, private status-page fallback and honest missing attribution. Current official HN/Show HN, Product Hunt featuring and LinkedIn community policies were independently read; the HN wording was narrowed to generated submission text, generated/AI-edited comments and automated posting. Both variants now disclose the publisher affiliation, conditional on its truth for the actual account. Reddit rule access remains unknown; blocked probes were not repeated. Stripe Directory was attempted first but the existing CLI has no directory command; no provider-selection result is claimed and no global upgrade, account setup or purchase performed. Direct primary-policy checks supplied the review evidence. Whitespace check passes. This accepts a concrete preparation artifact, not external publication, platform approval, audience fit or acquisition proof. Existing owner questions remain pending without a repeated request or fabricated answer. Original controller receipt and budget/counters retained; no code change or DAST required.
