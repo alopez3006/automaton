@@ -23,6 +23,7 @@ test('configured but disabled mail never calls provider or alters paid entitleme
 
 for(const [name,refusal] of [
   ['rate limit',async()=>Response.json({error:'rate limit'},{status:429})],
+  ['HTTP timeout',async()=>new Response(null,{status:408})],
   ['provider outage',async()=>Response.json({error:'unavailable'},{status:503})],
   ['timeout',async()=>{throw new DOMException('Synthetic timeout','TimeoutError');}],
   ['invalid JSON',async()=>new Response('not JSON')],
@@ -106,4 +107,25 @@ test('request → reviewed teaser → signed payment → gated report and dedupl
     assert.equal((await patch({status:'prepared'})).status,409);
     assert.equal(JSON.parse(data.get(key)).status,'delivered');
   } finally {globalThis.fetch=originalFetch;}
+});
+
+for(const status of [400,401,403,404,409,422]) test('permanent HTTP '+status+' requires review without replay or paid-access loss (local only)',async()=>{
+ const data=new Map(),token='f'.repeat(64),key='requests/'+await digest(token)+'.json';
+ const bucket={async put(k,v){data.set(k,v);},async get(k){return data.has(k)?{json:async()=>JSON.parse(data.get(k))}:null;},async list(){return {objects:[{key}]};}};
+ const env={BUCKET:bucket,RESEND_EMAILS_ENABLED:'true',RESEND_API_KEY:'re_synthetic_only',RESEND_FROM:'Audit GEO <audits@vutler.com>',TRACKING_LINK_SECRET:'a'.repeat(64),PUBLIC_SITE_ORIGIN:'https://audit.vutler.com'};
+ const r={id:'permanent_fixture',createdAt:new Date().toISOString(),status:'delivered',paymentReceipt:'cs_fixture',website:'https://example.com/',email:'synthetic@example.com',report:'# PAID_FIXTURE'};
+ data.set(key,JSON.stringify(r));await retainNotificationLink(env,r,key,token);
+ const original=data.get(key),marker='notifications/'+r.id+'/delivered.json';let calls=0;
+ assert.equal((await sendNotification(env,r,key,'delivered',{fetchApi:async()=>{calls++;return new Response('PRIVATE_PROVIDER_DETAIL',{status});}})).state,'needs_review');
+ let saved=JSON.parse(data.get(marker));assert.equal(saved.httpStatus,status);assert.equal(saved.attempts,1);assert.ok(!data.get(marker).includes('PRIVATE_PROVIDER_DETAIL'));
+ saved.lastAttemptAt=new Date(Date.now()-61000).toISOString();data.set(marker,JSON.stringify(saved));
+ const previousFetch=globalThis.fetch;
+ try{
+  globalThis.fetch=async()=>{calls++;throw Error('must not replay');};
+  assert.equal((await sendNotification(env,r,key,'delivered')).state,'needs_review');
+  assert.deepEqual(await flushNotifications(env),{configured:true,accepted:0,pending:0,needsReview:1});
+ }finally{globalThis.fetch=previousFetch;}
+ assert.equal(calls,1);assert.equal(JSON.parse(data.get(marker)).attempts,1);assert.equal(data.get(key),original);
+ const res=await worker.fetch(new Request(env.PUBLIC_SITE_ORIGIN+'/request/'+token+'/report.md'),env);
+ assert.equal(res.status,200);assert.equal(await res.text(),r.report);
 });

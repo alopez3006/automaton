@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-14T08:29:02.462603+00:00",
+  "hypothesis": "Permanent provider refusals should stop unchanged automatic sends without affecting paid access.",
+  "artifact": "site/worker/notifications.mjs",
+  "localScenariosPassed": 14,
+  "permanentStatusControls": [
+    400,
+    401,
+    403,
+    404,
+    409,
+    422
+  ],
+  "transientControls": [
+    "408",
+    "429",
+    "503",
+    "timeout",
+    "invalid JSON",
+    "missing receipt"
+  ],
+  "state": "published_source_verified",
+  "behavior": "Other HTTP 4xx require review; 408 and 429 retain bounded retry. No provider response body persisted. Explicit needs_review skipped before poll send allowance.",
+  "liveEmailSent": false,
+  "externalSpendCents": 0,
+  "followUp": "After accepted publication and permitted sending, measure permanent-refusal needs-review count and automatic replays (expected zero), separately from provider acceptance and inbox receipt.",
+  "publication": {
+    "observedAt": "2026-10-14T09:02:07.644Z",
+    "siteVersion": 14,
+    "sourceCommit": "7501b5f072d01ae1bbcc6163946783a26eb76e23",
+    "deploymentId": "appgdep_6acf425443f08191aa480c2ecb57d70e",
+    "environmentRevision": 9,
+    "status": "succeeded",
+    "proof": "PUBLICATION-V14.json"
+  },
+  "previousState": "local_tested_not_deployed",
+  "supervisorVerification": {
+    "launchScenariosPassed": 14,
+    "notificationsPassed": true,
+    "workerPassed": true,
+    "discoveryPassed": true,
+    "formattedEmailPrivacyControlsPassed": true,
+    "runtimeUnchanged": true,
+    "liveAssetsVerified": true
+  }
+}

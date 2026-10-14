@@ -1,0 +1,53 @@
+{
+  "observedAt": "2026-10-14T08:38:01.864806+00:00",
+  "ownerInstructionId": "8e0fad80-a7dc-4ff5-a2cf-919a77787f17",
+  "hypothesis": "Consistent brand and readable transaction emails make the next customer action easier to recognize.",
+  "assets": [
+    "site/worker/brand.mjs",
+    "site/worker/email-layout.mjs",
+    "brand-preview/logo.svg",
+    "brand-preview/logo.png",
+    "brand-preview/received.html",
+    "brand-preview/summary.html",
+    "brand-preview/closed.html",
+    "brand-preview/delivered.html"
+  ],
+  "implementation": "Published in version 14: shared logo/favicon/static PNG and four private-safe formatted email states. Real formatted-email client inspection remains separate.",
+  "verification": {
+    "launchScenariosPassed": 14,
+    "notificationRegressionPassed": true,
+    "assetAndEmailControlsPassed": 7,
+    "discoveryRegressionPassed": true,
+    "buildAndValidationPassed": true,
+    "browser": "Connected Chrome local desktop/email, mobile email at 375px",
+    "mobileScrollWidth": 375,
+    "mobileViewportWidth": 375,
+    "emailButtonHeight": 54.3984375,
+    "detector": "Arial intentional for email clients; 6px radius matches control token, detector parsing advisory; 20px wordmark intentional",
+    "emailClientMatrix": "Not tested in actual Outlook/Gmail clients",
+    "dast": "Existing StackHawk HTTP 402 prerequisite unchanged; no repeated scan or security claim"
+  },
+  "publicationDependency": null,
+  "followUp": "Publish exact reviewed source including G20, verify live SVG/PNG/header, then inspect actual permitted formatted mail in owner mailbox without automatic resend.",
+  "externalSpendCents": 0,
+  "publication": {
+    "observedAt": "2026-10-14T09:02:07.644Z",
+    "siteVersion": 14,
+    "sourceCommit": "7501b5f072d01ae1bbcc6163946783a26eb76e23",
+    "deploymentId": "appgdep_6acf425443f08191aa480c2ecb57d70e",
+    "environmentRevision": 9,
+    "status": "succeeded",
+    "proof": "PUBLICATION-V14.json"
+  },
+  "previousLocalImplementation": "Local only; not published. Logo in shared header and SVG favicon, public static PNG for email clients. Four existing transactional types share inline table layout, text alternative and private fallback link. No tracking pixel or unpaid report content.",
+  "previousPublicationDependency": "Accepted scoped Sites source publication mechanism; earlier version-13 masked-stdin transfer approval was explicitly one-off. No token requested, read, copied or attempted.",
+  "supervisorVerification": {
+    "launchScenariosPassed": 14,
+    "notificationsPassed": true,
+    "workerPassed": true,
+    "discoveryPassed": true,
+    "formattedEmailPrivacyControlsPassed": true,
+    "runtimeUnchanged": true,
+    "liveAssetsVerified": true
+  }
+}

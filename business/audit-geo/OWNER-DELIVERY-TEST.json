@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-10-14T08:33:07.987314+00:00",
+  "hypothesis": "An isolated owner-controlled email can establish the provider and verified sender path while keeping customer sending disabled.",
+  "authorization": {
+    "recipientAndTestAnswerMessageId": "06c6a21b-27ce-4a16-ba6c-008aded4bb2d",
+    "questionId": "934807f5-276e-4b8e-bacd-02da331ea34b"
+  },
+  "provider": {
+    "emailId": "01a1398a-189b-7d3f-84bb-6fc5b24d9844",
+    "accepted": true,
+    "status": "delivered",
+    "createdAt": "2026-10-14T08:31:54.224Z",
+    "sendCount": 1,
+    "channel": "connected Resend send_email"
+  },
+  "runtime": {
+    "revision": 9,
+    "emailsEnabled": false,
+    "paymentsEnabled": false,
+    "sandboxEnabled": false,
+    "resendSecretPresent": true,
+    "trackingSecretPresent": true
+  },
+  "ownerInboxReceipt": {
+    "confirmed": true,
+    "placement": "main inbox",
+    "answerMessageId": "e7b3ad21-43ce-46b0-a2b2-1f0687459e24",
+    "confirmedAt": "2026-10-14T08:32:18.189Z"
+  },
+  "receiptQuestionId": "d0791aab-9cc6-4581-8e1d-1ef20952ccaa",
+  "limitations": [
+    "Native connector test does not exercise Sites runtime credential",
+    "Provider delivered does not establish inbox versus spam",
+    "No payment journey or customer sale"
+  ],
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "observedAt": "2026-10-14T09:02:07.644Z",
+    "nativeProviderStatus": "delivered",
+    "providerEmailIdMatched": true,
+    "testAnswerGenuineAcknowledged": true,
+    "mainInboxAnswerGenuineAcknowledged": true,
+    "noResend": true
+  }
+}

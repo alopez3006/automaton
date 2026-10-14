@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "observedAt": "2026-10-14T09:02:07.644Z",
+  "projectId": "appgprj_6acd6192fcac8191b47b7b9538517608",
+  "siteVersion": 14,
+  "sourceCommit": "7501b5f072d01ae1bbcc6163946783a26eb76e23",
+  "savedVersionId": "appgprj_6acd6192fcac8191b47b7b9538517608~appgver_ff6986edc5348191ac24926e4f7813a0",
+  "deploymentId": "appgdep_6acf425443f08191aa480c2ecb57d70e",
+  "deploymentStatus": "succeeded",
+  "environmentRevision": 9,
+  "deployedUrl": "https://audit-geo-pilote.alopez-nevicom.chatgpt.site",
+  "publicOrigin": "https://audit.vutler.com",
+  "archive": {
+    "archive_format": "tar",
+    "sediment_file_id": "file_000000008aa881f4b7329ff18f5f59be",
+    "content_hash": "sha256:c279e282074cd529bfbe26f71832abe0c635ca29fa6e3b714f4565c3c6c3bc59",
+    "size_bytes": 604160,
+    "file_count": 5
+  },
+  "sourceWorkflow": {
+    "openingAccepted": true,
+    "packagingPushAccepted": true,
+    "freshSiteScopedCredential": true,
+    "maskedOfficialStdin": true,
+    "credentialClearedFromSession": true,
+    "managedSourceClean": true
+  },
+  "runtime": {
+    "revision": 9,
+    "allPriorSettingsPreserved": true,
+    "emailsEnabled": "false",
+    "paymentsEnabled": "false",
+    "sandboxEnabled": "false",
+    "resendSecretPresent": true,
+    "trackingSecretPresent": true
+  },
+  "live": {
+    "homepage": {
+      "status": 200,
+      "publishedContentBeforeBodyEndMatchesSource": true,
+      "headerMatchesSource": true,
+      "headerImageSources": [],
+      "favicon": true,
+      "appendedPlatformScript": true,
+      "fullHTMLByteMatch": false
+    },
+    "assets": [
+      {
+        "path": "/assets/brand-mark.svg",
+        "status": 200,
+        "contentType": "image/svg+xml",
+        "matchesSource": true,
+        "bytes": 351,
+        "expectedBytes": 351,
+        "age": null,
+        "cache": null,
+        "sha256": "2316cc6135437ac0b6f3ace42f38a4574d408fd47f50af8e31136eba8125169f"
+      },
+      {
+        "path": "/assets/brand-mark.png",
+        "status": 200,
+        "contentType": "image/png",
+        "matchesSource": true,
+        "bytes": 3825,
+        "expectedBytes": 3825,
+        "age": null,
+        "cache": null,
+        "sha256": "575fffdbd68b61e914f2d45b423eb9614856cbbf41aabd4148a6224e84c3e949"
+      },
+      {
+        "path": "/favicon.svg",
+        "status": 200,
+        "contentType": "image/svg+xml",
+        "matchesSource": true,
+        "bytes": 351,
+        "expectedBytes": 351,
+        "age": null,
+        "cache": null,
+        "sha256": "2316cc6135437ac0b6f3ace42f38a4574d408fd47f50af8e31136eba8125169f"
+      }
+    ],
+    "htmlLimit": "HTML content through the footer matches source; an appended platform script prevents a full HTML byte match"
+  },
+  "localAcceptance": {
+    "launchScenariosPassed": 14,
+    "notificationRegressionPassed": true,
+    "workerRegressionPassed": true,
+    "discoveryRegressionPassed": true,
+    "fourEmailStatesPrivacyChecked": true,
+    "buildMatchesExactSources": true
+  },
+  "emailProof": {
+    "isolatedNativeTestProviderStatus": "delivered",
+    "genuineOwnerMainInboxConfirmation": true,
+    "formattedEmailInboxProof": false,
+    "sitesRuntimeEmailProof": false
+  },
+  "paymentsActivated": false,
+  "newEmailSent": false,
+  "externalSpendCents": 0,
+  "limitations": [
+    "No real paid customer journey, indexing, traffic or sale proof",
+    "Email client matrix remains untested",
+    "Existing StackHawk HTTP 402 prerequisite unchanged; no DAST claim"
+  ]
+}

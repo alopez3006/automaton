@@ -1,0 +1,5 @@
+Payment for your example.com audit has been verified. Your complete Markdown report and agent prompt are ready.
+
+Download your full report: https://audit.vutler.com/request/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/report.md
+
+Keep this private link secure.
