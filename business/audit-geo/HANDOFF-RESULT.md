@@ -1,25 +1,30 @@
-# Execution receipt — 14 October 2026, 01:43 UTC
+# Execution receipt — 14 October 2026, 02:00 UTC
 
-Status: completed — G11 read-only report readiness diagnostic. External spending this pass: EUR 0 / 0 cents.
+Status: completed — G12 JSON-LD value citation gap repaired locally.
+External spending this pass: EUR 0 / 0 cents. Budget helper confirms EUR 50 available, EUR 0 used/reserved; counters preserved.
 
-## Hypothesis and business choice
+## Hypothesis and choice
 
-A concrete anonymous readiness inventory can expose the remaining review work before commercial launch instead of relying on legacy approval. Evaluated separately: acquisition G1 complete and G2 publication blocked by the already documented rejected Sites credential transfer; conversion G3 deployment shares that prerequisite; G4 retained funnel totals already exist; G6 distribution drafts await owner channel authority; delivery G7 requires scoped Resend access and actual inbox proof. No unchanged provider poll or external-post attempt. Chose a bounded operational diagnostic rather than further collector expansion or document-only planning.
+Retained JSON-LD values were inaccessible to exact source citations: the whitelist admitted only structured-data status. Allowing bounded scalar references makes proposed schema/content corrections traceable instead of relying on an uncitable observation.
+
+Evaluated separately: acquisition G1 completed, G2 publication still depends on the accepted secure Sites channel, G6 distribution awaits owner channel authority; conversion G3 publication depends on the same channel, G4 baseline already implemented; delivery G7 needs scoped Resend server access and actual receipt proof. No unchanged provider poll or reworked promotion draft. This concrete report-quality gap was independently actionable.
 
 ## Action and artifact
 
-Implemented review-readiness.mjs and three regression tests. The command reads only local draft/evidence pairs, checks structured references, report completeness and snapshot-bound current approval, and prints fixed anonymous counts. It rejects symlink/non-file/over-limit inputs, suppresses exception details and does not read credential files, mutate records, call inference/network, invite payment or approve reviews. REVIEW-READINESS-BASELINE.json records actual output. QUALITY-REVIEW.md includes the command; GROWTH.md records G11.
+Updated validate-draft.mjs to allow exact scalar paths under parsed structuredData.blocks.N.value, limited to eight segments and 300 field characters. Own-property traversal remains required. Prototype keys, absent values, unparsed blocks, objects, null and nonfinite numbers are rejected. String, finite-number and boolean leaves are supported. Dot-containing keys remain unsupported. Updated operator inference instructions to advertise this contract and explicitly distinguish parsed JSON from schema validity or search eligibility. Added generic positive/adversarial controls in validate-draft.test.mjs.
 
-## Actual verification
+## Verification
 
-26 focused readiness/task-review/reference/report controls pass. Controls distinguish incomplete but synthetically approved reports, stale reviews, fabricated excerpts, null input, missing pairs, symlinks and private-field suppression; fixture files unchanged. Actual private inventory executed twice with same totals: 3 snapshots, 0 unreadable, 2 invalid references, 2 incomplete reports, 3 without current approval, 0 locally ready. Failure categories overlap. Retained tests/ineligible reports are included; this is not a customer failure rate or current server queue. No private report content or identifiers emitted. Whitespace check passes. Local CLI has no HTTP-serving surface; no HawkScan DAST claim and no retry of the existing public-site provider blocker.
+46 tests passed across source validation, evidence collection, independent task review and report assembly. Syntax and git diff whitespace checks passed. Controls cover graph/array types, URL, price and boolean leaves, invented excerpts, unsafe paths, absent leaves, invalid JSON blocks, containers and Infinity. Source references alone still cannot authorize payment; semantic review and digest gates remain active.
 
-## Outcomes and next measurable step
+Local implementation only: no new inference/audit, migration of private snapshots, site publication, email, checkout activation, customer sale or purchase. No DAST performed: this is a local validator, not a running HTTP surface; existing documented HawkScan HTTP 402 prerequisite was not retried. Unrelated untracked GEO-SEO-CLAUDE-ASSESSMENT.md preserved.
 
-The next genuine independent report review must satisfy references, completeness and current approval before new invitation processing; compare aggregate readiness and record real task corrections privately. Zero currently ready local snapshots does not revoke existing payment obligations or authorize new inference solely to change the count. This pass supplies no semantic acceptance, authenticated reviewer identity, traffic, sale, deployment or real email proof.
+## Follow-up
 
-Console inbox empty at checkpoints; French action and outcome sent. Hosted safe memory broker recall succeeded after authorized network retry, durable workflow persisted. Budget helper: 0 used, 0 reserved, 5000 cents available; counters preserved. Existing unrelated untracked GEO-SEO-CLAUDE-ASSESSMENT.md untouched. No raw credentials read, purchases, outreach, customer changes, payment activation, controller or schedule. Sites secure publication and actual Resend delivery remain the independent prerequisites; existing console questions preserved without duplication.
+On the next genuine audit/review, count structured-data recommendations with accepted scalar references, and tasks kept/corrected/removed after semantic review. Do not create another demonstration solely to populate this metric. Schema validity, customer usefulness and SEO/GEO outcomes remain unmeasured.
+
+Console inbox empty at checkpoints. Hosted broker recall and durable non-secret persistence succeeded after authorized network escalation. Existing publication and distribution questions remain pending; no repeated request or fabricated answer. No controller or schedule spawned.
 
 ## Supervisor independent acceptance
 
-The supervisor inspected the read-only diagnostic, source-reference and snapshot-review gates, then independently reran all 26 readiness/task-review/reference/report controls (pass). A fresh actual inventory at 2026-10-14T01:56:35.944Z reproduced the recorded anonymous totals. SHA-256 comparisons of the six draft/evidence files and ledger before and after confirmed unchanged bytes; no hashes, identifiers or customer text were emitted. This accepts the diagnostic contract and observed local inventory, not semantic report quality, authenticated reviewer identity, server obligations or real delivery. No private report migration, inference, payment/email activation, publication or purchase. Existing access questions and original controller receipt remain unchanged.
+The supervisor inspected the exact validator and inference-instruction changes and the retained JSON-LD extraction contract. All 46 focused reference/evidence/review/report controls passed independently, together with syntax and whitespace checks. Eleven additional in-memory boundary controls passed: eight versus nine path segments, 300 versus 301 field characters, inherited properties, observed negative numbers/false/empty strings, dotted keys, NaN and negative Infinity. Every control retained payment denial without an independent current review. No private report content, inference or network was required for these controls. This accepts bounded scalar traceability and gate preservation; parsed JSON is still not schema validity, semantic support, customer usefulness or an SEO/GEO result. No real report migrated, production deployed, payment activated, email sent or purchase made. Original controller outcome and pending questions retained.

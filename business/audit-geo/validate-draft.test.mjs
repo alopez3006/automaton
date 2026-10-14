@@ -21,3 +21,20 @@ test('counts, absent tasks, omitted report citations and duplicate titles fail',
 test('a longer or embedded identifier cannot stand in for the cited observation',()=>{for(const citation of ['E10','prefixE1','E1suffix']){const d=make();d.report='Improve description — '+citation;d.review={usefulnessApproved:true,sourceSupportApproved:true};assert.throws(()=>validateDraft(d,evidence));assert.equal(canRequestPayment(d,evidence),false);}const d=make();d.report='Improve description — [E1]';validateDraft(d,evidence);});
 test('zero useful tasks can be ineligible, never payment eligible',()=>{const d={report:'No changes supported.',eligible:false,reason:'No task',taskCount:0,tasks:[]};validateDraft(d,evidence);assert.equal(canRequestPayment(d,evidence),false);d.eligible=true;assert.throws(()=>validateDraft(d,evidence));});
 test('valid excerpt matches an observed scalar; legacy drafts cannot unlock payment',()=>{const d=make();Object.assign(d.tasks[0].references[0],{field:'body',excerpt:'public offer'});validateDraft(d,evidence);delete d.tasks;d.review={usefulnessApproved:true,sourceSupportApproved:true};assert.equal(canRequestPayment(d,evidence),false);});
+test('JSON-LD value citations cover graph, array, numeric and boolean leaves without payment approval',()=>{
+ const value={'@graph':[{'@type':['Organization','LocalBusiness'],url:'https://example.org/',offers:{price:9,available:true}}]};
+ const e={observations:[{...evidence.observations[0],structuredData:{blocks:[{status:'parsed',value}]}}]};
+ for(const [suffix,excerpt] of [['@graph.0.@type.1','LocalBusiness'],['@graph.0.url','https://example.org/'],['@graph.0.offers.price','9'],['@graph.0.offers.available','true']]){
+  const d=make();Object.assign(d.tasks[0].references[0],{field:'structuredData.blocks.0.value.'+suffix,excerpt});
+  assert.equal(validateDraft(d,e).sourceReferencesValid,true);assert.equal(canRequestPayment(d,e),false);
+ }
+});
+test('JSON-LD citations reject unparsed blocks, invented leaves, containers and unsafe paths',()=>{
+ const value=JSON.parse('{"@type":"Product","constructor":"unsafe","nullValue":null,"nested":{"name":"Observed"}}');
+ const e={observations:[{...evidence.observations[0],structuredData:{blocks:[{status:'parsed',value},{status:'invalid_json',value}]}}]};
+ for(const [path,excerpt] of [['0.value.@type','Organization'],['0.value.missing','x'],['0.value.nested','Observed'],['0.value.nullValue','null'],['0.value.constructor','unsafe'],['0.value.__proto__.name','x'],['1.value.@type','Product'],['2.value.@type','Product'],['0.value.'+'nested.'.repeat(9)+'name','Observed'],['0.value.toString','x']]){
+  const d=make();Object.assign(d.tasks[0].references[0],{field:'structuredData.blocks.'+path,excerpt});assert.throws(()=>validateDraft(d,e));
+ }
+ value.number=Infinity;
+ const d=make();Object.assign(d.tasks[0].references[0],{field:'structuredData.blocks.0.value.number',excerpt:'Infinity'});assert.throws(()=>validateDraft(d,e));
+});

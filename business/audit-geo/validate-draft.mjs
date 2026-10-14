@@ -1,4 +1,11 @@
 import {validateTaskReview} from './task-review.mjs';
+function structuredValueField(field,o){
+  if(typeof field!=='string'||field.length>300)return false;
+  const match=/^structuredData\.blocks\.(0|[1-9]\d*)\.value((?:\.[A-Za-z0-9_@:-]+){0,8})$/.exec(field);
+  if(!match||match[2].split('.').some(p=>['__proto__','prototype','constructor'].includes(p)))return false;
+  const blocks=o.structuredData?.blocks;
+  return Array.isArray(blocks)&&Object.hasOwn(blocks,match[1])&&blocks[match[1]]?.status==='parsed';
+}
 // Source identity checks are not semantic entailment or a usefulness review.
 export function validateDraft(draft,evidence) {
   const fail=message=>{throw Error(`Report requires review: ${message}`);};
@@ -12,10 +19,10 @@ export function validateDraft(draft,evidence) {
       const o=observations.get(ref.evidenceId);
       if(typeof ref.evidenceId!=='string'||!/^E[1-9]\d*$/.test(ref.evidenceId)||!o||o.error||ref.url!==o.url||ref.observedAt!==o.observedAt||!new RegExp(`\\b${ref.evidenceId}\\b`).test(draft.report))fail('unknown or mismatched observation');
       // Only observed scalar fields; no prototype traversal or model-defined fields.
-      if(typeof ref.field!=='string'||!/^(status|title|body|sections\.\d+\.(heading|text)|descriptions\.\d+|h1\.\d+|canonicals\.\d+|robots\.\d+\.(agent|content)|structuredData\.status|structuredData\.blocks\.\d+\.status|headers\.x-robots-tag)$/.test(ref.field))fail('unsupported evidence field');
+      if(typeof ref.field!=='string'||(!/^(status|title|body|sections\.\d+\.(heading|text)|descriptions\.\d+|h1\.\d+|canonicals\.\d+|robots\.\d+\.(agent|content)|structuredData\.status|structuredData\.blocks\.\d+\.status|headers\.x-robots-tag)$/.test(ref.field)&&!structuredValueField(ref.field,o)))fail('unsupported evidence field');
       let value=o;
       for(const part of ref.field.split('.')){if(value===null||typeof value!=='object'||!Object.hasOwn(value,part))fail('unobserved field');value=value[part];}
-      const scalar=typeof value==='string'?value:typeof value==='number'?String(value):null;
+      const scalar=typeof value==='string'?value:((typeof value==='number'&&Number.isFinite(value))||typeof value==='boolean')?String(value):null;
       if(scalar===null||typeof ref.excerpt!=='string'||ref.excerpt.length>1000||(!ref.excerpt.length&&scalar!=='')||!scalar.includes(ref.excerpt))fail('excerpt not observed');
     }
   }
