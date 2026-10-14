@@ -179,6 +179,20 @@ export function selectPageSample(candidates,base,excluded=[]) {
   }
   return selected;
 }
+// One discovery request only: use the first safe declared sitemap, otherwise default.
+export function selectSitemap(robots,base) {
+  const fallback=new URL('/sitemap.xml',base).href;
+  if(robots?.status!==200)return {url:fallback,selection:'default'};
+  for(const line of robots.body.split(/\r?\n/)) {
+    const value=line.replace(/\s+#.*$/,'').match(/^\s*sitemap\s*:\s*(\S+)\s*$/i)?.[1];
+    if(!value)continue;
+    try{const candidate=new URL(value);
+      if(candidate.protocol!=='https:'||candidate.origin!==new URL(base).origin||candidate.username||candidate.password||candidate.port||candidate.search||candidate.hash||isIP(candidate.hostname)||candidate.hostname.includes(':'))continue;
+      return {url:candidate.href,selection:'first_safe_robots_declaration'};
+    }catch{}
+  }
+  return {url:fallback,selection:'default'};
+}
 export async function collectEvidence(website,{pagespeed=false,fetchPage=publicFetch,renderPage}={}) {
   const url=new URL(website);
   const raw=new Map();
@@ -190,8 +204,11 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
       return {...r,kind,...(html?extractHtml(r.body):{body:r.body.slice(0,16000),bodyTruncated:r.body.length>16000}),headers:{'content-type':r.headers['content-type'],'x-robots-tag':r.headers['x-robots-tag']??null}};
     }catch(e){return {url:target,kind,observedAt:new Date().toISOString(),error:e.message};}
   }
-  const resources=[url.href,new URL('/robots.txt',url).href,new URL('/sitemap.xml',url).href];
+  const resources=[url.href,new URL('/robots.txt',url).href];
   const observations=await Promise.all(resources.map((target,i)=>observe(target,i?'discovery':'page')));
+  const sitemapDiscovery=selectSitemap(raw.get(resources[1]),url.href);
+  resources.push(sitemapDiscovery.url);
+  observations.push(await observe(sitemapDiscovery.url,'discovery'));
   const homepage=raw.get(url.href),sitemap=raw.get(resources[2]);
   const candidates=[...internalCandidates(homepage?.status===200?homepage.body:'',homepage?.url??url.href),...internalCandidates(sitemap?.status===200?sitemap.body:'',url.href,{sitemap:true})];
   const selected=selectPageSample(candidates,url.href,[...resources,homepage?.url].filter(Boolean));
@@ -213,5 +230,5 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
   robotsPolicy.evidenceId=observations[1].id;
   let performance={status:'not_requested'};
   if(pagespeed)performance=await collectPageSpeed(url.href);
-  return {website,observations,robotsPolicy,performance,scope:{maxAdditionalPages:4,selectedPages:selected,selection:'Round-robin by first path segment among bounded same-origin links and sitemap URLs; discovery order within each group; no query strings',limitations:['Path diversity is a heuristic, not semantic relevance or complete coverage','Bounded sample, not a complete crawl','Sitemap indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
+  return {website,observations,robotsPolicy,performance,scope:{sitemapDiscovery,maxAdditionalPages:4,selectedPages:selected,selection:'Round-robin by first path segment among bounded same-origin links and sitemap URLs; discovery order within each group; no query strings',limitations:['Path diversity is a heuristic, not semantic relevance or complete coverage','Bounded sample, not a complete crawl','Only one sitemap is fetched; failed declared sitemap has no fallback request; indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
 }

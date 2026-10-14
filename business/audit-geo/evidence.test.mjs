@@ -103,3 +103,31 @@ test('optional rendered evidence gets separate IDs and preserves raw evidence on
  const redirected=await collectEvidence('https://example.com/',{fetchPage,renderPage:async()=>({url:'https://other.example/'})});
  assert.match(redirected.observations[3].error,/Cross-origin/);
 });
+
+test('sitemap declaration selects first safe absolute same-origin HTTPS URL',async()=>{
+ const {selectSitemap}=await import('./evidence.mjs');
+ const base='https://example.com/';
+ const unsafe=['/relative.xml','http://example.com/map.xml','https://external.test/map.xml','https://user:pass@example.com/map.xml','https://example.com:444/map.xml','https://example.com/map.xml?q=secret','https://example.com/map.xml#fragment','https://127.0.0.1/map.xml'];
+ const body=unsafe.map(u=>'Sitemap: '+u).join('\n')+'\n sItEmAp : https://example.com/maps/public.xml # comment\nSitemap: https://example.com/ignored.xml';
+ assert.deepEqual(selectSitemap({status:200,body},base),{url:'https://example.com/maps/public.xml',selection:'first_safe_robots_declaration'});
+ for(const status of [404,500])assert.equal(selectSitemap({status,body},base).selection,'default');
+ assert.equal(selectSitemap({status:200,body:unsafe.map(u=>'Sitemap: '+u).join('\n')},base).url,base+'sitemap.xml');
+});
+test('declared sitemap replaces default request and exposes useful page within seven fetches',async()=>{
+ const calls=[];
+ const fetchPage=async url=>{calls.push(url);return {url,status:200,observedAt:'now',headers:{'content-type':'text/plain'},body:url.endsWith('/robots.txt')?'Sitemap: https://example.com/maps/pages.xml':url.endsWith('/maps/pages.xml')?'<loc>https://example.com/pricing</loc>':Array.from({length:6},(_,i)=>`<a href="/docs/${i}">Doc</a>`).join('')};};
+ const e=await collectEvidence('https://example.com/',{fetchPage});
+ assert.equal(calls.length,7);assert.ok(!calls.includes('https://example.com/sitemap.xml'));
+ assert.equal(e.observations[2].url,'https://example.com/maps/pages.xml');assert.equal(e.observations[2].id,'E3');
+ assert.ok(e.scope.selectedPages.includes('https://example.com/pricing'));
+ assert.equal(e.scope.sitemapDiscovery.selection,'first_safe_robots_declaration');
+});
+test('unavailable declared sitemap stays unknown without a fallback or child-map request',async()=>{
+ const calls=[];
+ const e=await collectEvidence('https://example.com/',{fetchPage:async url=>{
+ calls.push(url);if(url.endsWith('/map.xml'))throw Error('timeout');
+ return {url,status:200,observedAt:'now',headers:{'content-type':'text/plain'},body:url.endsWith('/robots.txt')?'Sitemap: https://example.com/map.xml':'Home'};
+ }});
+ assert.equal(calls.length,3);assert.equal(e.observations[2].error,'timeout');assert.deepEqual(e.scope.selectedPages,[]);
+ assert.ok(e.scope.limitations.some(x=>x.includes('no fallback')));
+});
