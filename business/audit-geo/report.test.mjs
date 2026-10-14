@@ -20,3 +20,16 @@ test('comments, code fences, headings and punctuation do not fill empty sections
 test('valid CRLF, subsection prose and fenced examples remain acceptable',()=>{
   assert.ok(assembleReport(complete.replace('Public page only.','### Sampling\nPublic page only.\n```html\n<h1>Example</h1>\n```').replaceAll('\n','\r\n')).includes('Prompt for your agent'));
 });
+test('hidden examples and headings cannot supply the no-action instruction',()=>{
+  const missing=complete.replace(' No-action condition: skip if accurate.','');
+  for(const hidden of ['<!-- No-action: skip if accurate. -->','```text\nNo-action: skip if accurate.\n```','~~~~text\nNo-action: skip if accurate.\n~~~~','### No-action condition']){
+    assert.throws(()=>assembleReport(missing+'\n'+hidden+'\nFinished.'),/incomplete report/,hidden);
+  }
+  assert.throws(()=>assembleReport(missing+'\nUnrelated techno-action wording.'),/incomplete report/);
+});
+test('hidden punctuation cannot finish a truncated prose ending',()=>{
+  for(const hidden of ['<!-- Finished. -->','```text\nFinished.\n```','~~~~text\nFinished.\n~~~~','### Finished.']){
+    assert.throws(()=>assembleReport(complete.slice(0,-1)+'\n'+hidden),/incomplete report/,hidden);
+  }
+  assert.ok(assembleReport(complete+'\n```html\n<span>Example</span>\n```').includes('Prompt for your agent'));
+});

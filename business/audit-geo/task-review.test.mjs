@@ -39,3 +39,15 @@ test('fresh task approval cannot authorize an empty or example-only report secti
   }
  }
 });
+test('fresh task approval cannot invite payment with a hidden no-action instruction or ending',()=>{
+ const original=make();
+ for(const hidden of ['<!-- No-action: keep accurate wording. -->','```text\nNo-action: keep accurate wording.\n```','### No-action: keep accurate wording.']){
+  const report=original.report.replace(' No-action condition: keep accurate wording.','')+'\n'+hidden+'\nFinished.';
+  const d=approveFixture({...structuredClone(original),report},evidence);
+  assert.equal(validateTaskReview(d,evidence).approved,true);
+  assert.equal(canRequestPayment(d,evidence),false);
+ }
+ const d=approveFixture({...structuredClone(original),report:original.report.slice(0,-1)+'\n<!-- Finished. -->'},evidence);
+ assert.equal(validateTaskReview(d,evidence).approved,true);
+ assert.equal(canRequestPayment(d,evidence),false);
+});

@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-14T16:09:06.691516+00:00",
+  "hypothesis": "Visible no-action instructions and finished prose prevent structurally incomplete reports from reaching payment invitations.",
+  "reproduction": "Before change, complete sections with no-action only in an HTML comment were accepted.",
+  "artifacts": [
+    "report.mjs",
+    "report.test.mjs",
+    "task-review.test.mjs"
+  ],
+  "sha256": {
+    "report.mjs": "ec4e87b0576db3403bdf2cf4845172d2039ddb92eec740fde46372267b6f839f",
+    "report.test.mjs": "2e1af8d54a426a00d151e81603f5ccd0cd56900635536b1cb006220f4a93b51c",
+    "task-review.test.mjs": "fe15c7d520ea9ff829670128b5e7f1414823869644470393e6f3b2091618e5d5"
+  },
+  "verification": {
+    "targetedTests": 29,
+    "mockedLaunchScenarios": 14,
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "freshSyntheticTaskApprovalCannotBypass": true
+  },
+  "inventory": {
+    "observedAt": "2026-10-14T16:07:20.662Z",
+    "scope": "retained first-page inventory, includes administrative/test records",
+    "total": 3,
+    "requested": 0,
+    "prepared": 1,
+    "ineligible": 2,
+    "payment_pending": 0,
+    "delivered": 0,
+    "paymentsEnabled": false,
+    "notificationsEnabled": false
+  },
+  "memory": {
+    "stored": true,
+    "id": "cmv8b0v1r038yt0n3j1byynoo"
+  },
+  "limits": [
+    "Structural completeness only, not semantic usefulness.",
+    "No private report migration, deployment, email, inference or customer payment.",
+    "Existing paid entitlements unchanged."
+  ],
+  "followUp": "On next genuine draft: count hidden-only instruction/unfinished-prose rejections, repair and independently re-review before invitation.",
+  "externalSpendCents": 0,
+  "supervisorAcceptance": {
+    "at": "2026-10-14T16:22:10.891Z",
+    "sourceHashesMatch": true,
+    "sourceHashes": {
+      "report.mjs": "ec4e87b0576db3403bdf2cf4845172d2039ddb92eec740fde46372267b6f839f",
+      "report.test.mjs": "2e1af8d54a426a00d151e81603f5ccd0cd56900635536b1cb006220f4a93b51c",
+      "task-review.test.mjs": "fe15c7d520ea9ff829670128b5e7f1414823869644470393e6f3b2091618e5d5"
+    },
+    "targetedTestsPassed": 29,
+    "mockedLaunchScenariosPassed": 14,
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "watcherSourceReview": "The existing watcher starts a fresh operator.mjs subprocess per iteration, which imports report.mjs; no watcher restart is needed for these local source changes.",
+    "inventoryBoundary": "Controller dated anonymous inventory retained; no independent provider re-fetch or private snapshot mutation.",
+    "limits": [
+      "Bounded structural extraction excludes closed HTML comments, fenced examples and ATX headings; it is not a complete Markdown/HTML visibility parser or semantic usefulness review.",
+      "No paid customer outcome, email delivery or Site deployment established by fixtures."
+    ]
+  }
+}
