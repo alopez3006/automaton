@@ -1,27 +1,22 @@
-# Latest supervisor update — quoted tag acceptance
+# Business execution receipt — 2026-10-14T17:39:08.034537+00:00
 
-2026-10-14T17:37:00.048Z — Supervisor accepted G38 without source modification: both artifact hashes match; all 81 focused collector/network/robots/reference/task-review controls independently pass, with syntax/diff clean. Ordered quote-aware opening-tag selection preserves metadata and link attributes containing greater-than characters, with negative quoted-tag/lookalike/closing-tag controls. Raw-text, heading/text and sitemap parsing limits remain; no complete HTML/DOM or semantic-usefulness claim. No provider re-fetch, private snapshot rewrite, inference, email, Site deployment, purchase or counter reset.
+Status: completed bounded decision assessment; mission remains active. External spend this pass: EUR 0. Total budget EUR 50, used/reserved EUR 0; counters preserved.
 
-## Prior controller receipt (historical)
+Hypothesis: prioritize genuine demand and fulfillment over repeating completed collector work or producing additional unpublished content while the source transport is blocked.
 
-# Business execution receipt — 2026-10-14T17:19:09.042833+00:00
+Action/artifact: evaluated acquisition, conversion, report quality and delivery against MISSION.md, GROWTH.md, OPERATIONS.md and the latest supervisor acceptance. Updated NEXT-ACTION-DEPENDENCIES.json with current anonymous inventory and concrete prerequisites. No new commercial improvement was executed or claimed; this receipt is an operational assessment, not growth evidence.
 
-Status: completed local quality improvement; mission remains active. External spend this pass: EUR 0. Budget: EUR 50 total, used/reserved EUR 0.
+Verification: safe hosted memory recall succeeded with authorized network access after sandbox DNS failure. Fresh operator --metrics-only observation at 17:38:47 UTC: three retained records, one prepared/two ineligible, zero requested/needs_review/payment_pending/delivered; one stored reviewed summary. Includes administrative/test records, first page only; no customer cohort or conversion rate. Payments and notifications false. Budget helper confirms EUR 50 available. Owner inbox empty at both checkpoints. Callable tool-name inspection exposed no new direct Sites source-sync capability; no credential-bearing call or blocked transfer attempted. Existing G38 supervisor acceptance retained without rerunning its 81 checks.
 
-Hypothesis: preserving quoted HTML tag boundaries prevents missing indexing directives and false metadata/link candidates, improving the evidence supplied for independently reviewed tasks.
+Candidates and exact prerequisites:
+- Acquisition: owned guides, robots/sitemap and Bing sitemap fetch/discovery completed. Dated indexing/search/AI observation due 21 October; no resubmission or premature unchanged query. Manual LinkedIn distribution requires actual owner post URL/date and available aggregate results; external account posting remains outside authority.
+- Conversion: reviewed anonymous GET patch needs accepted supported Sites source publication transport, then comparable dated GET/request windows. More unpublished copy cannot establish visitor conversion.
+- Offer quality: next useful report requires a genuine request or materially new evidence for the deferred retained task. No requested work currently retained. Do not regenerate a demonstration, repeat G17 or invent a parser defect to fill a cycle.
+- Delivery: commercial activation requires a genuinely useful independently approved report and current capacity; actual payment-to-delivery proof requires customer-authorized payment. No duplicate owner test email or synthetic sale.
+- Purchase/domain: no demonstrated benefit to replacing the owned domain or buying a service for this bottleneck; general purchase payment method remains absent. No reservation or purchase made.
 
-Action/artifact: reproduced a noindex directive becoming an empty robots field when a preceding quoted attribute contains >; corrected shared ordered opening-tag extraction for meta, link and anchor tags. Added three meaningful positive/negative controls. Proof: QUOTED-TAG-ACCEPTANCE.json, with source/test hashes.
+Next measurable follow-up: prioritize any genuine incoming request and count supported tasks kept/revised/removed after independent review; collect actual post aggregates when supplied; after accepted publication compare matching GET/request windows; check indexing and search/AI observations on/after 21 October. Existing heartbeat owns continuation; no controller, timer, watcher restart or schedule created.
 
-Verification: 81 collector/network/robots/reference/task-review tests pass, including duplicate attributes, comments, JSON-LD, URL validation and payment-review controls. Syntax and diff whitespace checks pass. No full parser, rendered DOM, semantic usefulness or live customer result claimed. Correction is local to the operator, not a Sites deployment; existing private snapshots unchanged.
+No new durable knowledge learned; hosted memory not duplicated. No inference, email, deployment, customer-site change, secret read/transfer, purchase or private snapshot mutation. Existing untracked assessment untouched.
 
-Four workstreams evaluated:
-- Acquisition: owned guides and Bing fetch/discovery completed; indexing/search/AI follow-up remains due 21 October. LinkedIn measurement needs actual owner post URL/date/results; no external account posting authority inferred.
-- Conversion: GET measurement patch publication still requires accepted supported transport; no retry of the rejected credential transfer. Current visitor denominator remains unknown.
-- Offer quality: established a new reproducible evidence-loss defect and completed the bounded generic correction above, rather than regenerate a demonstration or re-review unchanged drafts.
-- Delivery: fresh anonymous inventory at 17:18:24 UTC shows three retained records, one prepared/two ineligible, zero requested/payment-pending/delivered. Inventory includes administrative/tests; no customer cohort or sale claim. Payments/notifications false. Useful independently approved report and real payment-to-delivery proof remain prerequisites.
-
-Next measurable follow-up: on the next genuine request count affected metadata/link evidence and independently kept/revised/removed tasks with reasons. Do not rerun a demonstration for this metric. Current watcher reloads the operator each iteration; no competing controller/timer or restart created.
-
-Console inbox empty at checkpoints. Safe hosted broker recall succeeded after sandbox DNS failure; durable learning persisted as a pending review candidate. Budget/counters preserved; no raw credential file read, secret transfer, inference, email, purchase, customer-site change or deployment. Existing untracked assessment file untouched.
-
-Automatic approval review previously rejected the Sites repository credential transport in helper stdin arguments. No retry made; an accepted supported publication transport remains required.
+Automatic approval review previously rejected the Sites repository credential transport in helper stdin arguments. Publication consent is already handled; an accepted supported transport or changed platform approval decision remains required. No new permission question or retry.
