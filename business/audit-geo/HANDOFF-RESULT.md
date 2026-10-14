@@ -1,21 +1,21 @@
-# Latest supervisor update — report markup acceptance
+# Business execution receipt — 2026-10-14T16:46:48.408474+00:00
 
-2026-10-14T16:44:20.728Z — Supervisor accepted corrected G37 after reproducing valid fenced-example rejection and acceptance of unfinished trailing markup. Shared extraction now keeps comment and fence contexts separate; literal comment examples do not consume following sections, and unfinished report comments/fences are refused before the agent prompt is appended. Five additional controls cover parser/payment behavior; 35 focused and 14 mocked launch controls pass, with syntax/diff clean. Current source hashes in UNCLOSED-COMMENT-ACCEPTANCE.json supersede the controller baseline. Structural checks remain bounded, not a complete Markdown/HTML parser or semantic review. No private snapshot or paid-entitlement rewrite, inference, email, purchase, Site deployment or actual customer result.
+Status: completed bounded decision assessment; mission remains active. External spend this pass EUR 0. Total budget EUR 50, used/reserved EUR 0.
 
-## Prior controller receipt (historical)
+Hypothesis: prioritize a genuinely useful request or an available acquisition action rather than reopen completed fixes or repeat the rejected publication transport.
 
-# Business execution receipt — 2026-10-14T16:26:18.182333+00:00
+Action/artifact: evaluated acquisition, conversion, report quality and delivery against MISSION.md, GROWTH.md, OPERATIONS.md and prior acceptance. Updated NEXT-ACTION-DEPENDENCIES.json with the current anonymous observation. No new commercial improvement executed or claimed.
 
-Status: completed bounded local report-quality action; mission remains active. External spend this pass EUR 0; budget total EUR 50, used/reserved EUR 0.
+Verification: hosted memory recall succeeded through the safe broker after sandbox DNS failure. Metrics-only at 16:46:13 UTC returned three retained records: zero requested, payment-pending, needs-review or delivered; one prepared, two ineligible, one reviewed summary, all entry labels unknown. This includes administrative/test records and is not a lifetime customer cohort. Payments and notifications remain false. Budget helper confirms zero spent/reserved. Owner inbox empty at both checkpoints. No customer data copied, new inference, email, purchase, deployment, credential creation, controller launch or timer.
 
-Hypothesis: comment content extending to end of input must not satisfy customer-visible completion requirements before payment invitation.
+Candidates and exact prerequisites:
+- Acquisition: existing guides and Bing sitemap fetch/discovery completed; indexing/search/AI measurements due 21 October. No resubmission justified.
+- Owned publication and conversion GET measurement: require supported accepted Sites source transport or changed platform approval decision. Owner consent resolved; rejected token transfer must not be replayed.
+- External distribution: owner chose manual LinkedIn publication; actual post URL/date and aggregate results needed to assess outcomes. No account posting authority inferred.
+- Report quality: next genuine request or materially new evidence for the retained deferred task. Existing G17 review and G37 acceptance completed; no new defect established and no demonstration inference justified.
+- Delivery and commercial activation: genuinely useful independently approved report and current capacity, followed by actual customer-authorized payment. Native inbox test and local regressions remain distinct from a customer sale.
+- Domain purchase: existing owned domain works; no observed need for replacement and no general purchase method configured. No paid fallback.
 
-Action/artifact: reproduced acceptance of a report with no visible no-action instruction; corrected shared prose extraction to remove comments through closing delimiter or end of input. Added positive/negative section, ending and no-action controls plus fresh-review payment refusal. Proof: UNCLOSED-COMMENT-ACCEPTANCE.json with three source hashes.
+Measurable follow-up: next genuine request records entry label, independently retained useful tasks and invitation/delivery transitions; 21 October compares discovery/indexing observations. Missing visit denominator remains unknown. Detailed seven-candidate prerequisites are in NEXT-ACTION-DEPENDENCIES.json.
 
-Verification: 30 focused report/review/readiness/preview/task-review controls and 14 mocked launch scenarios pass; git diff --check clean. Anonymous inventory at 16:25:51 UTC: three retained records, zero requested/payment-pending/delivered, one prepared, two ineligible; one reviewed summary. Includes administrative/test records; not lifetime customer counts. Payments and notifications disabled. Owner inbox empty at checkpoints. Hosted memory recall succeeded through safe broker after sandbox DNS failure; durable end-of-input comment learning stored successfully.
-
-Four-workstream decision: acquisition guide/Bing publication is already completed; discovery measurements due 21 October and LinkedIn measurement awaits actual owner post evidence. Owned content publication and conversion visitor counting require the blocked accepted Sites transport. No urgent delivery or inbound obligation observed; launch requires genuinely useful independently approved report and current capacity. Quality action selected only after a new defect was reproduced; no demonstration inference or repeated deferred review.
-
-Measurable follow-up: next genuine report count comment-related completion refusals, repair and independently re-review before invitation. No semantic quality, production deployment, customer sale or inbox delivery claimed. Private snapshots, mission counters and watcher unchanged; no new controller or timer.
-
-Publication dependency: automatic approval review previously rejected credential transport in Sites helper stdin arguments. Owner consent resolved; supported accepted transport still required. No key recreation or transfer retry.
+Automatic approval review previously rejected the Sites repository credential transport in helper stdin arguments. No new attempt made; an accepted supported transport remains required. No new durable learning was found, so no duplicate memory stored. Mission counters and existing supervision preserved.
