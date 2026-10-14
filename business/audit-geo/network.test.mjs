@@ -57,3 +57,22 @@ test('binary single-hop mode retains non-text bytes and returns redirects withou
  const r=await fetch('https://example.com/');assert.deepEqual(r.body,body);assert.equal(r.status,302);assert.equal(calls.length,1);
  assert.throws(()=>createPublicFetcher({responseEncoding:'unknown'}),/mode/);
 });
+test('successful redirect evidence retains requested URL and ordered dated hops without extra requests',async()=>{
+ const calls=[];
+ const fetch=createPublicFetcher({resolveHost:publicDns,get:transport([
+  {status:301,headers:{location:'/new'}},
+  {status:307,headers:{location:'https://www.example.com/final'}},
+  {body:'final page'}
+ ],calls)});
+ const r=await fetch('https://example.com/old');
+ assert.equal(r.requestedUrl,'https://example.com/old');
+ assert.equal(r.url,'https://www.example.com/final');
+ assert.equal(r.body,'final page');assert.equal(calls.length,3);
+ assert.deepEqual(r.redirectChain.map(({url,status,nextUrl})=>({url,status,nextUrl})),[
+  {url:'https://example.com/old',status:301,nextUrl:'https://example.com/new'},
+  {url:'https://example.com/new',status:307,nextUrl:'https://www.example.com/final'}
+ ]);
+ for(const hop of r.redirectChain)assert.ok(Number.isFinite(Date.parse(hop.observedAt)));
+ const direct=await createPublicFetcher({resolveHost:publicDns,get:transport([{body:'direct'}])})('https://example.com/');
+ assert.deepEqual(direct.redirectChain,[]);assert.equal(direct.requestedUrl,direct.url);
+});

@@ -32,6 +32,8 @@ export function createPublicFetcher({resolveHost=lookup,get=https.get,totalTimeo
   if(!Number.isSafeInteger(totalTimeoutMs)||totalTimeoutMs<=0||!Number.isSafeInteger(maxBytes)||maxBytes<=0)throw Error('Invalid fetch bounds');
   if(!['utf8','buffer'].includes(responseEncoding)||typeof followRedirects!=='boolean')throw Error('Invalid response mode');
   return async function fetchPublic(target) {
+    const requestedUrl=new URL(target).href;
+    const redirectChain=[];
     const deadline=Date.now()+totalTimeoutMs;
     const remaining=()=>{const ms=deadline-Date.now();if(ms<=0)throw Error('Evidence total deadline exceeded');return ms;};
     async function visit(target,redirects) {
@@ -51,8 +53,13 @@ export function createPublicFetcher({resolveHost=lookup,get=https.get,totalTimeo
           res.on('end',()=>{if(settled)return;settled=true;clearTimeout(timer);const bytes=Buffer.concat(chunks);resolve({url:url.href,status:res.statusCode,headers:res.headers,body:responseEncoding==='buffer'?bytes:bytes.toString('utf8'),observedAt:new Date().toISOString()});});
         });req.on('error',fail);}catch(e){fail(e);}
       });
-      if(followRedirects&&result.status>=300&&result.status<400&&result.headers.location){if(redirects>=3)throw Error('Too many redirects');return visit(new URL(result.headers.location,url).href,redirects+1);}
-      return result;
+      if(followRedirects&&result.status>=300&&result.status<400&&result.headers.location){
+        if(redirects>=3)throw Error('Too many redirects');
+        const nextUrl=new URL(result.headers.location,url).href;
+        redirectChain.push({url:url.href,status:result.status,nextUrl,observedAt:result.observedAt});
+        return visit(nextUrl,redirects+1);
+      }
+      return {...result,requestedUrl,redirectChain};
     }
     return visit(target,0);
   };

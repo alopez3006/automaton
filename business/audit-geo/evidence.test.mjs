@@ -68,6 +68,18 @@ test('cross-origin redirected markup cannot seed further pages',async()=>{
  const e=await collectEvidence('https://example.com/',{fetchPage:async url=>({url:'https://elsewhere.test/',status:200,headers:{'content-type':'text/html'},body:'<a href="/secret">',observedAt:'now'})});
  assert.ok(e.observations.every(o=>o.error));assert.equal(e.scope.selectedPages.length,0);
 });
+test('same-origin redirect provenance survives HTML extraction under the final evidence URL',async()=>{
+ const chain=[{url:'https://example.com/',status:301,nextUrl:'https://example.com/home',observedAt:'2026-10-14T06:00:00Z'}];
+ const e=await collectEvidence('https://example.com/',{fetchPage:async requestedUrl=>({
+  requestedUrl,url:requestedUrl==='https://example.com/'?'https://example.com/home':requestedUrl,
+  redirectChain:requestedUrl==='https://example.com/'?chain:[],status:200,
+  headers:{'content-type':'text/html'},body:'<title>Final page</title>',observedAt:'2026-10-14T06:00:01Z'
+ })});
+ assert.equal(e.observations[0].url,'https://example.com/home');
+ assert.equal(e.observations[0].requestedUrl,'https://example.com/');
+ assert.deepEqual(e.observations[0].redirectChain,chain);
+ assert.equal(e.observations[0].title,'Final page');assert.equal(e.observations[0].id,'E1');
+});
 test('robots policy uses complete fetched rules and stable observation IDs',async()=>{
  const e=await collectEvidence('https://example.com/',{fetchPage:async url=>({url,status:200,observedAt:'2026-10-13T13:00:00Z',headers:{'content-type':url.endsWith('.txt')?'text/plain':'text/html'},body:url.endsWith('.txt')?'#'+'x'.repeat(17000)+'\nUser-agent: GPTBot\nDisallow: /\nUser-agent: OAI-SearchBot\nAllow: /':'<h1>Home</h1>'})});
  assert.deepEqual(e.observations.map(o=>o.id),['E1','E2','E3']);

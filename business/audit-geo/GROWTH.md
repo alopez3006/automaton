@@ -69,3 +69,8 @@ G16 Search Console follow-up 2026-10-14T05:24:18.787692+00:00: actual read-only 
 ## G17 — Actual retained-draft review, 2026-10-14T05:37:37.129327+00:00
 
 One complete reference-valid retained draft independently assessed, sole conditional metadata task deferred. Private digest-bound assessment saved without version-2 approval or original-snapshot mutation. Optional availability and default enablement can coexist; commercial usefulness and product behavior require verification. No new inference, invitation, customer change or sale. Follow-up on relevant fresh evidence: actual kept/revised/removed tasks with reasons; zero useful tasks remains ineligible. Do not repeat this review without new evidence.
+
+
+## G18 — Redirect provenance, 2026-10-14T06:20:43.132279+00:00
+
+Implemented locally: successful raw fetches retain requestedUrl and ordered followed-hop URL/status/nextUrl/date; final URL remains the content evidence identity. Direct/no-follow responses have no followed hops. Existing DNS/HTTPS/three-hop/deadline/byte limits and cross-origin content exclusion unchanged. 41 focused controls pass. Citation fields unchanged; no redirect defect inferred and failed fetches remain unavailable. No Site publication required for the local collector; existing private snapshots are not migrated. Follow-up on next genuine report: count hops and tasks revised/removed because target/final URL ambiguity was resolved. No demonstration inference or commercial outcome claimed.
