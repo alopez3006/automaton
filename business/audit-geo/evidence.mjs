@@ -2,6 +2,7 @@ import https from 'node:https';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import { evaluateRobots } from './robots.mjs';
+import {labObservation} from './lab-observation.mjs';
 
 // Conservative global-unicast allowlist; reject special-use/tunnel ranges.
 function ipv6Number(address) {
@@ -228,7 +229,7 @@ export function selectSitemap(robots,base) {
   }
   return {url:fallback,selection:'default'};
 }
-export async function collectEvidence(website,{pagespeed=false,fetchPage=publicFetch,renderPage}={}) {
+export async function collectEvidence(website,{pagespeed=false,fetchPage=publicFetch,renderPage,collectPerformance=collectPageSpeed}={}) {
   const url=new URL(website);
   const raw=new Map();
   async function observe(target,kind){
@@ -267,6 +268,10 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
   const robotsPolicy=evaluateRobots(robots,observations.filter(o=>o.kind==='page'&&!o.error).map(o=>o.url));
   robotsPolicy.evidenceId=observations[1].id;
   let performance={status:'not_requested'};
-  if(pagespeed)performance=await collectPageSpeed(url.href);
+  if(pagespeed){
+    performance=await collectPerformance(url.href);
+    const measured=labObservation(performance,url.href,`E${observations.length+1}`);
+    if(measured){observations.push(measured);performance.evidenceId=measured.id;}
+  }
   return {website,observations,robotsPolicy,performance,scope:{sitemapDiscovery,maxAdditionalPages:4,selectedPages:selected,selection:'Round-robin by first path segment among bounded same-origin links and sitemap URLs; discovery order within each group; no query strings',limitations:['Path diversity is a heuristic, not semantic relevance or complete coverage','Bounded sample, not a complete crawl','Only one sitemap is fetched; failed declared sitemap has no fallback request; indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
 }

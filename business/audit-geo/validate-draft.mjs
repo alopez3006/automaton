@@ -1,5 +1,6 @@
 import {assembleReport} from './report.mjs';
 import {validateTaskReview} from './task-review.mjs';
+import {labField} from './lab-observation.mjs';
 function structuredValueField(field,o){
   if(typeof field!=='string'||field.length>300)return false;
   const match=/^structuredData\.blocks\.(0|[1-9]\d*)\.value((?:\.[A-Za-z0-9_@:-]+){0,8})$/.exec(field);
@@ -20,7 +21,8 @@ export function validateDraft(draft,evidence) {
       const o=observations.get(ref.evidenceId);
       if(typeof ref.evidenceId!=='string'||!/^E[1-9]\d*$/.test(ref.evidenceId)||!o||o.error||ref.url!==o.url||ref.observedAt!==o.observedAt||!new RegExp(`\\b${ref.evidenceId}\\b`).test(draft.report))fail('unknown or mismatched observation');
       // Only observed scalar fields; no prototype traversal or model-defined fields.
-      if(typeof ref.field!=='string'||(!/^(status|title|body|sections\.\d+\.(heading|text)|descriptions\.\d+|h1\.\d+|canonicals\.\d+|robots\.\d+\.(agent|content)|structuredData\.status|structuredData\.blocks\.\d+\.status|headers\.x-robots-tag)$/.test(ref.field)&&!structuredValueField(ref.field,o)))fail('unsupported evidence field');
+      if(o.kind==='lighthouse_lab'&&!labField(ref.field,o))fail('unsupported laboratory field');
+      if(typeof ref.field!=='string'||(!/^(status|title|body|sections\.\d+\.(heading|text)|descriptions\.\d+|h1\.\d+|canonicals\.\d+|robots\.\d+\.(agent|content)|structuredData\.status|structuredData\.blocks\.\d+\.status|headers\.x-robots-tag)$/.test(ref.field)&&!structuredValueField(ref.field,o)&&!labField(ref.field,o)))fail('unsupported evidence field');
       let value=o;
       for(const part of ref.field.split('.')){if(value===null||typeof value!=='object'||!Object.hasOwn(value,part))fail('unobserved field');value=value[part];}
       const scalar=typeof value==='string'?value:((typeof value==='number'&&Number.isFinite(value))||typeof value==='boolean')?String(value):null;

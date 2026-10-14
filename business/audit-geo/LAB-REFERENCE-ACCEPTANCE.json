@@ -1,0 +1,56 @@
+{
+  "observedAt": "2026-10-14T13:15:54.436651+00:00",
+  "hypothesis": "Make already collected mobile Lighthouse diagnostics usable as exact source references for useful report tasks, without conflating laboratory diagnostics and search outcomes.",
+  "defect": "Performance diagnostics were outside observations and all lab fields were excluded by validateDraft.",
+  "action": "Added separate dated same-origin lighthouse_lab observation, explicit scalar whitelist and inference guidance; optional collector retains existing performance output and links its evidence ID.",
+  "verification": {
+    "command": "node --test business/audit-geo/lab-observation.test.mjs business/audit-geo/validate-draft.test.mjs business/audit-geo/evidence.test.mjs business/audit-geo/task-review.test.mjs business/audit-geo/report.test.mjs",
+    "passed": 69,
+    "failed": 0,
+    "newControls": [
+      "exact lab diagnostic and numeric leaf references",
+      "independent final URL and measurement date",
+      "unavailable, mismatched, foreign, insecure or credential-bearing final URL refused",
+      "null, nonfinite, missing and invented fields refused",
+      "lab versus HTML and field-data separation",
+      "payment remains denied without independent review",
+      "optional collector integration, stable E2 robots and no additional HTML fetches"
+    ],
+    "syntax": [
+      "operator.mjs",
+      "evidence.mjs"
+    ],
+    "diffCheck": true
+  },
+  "scope": "Local fixture acceptance only; no API measurement, new inference, report migration, site deployment, email, payment, customer outcome or search result.",
+  "workstreams": {
+    "acquisition": "Existing owned guides published; discovery follow-up due 21 October. External posting authority not inferred.",
+    "conversion": "Anonymous GET publication remains blocked by prior rejected transport; no retry.",
+    "reportQuality": "Executed missing diagnostic-to-reference integration from API-ASSESSMENT.md.",
+    "delivery": "Existing payment and independent usefulness gates preserved; no duplicate email test."
+  },
+  "followUp": "On next genuine request with available optional PageSpeed diagnostics, count lab references actually retained and tasks kept/revised/removed by independent review. An unavailable API remains unknown; no automatic retry or score zero.",
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T13:33:46.176Z",
+    "passed": 69,
+    "failed": 0,
+    "command": "node --test business/audit-geo/lab-observation.test.mjs business/audit-geo/validate-draft.test.mjs business/audit-geo/evidence.test.mjs business/audit-geo/task-review.test.mjs business/audit-geo/report.test.mjs",
+    "syntax": [
+      "operator.mjs",
+      "evidence.mjs",
+      "lab-observation.mjs"
+    ],
+    "diffCheck": true,
+    "sourceHashes": {
+      "evidence.mjs": "4d11ff78d5b61dadc6709dc26511f5d9f22e5f1590c587a57e54608f2e9fbc11",
+      "operator.mjs": "4752e7ebc0faeb95f920f81e9ad4a9ad6db0d031e7d82503b8b2d9e62db4d604",
+      "validate-draft.mjs": "487c5558f940803391496ef43d898788f5f6f40869f59f07e56318082ad0bca4",
+      "lab-observation.mjs": "ccc2d31de1ff8f900dc4e128186b3d9cdd3450f88e5deb250beddef5b1057f06",
+      "lab-observation.test.mjs": "fa6f20d66ccb691260827551ad84e166a921b0f49aa26fc5e29de3562b08cfe5"
+    },
+    "additionalFixture": "Collection observedAt remains separate from original lab fetchTime; zero performance score retained; no real API request",
+    "timestampBoundary": "observedAt is the provider-response collection date; lab.fetchTime is the original run timestamp when present",
+    "boundary": "Local fixture/reference acceptance only; independent usefulness, real provider/customer delivery and search outcomes remain separate"
+  }
+}
