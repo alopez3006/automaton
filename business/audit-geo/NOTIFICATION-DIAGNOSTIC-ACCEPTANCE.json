@@ -1,0 +1,56 @@
+{
+  "observedAt": "2026-10-14T22:23:43.323133+00:00",
+  "hypothesis": "Bounded non-secret failure categories make the observed automatic notification incident diagnosable without exposing provider messages or replaying delivered mail.",
+  "action": "Local notification marker diagnostics for transport, timeout, HTTP refusal, JSON, receipt and accepted-receipt persistence failures.",
+  "localOnly": true,
+  "productionRootCauseEstablished": false,
+  "verification": {
+    "diagnosticCases": 9,
+    "launchScenarios": 14,
+    "existingNotificationSuite": "passed",
+    "syntax": "passed",
+    "nestedDiffCheck": "passed",
+    "dast": "not run; documented HTTP 402 dependency unchanged; CLI 6.4.0, cached skills current"
+  },
+  "hashes": {
+    "site/worker/notifications.mjs": "719c0908ad61c4c294469870bc06d2ee904950c2805282f996d6645f7280c429",
+    "site/scripts/test-notification-diagnostics.mjs": "9c8db6b2d58a951c57e397b2c07f42480b0a967a487f0a9a972c2bd17dee4572"
+  },
+  "productionInventory": {
+    "total": 4,
+    "requested": 0,
+    "prepared": 1,
+    "ineligible": 3,
+    "paymentPending": 0,
+    "delivered": 0,
+    "firstPageOnly": true,
+    "includesAdministrativeTests": true,
+    "notificationsConfigured": true,
+    "paymentsConfigured": false
+  },
+  "externalSpendCents": 0,
+  "nextMeasurement": "After accepted source publication, inspect fixed reason/httpStatus on the next naturally occurring failure; reconcile native receipts before any maintenance retry.",
+  "supervisorVerification": {
+    "at": "2026-10-14T22:40:57.258Z",
+    "controllerHashesMatchedBeforeCorrection": true,
+    "reproducedGap": "Retry exhaustion overwrote the only fixed failure category with the stop reason.",
+    "correction": "lastFailureReason retains the fixed send-failure category separately from retry_attempt_limit or retry_window_expired.",
+    "checks": {
+      "diagnosticCases": 9,
+      "directAndPollExhaustionControls": 32,
+      "launchScenarios": 14,
+      "existingNotifications": "passed",
+      "syntax": "passed",
+      "nestedDiff": "passed"
+    },
+    "hashes": {
+      "site/worker/notifications.mjs": "db315952843bdc151b47ead1d41048f1d8886ee45e3b82cad7d2cac7e086ef52",
+      "site/scripts/test-notification-diagnostics.mjs": "d1f583989e630984b4ec966f4f319c6ca570d54596ea3c63b9e9409d42890ab6"
+    },
+    "localOnly": true,
+    "productionRootCauseEstablished": false,
+    "productionRepaired": false,
+    "notificationReplayed": false,
+    "entitlementPreserved": true
+  }
+}

@@ -1,3 +1,27 @@
+# Supervisor acceptance — 2026-10-14T22:40:57.258Z
+
+2026-10-14T22:40:57.258Z — Supervisor verified G45 source hashes before correction and reproduced one diagnostic gap: retry exhaustion overwrote the fixed send-failure category. Local markers now retain lastFailureReason separately from the terminal stop reason. Nine diagnostic cases, 32 direct/poll attempt/window exhaustion controls, the existing notification suite and 14 launch scenarios pass; syntax/diff clean. Provider bodies/messages and customer data remain excluded, accepted/exhausted markers and payment entitlement retained. Source publication is still blocked on the existing accepted Sites transport dependency; no credential replay, deployment, actual send, inference or spending. Historical production root cause and automatic sending remain unresolved; native fallback receipts preserved.
+
+Next independent action remains the controller decision under MISSION.md. Do not repeat delivered notifications, reset exhaustion or claim that this local patch repaired production. After an accepted source deployment, observe the next naturally occurring fixed failure category; both direct and polling exhaustion retain it.
+
+---
+
+# Execution receipt — 2026-10-14T22:23:43.323133+00:00
+
+Status: completed (local notification diagnostics). External spend this pass: EUR 0.
+
+Hypothesis: fixed non-secret categories will make the observed automatic sending incident diagnosable, whereas another unchanged provider-log poll cannot expose caught failures.
+
+Action/artifact: updated local site/worker/notifications.mjs and added nine mocked diagnostic cases. Pending markers now retain only a fixed failure reason and validated HTTP status when available, separating transport/timeout, retryable HTTP refusal, invalid JSON, missing provider receipt and accepted-receipt persistence failure. No thrown message or provider body is retained. NOTIFICATION-DIAGNOSTIC-ACCEPTANCE.json records hashes and verification. Existing retry ceilings, cooldown, event idempotency, needs_review markers and paid entitlement remain intact.
+
+Verification: nine diagnostic cases, existing notification suite and fourteen integrated launch scenarios pass; module syntax and nested checkout diff check pass. Fixtures verify redaction, unchanged request bytes and no immediate replay. HawkScan skill applied; CLI 6.4.0 and cached skill status checked, documented HTTP 402 prerequisite unchanged, no repeated scan or DAST claim. Fresh authorized anonymous inventory: four retained records, zero requested/payment-pending/delivered, one prepared and three ineligible; includes administrative/tests and is not a lifetime conversion cohort. Notifications true, payments false. Hosted recall succeeded through authorized networking after sandbox DNS failure; no outage inferred. Console inbox empty at checkpoints. Budget EUR 0 used/reserved, EUR 50 available; no inference or counter changes.
+
+Four workstreams: acquisition guides/discovery work already completed, indexing measurement due 21 October and LinkedIn results require a real owner post/aggregates. Conversion GET patch and this diagnostic require accepted Sites source transport; rejected mechanism not retried. Offer quality requires a new genuinely useful request before payment; completed no-action review not reopened. Delivery is prioritized through an executable diagnostic patch; prior native closure receipt preserved and no notification resent. Automatic runtime remains unrepaired and root cause unknown.
+
+Measurable follow-up: after accepted source publication, inspect fixed reason/httpStatus on the next naturally occurring failure. Reconcile retained native receipts before any maintenance retry; no reset of the exhausted marker. Useful independently reviewed report and customer-authorized payment remain required for real-sale proof. No Site deployment, email, purchase, inference, new controller/timer or unrelated-file edit.
+
+---
+
 # Supervisor verification and notification incident — 2026-10-14T22:08:42.849Z
 
 G44 accepted without source edits: actual private original/refusal digest validates, all three controller source hashes match, 48 targeted controls plus syntax/diff pass. The existing request is verified ineligible after independent review removed one positioning-preference task; no payment requested or report disclosed.
