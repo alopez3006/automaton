@@ -1,0 +1,50 @@
+{
+  "observedAt": "2026-10-14T14:11:26.386Z",
+  "status": "dns_published_authoritatively_verified",
+  "provider": "Infomaniak",
+  "zone": "vutler.com",
+  "record": {
+    "type": "CNAME",
+    "relativeName": "7155a834e77a11ddd0a3944a80eb979b.audit",
+    "name": "7155a834e77a11ddd0a3944a80eb979b.audit.vutler.com",
+    "target": "verify.bing.com.",
+    "ttlSeconds": 3600
+  },
+  "changeScope": "One new record only; existing audit CNAME not edited",
+  "ui": {
+    "recordsBefore": 37,
+    "recordsAfter": 38,
+    "filteredExactRecordVisible": true,
+    "localScreenshot": ".reports/bing-dns-confirmation.jpg"
+  },
+  "authoritativeChecks": [
+    {
+      "server": "nsany1.infomaniak.com",
+      "bingCname": "verify.bing.com.",
+      "bingTTLSeconds": 3600,
+      "existingAuditCname": "custom-domains.chatgpt.site.",
+      "existingAuditTTLSeconds": 3600,
+      "passed": true
+    },
+    {
+      "server": "nsany2.infomaniak.com",
+      "bingCname": "verify.bing.com.",
+      "bingTTLSeconds": 3600,
+      "existingAuditCname": "custom-domains.chatgpt.site.",
+      "existingAuditTTLSeconds": 3600,
+      "passed": true
+    }
+  ],
+  "existingAudit": {
+    "name": "audit.vutler.com",
+    "targetBefore": "custom-domains.chatgpt.site.",
+    "targetAfter": "custom-domains.chatgpt.site.",
+    "unchanged": true
+  },
+  "ownershipVerifiedInBing": false,
+  "sitemapSubmitted": false,
+  "secretTransmitted": false,
+  "externalSpendCents": 0,
+  "questionId": "0449245d-817b-49db-a54d-ac04506619cd",
+  "followUp": "DNS prerequisite fulfilled; Bing property verification and sitemap submission still require their own actual result."
+}

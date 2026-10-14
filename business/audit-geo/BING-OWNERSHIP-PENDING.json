@@ -1,0 +1,53 @@
+{
+  "observedAt": "2026-10-14T14:00:48.528121+00:00",
+  "hypothesis": "Adding the owned site to authenticated Bing Webmaster Tools and using DNS verification creates a measurable discovery channel without the blocked Sites source transport.",
+  "action": "Added https://audit.vutler.com/ manually in owner-selected authenticated Chrome Bing session; expanded DNS verification method; acknowledged genuine owner sign-in answer.",
+  "property": "https://audit.vutler.com/",
+  "verification": {
+    "authenticatedSessionObserved": true,
+    "addAndVerifyPanelObserved": true,
+    "ownershipVerified": false,
+    "dnsRecord": {
+      "type": "CNAME",
+      "nameAsDisplayed": "7155a834e77a11ddd0a3944a80eb979b",
+      "propertyRelativeFqdn": "7155a834e77a11ddd0a3944a80eb979b.audit.vutler.com",
+      "targetAsDisplayed": "verify.bing.com"
+    },
+    "dnsChanged": false,
+    "sitemapSubmitted": false,
+    "indexationObserved": false,
+    "aiCitationObserved": false
+  },
+  "dependency": {
+    "dnsConnectorAvailable": false,
+    "questionId": "0449245d-817b-49db-a54d-ac04506619cd",
+    "browserHandoffPreserved": true
+  },
+  "workstreams": {
+    "acquisition": "Executed Bing property addition; DNS prerequisite pending. Existing publication/IndexNow transport remains blocked; manual LinkedIn post evidence still missing.",
+    "conversion": "Public guide entry categories deployed; anonymous GET patch local-only; no new friction evidence justifying another patch.",
+    "offerQuality": "No new requested record; independent useful report acceptance still unproven. Do not create another artificial inference demonstration.",
+    "delivery": "Fresh whitelist inventory: 3 retained records, prepared 1, ineligible 2, requested/payment_pending/delivered 0; payments/notifications disabled. No incident identified; real paid path unproven."
+  },
+  "inventoryObservedAt": "2026-10-14T13:59:58.118Z",
+  "followUp": "After genuine DNS confirmation, verify CNAME publicly, click Bing Verify, then submit https://audit.vutler.com/sitemap.xml once and retain exact result. On or after 21 October inspect three priority URLs and actual search/AI-performance metrics; submission is not indexation.",
+  "externalSpendCents": 0,
+  "limits": [
+    "Bing add-and-verify panel is an intermediate state, not ownership success.",
+    "No other site changed or imported; no broad GSC permission granted.",
+    "No DNS provider access available; no secrets read, copied or persisted.",
+    "Retained first-page inventory is not a lifetime customer cohort."
+  ],
+  "dnsFulfillment": {
+    "at": "2026-10-14T14:11:26.386Z",
+    "artifact": "BING-DNS-PUBLICATION.json",
+    "status": "dns_published_authoritatively_verified",
+    "authoritativeNameservers": [
+      "nsany1.infomaniak.com",
+      "nsany2.infomaniak.com"
+    ],
+    "existingAuditCnameUnchanged": true,
+    "ownershipVerificationPerformedBySupervisor": false,
+    "sitemapSubmittedBySupervisor": false
+  }
+}

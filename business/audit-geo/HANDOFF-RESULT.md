@@ -1,17 +1,19 @@
-# Execution receipt — 2026-10-14T13:37:36.375742+00:00
+# Latest supervisor update — Bing DNS published
 
-Status: completed bounded research/preparation; Bing execution awaits owner-selected authenticated session. Mission remains active.
+2026-10-14T14:11:26.386Z — Owner-requested single Bing verification CNAME added through authenticated Infomaniak Manager: exact subrecord under audit.vutler.com points to verify.bing.com., TTL 3600. Zone count 37 to 38; exact row visible. Both authoritative nameservers confirm the new record and unchanged audit.vutler.com → custom-domains.chatgpt.site. Proof BING-DNS-PUBLICATION.json; screenshot kept private. DNS prerequisite is fulfilled; no Bing Verify or sitemap submission performed in this intervention, no other DNS change, secret transmission, purchase, Site deployment or counter reset. No local owner answer fabricated.
 
-Hypothesis: Bing ownership verification and sitemap submission offer a free discovery route independent of the blocked Sites repository transport.
+## Prior controller receipt (historical)
 
-Action/artifact: researched official requirements, inspected Bing landing through connected Chrome, verified live public robots/sitemap, prepared three public discovery URLs in public-content/BING-SUBMISSION-URLS.txt and BING-DISCOVERY-PREPARATION.json. Asked one new account-session question in the French console; retained the Bing tab for handoff. No account/login/DNS/submission action performed.
+# Business execution receipt — 2026-10-14T14:00:48.528121+00:00
 
-Verification: public robots and sitemap HTTP 200; four public URLs; robots declares the sitemap and excludes request/API paths. Official Bing documentation supports account-specific ownership verification and sitemap submission. IndexNow requires a hosted key file, so is deferred. No Bing connector exposed; Chrome displays Sign In. Exa sandbox DNS failed; connected web supplied official sources. Safe hosted memory recall succeeded with authorized network access.
+Status: waiting_for_user (DNS-dependent Bing work only). External spending this pass: EUR 0.
 
-Workstreams: acquisition now has a concrete Bing candidate and session dependency, alongside the accepted-publication-channel dependency and manual LinkedIn evidence. Conversion requires deployed anonymous GET metrics/comparable windows. Quality requires genuine request/useful independent review; delivery requires that approval/capacity and customer-authorized payment. Prior dated inventory remains historical; no repeated inventory or unchanged test polling.
+Hypothesis: authenticated Bing ownership plus sitemap submission can create an observable discovery channel while Sites source publication is blocked.
 
-Measurable follow-up: after session availability, obtain exact Bing DNS requirement, prove ownership, submit sitemap once and record submission/fetch result. Inspect three priority URLs on/after 21 October; actual impressions, clicks and citations remain unknown. No search-result probe repeated early.
+Action: confirmed the owner-selected Bing session, manually added https://audit.vutler.com/, and obtained Bing's exact CNAME verification requirement. Genuine sign-in answer acknowledged. Browser panel retained for continuation. BING-OWNERSHIP-PENDING.json contains concrete proof and boundaries.
 
-External spend this pass: EUR 0. No new inference, email, payment, deployment, credential transfer, controller/timer, budget or quota reset.
+Verification: Bing visibly shows Add & verify site for the correct property and CNAME name 7155a834e77a11ddd0a3944a80eb979b, target verify.bing.com. DNS not changed; ownership not verified; sitemap not submitted; no indexation or AI citation claimed. No callable DNS provider connector exists. Console question 0449245d-817b-49db-a54d-ac04506619cd requests only the DNS record, not renewed publication permission or credentials.
 
-Supervisor reconciliation: 2026-10-14T13:54:37.197Z — Supervisor verified genuine owner-role answers linked to the existing Sites and Bing questions without displaying private reply text. Sites answer is acknowledged; Bing answer remains incoming for the controller. Three prepared priority URLs are an exact public owned-origin allowlist, without credentials/query/fragment; four pending Site source hashes still match acceptance. No browser/account/DNS/submission step or repeated provider check performed. Updated question history distinguishes answered owner consent from unresolved platform transport. No tests, inference, email, payment, purchase, credential transfer, deployment or counter reset; original receipts retained.
+Four workstreams: acquisition advanced through actual Bing property addition. Conversion categories are already deployed; GET patch remains local-only under the existing transport rejection. Fresh anonymous metrics at 13:59:58 UTC show no requested/payment-pending record, three retained records (one prepared, two ineligible), zero delivered, payments/notifications false. Useful independently approved report and real payment-to-delivery proof remain absent; no new quality defect or delivery incident justifies fabricated busywork. Existing LinkedIn evidence and Sites transport candidates retain their precise prerequisites.
+
+Next measurable follow-up: after genuine DNS confirmation, verify public CNAME and ownership, submit the sitemap once, preserve submitted/fetched/error state. On/after 21 October inspect priority URLs and actual Bing search/AI metrics. No additional controller, inference, email, purchase, deployment or counter reset.
