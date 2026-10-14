@@ -1,0 +1,48 @@
+{
+  "observedAt": "2026-10-14T12:00:48.205634+00:00",
+  "status": "locally_accepted_not_deployed",
+  "hypothesis": "Anonymous public page GET totals provide a declared exposure baseline for requests by educational page.",
+  "publicVersion": 18,
+  "action": "Immutable anonymous public GET events in existing R2, private bounded seven-day aggregation, safe operator output and privacy notice.",
+  "checks": {
+    "publicGetControls": 12,
+    "remoteWhitelistTests": 5,
+    "launchScenarios": 14,
+    "attributionControls": 18,
+    "discoveryIntakePaymentChecks": "passed",
+    "build": "passed",
+    "artifactImport": "passed",
+    "diffCheck": "passed"
+  },
+  "limits": [
+    "GET events are not unique visitors; bots, repeats and verification traffic included.",
+    "Cache hits and failed writes absent. Observed 1000-event daily recording ceiling can overshoot under concurrency; reads capped at first 1000 and flagged saturated.",
+    "Thirty-day expiry is opportunistic with at most 100 deletions per authorized metrics read; deletion may lag.",
+    "No production events, customer request, indexation, citation or sale proved."
+  ],
+  "sourceHashes": {
+    "worker/index.js": "1327dfdea83918170dd413989e5cfacea181d4fbaa90991ce900dce6bbc3091b",
+    "worker/page-views.mjs": "9a05d54fd987ed5a07a5c803efb259548e2f003903ca7f4b400aa1d3bc3226e2",
+    "scripts/build.sh": "2f528a332bb2a4c0ecb87de29b9aa5faae9bd84d37fe6ef4f02316d3157e794c",
+    "scripts/test-page-views.mjs": "91fadeead24752dbc2684c9db3c8cf0fa7171b952d7d938f3b87fa5f6947effc"
+  },
+  "publicationBlocker": "Automatic approval review rejected raw repository credential in write_stdin arguments. Credential cleared; waiting helper cancelled. No alternate transfer or deployment attempted.",
+  "consoleQuestionId": "338a6610-7c36-4312-a4b7-fe96e96b42b6",
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T12:15:08.249Z",
+    "publicGetControls": 12,
+    "remoteWhitelistTests": 5,
+    "producerWhitelistDSTControls": 2,
+    "attributionControls": 18,
+    "mockedLaunchScenarios": 14,
+    "discoveryIntakePaymentChecks": "passed",
+    "artifactImport": "passed",
+    "sourceHashAndBuildInputsMatch": true,
+    "reversePatchCheck": "passed",
+    "syntaxAndDiff": "passed",
+    "correction": "Remote date output now requires real calendar strings and a consecutive newest-first seven-day window; array coercion, impossible dates, gaps and reversed windows refused. Leap-day/year and both Zurich DST boundaries accepted.",
+    "publication": "Not attempted; existing automatic-review rejection and console question retained",
+    "boundary": "Local fixture proof only, not deployed page counts, visitors, conversion or customer outcomes"
+  }
+}

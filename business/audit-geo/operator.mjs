@@ -9,6 +9,7 @@ import { validateDraft,canRequestPayment } from './validate-draft.mjs';
 import { draftSchema } from './draft-schema.mjs';
 import { reviewedPreview } from './preview.mjs';
 import { summarizeFunnel } from './funnel.mjs';
+import {safePageViewMetrics} from './page-view-metrics.mjs';
 import { sniparaEnvironment } from '../../scripts/with-snipara.mjs';
 import { loadSniparaTools } from '../../dist/agent/snipara.js';
 import {loadBusinessPolicy,auditCapacity} from '../../dist/business/policy.js';
@@ -26,7 +27,12 @@ const reports=join(root,'.reports');await mkdir(reports,{recursive:true,mode:0o7
 const lock=await open(join(reports,'operator.lock'),'wx',0o600).catch(()=>{throw Error('Another operator is running; inspect its process before removing a stale lock');});
 async function api(method,body){const r=await fetch(new URL('/api/operator/requests',site),{method,headers:{...headers,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(20000),redirect:'error'});if(!r.ok)throw Error(`Operator API HTTP ${r.status}`);return r.json();}
 try{
- if(process.argv.includes('--metrics-only')){
+ if(process.argv.includes('--page-views-only')){
+  if(process.argv.includes('--accept-orders')||process.argv.includes('--retry-review'))throw Error('Metrics mode cannot mutate orders');
+  const response=await fetch(new URL('/api/operator/page-views',site),{headers,redirect:'error',signal:AbortSignal.timeout(20000)});
+  if(!response.ok)throw Error('Public GET metrics unavailable; deployment may be pending');
+  console.log(JSON.stringify(safePageViewMetrics(await response.json())));
+ }else if(process.argv.includes('--metrics-only')){
   if(process.argv.includes('--accept-orders')||process.argv.includes('--retry-review'))throw Error('Metrics mode cannot mutate orders');
   console.log(JSON.stringify(summarizeFunnel(await api('GET'))));
  }else{
