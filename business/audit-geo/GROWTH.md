@@ -22,6 +22,8 @@ G8: reduce evidence blindness to useful content below the opening 16000-characte
 
 ## Decision and feedback
 
+G11 — Local launch review diagnostic implemented 14 October: review-readiness.mjs checks retained draft/evidence pairs without network, inference or mutation and emits fixed anonymous categories. Actual baseline: three snapshots, zero unreadable, two invalid references, two incomplete reports, three without current approval, zero locally ready. Counts overlap and may include tests/ineligible reports; not a customer-quality failure rate. 26 focused controls pass. This does not renew any review or change server obligations. Next real independent review: compare readiness totals and record actual task corrections privately; do not regenerate a demonstration to improve the counts.
+
 At each pass, inspect outcomes and consider acquisition, conversion, offer quality and delivery separately. Select one bounded action with the best expected value and record the reason briefly in the receipt: hypothesis, artifact/action, verification, metric and next check. Mark a candidate completed only when its acceptance is proved, blocked only with its precise dependency, or rejected with a business reason. Add genuinely new candidates from observed results rather than reopening completed ones.
 
 Do not spend another pass repeating unchanged provider checks, old local acceptance suites or documentation polishing. A genuine idle receipt must explain the alternatives evaluated and why each currently lacks a useful permitted action. The next scheduled controller still evaluates decisions under the standing mission; an idle receipt does not change authority or pause the mission.

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "observedAt": "2026-10-14T01:42:43.426Z",
+  "totals": {
+    "snapshots": 3,
+    "unreadable": 0,
+    "invalidReferences": 2,
+    "incompleteReports": 2,
+    "notCurrentlyApproved": 3,
+    "locallyReady": 0
+  },
+  "limits": [
+    "Local retained draft snapshots only; not current server status or a customer-only cohort.",
+    "Failure counts overlap. Unreadable pairs are excluded from other checks.",
+    "No semantic review, reviewer authentication, payment authorization or delivery proof.",
+    "No writes, inference, network calls or credential reads."
+  ]
+}

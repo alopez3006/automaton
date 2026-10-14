@@ -1,5 +1,7 @@
 # Report quality review
 
+Read-only launch diagnostic: `node business/audit-geo/review-readiness.mjs` reads local retained draft/evidence pairs and prints anonymous counts for references, report completeness and current approval. It never writes reviews or requests payment. Counts overlap and include any retained tests/ineligible drafts; they are not a customer cohort, server status or semantic acceptance. Optional argument selects a fixture directory. The dated baseline is REVIEW-READINESS-BASELINE.json. Use this to identify review prerequisites before running an authorized invitation workflow; no synthetic approval may replace the independent review.
+
 Use this checklist alongside the existing source-reference validator and independent review gates. It is a reviewer procedure, not an automated approval or evidence of SEO/GEO performance. Public reports remain English.
 
 Apply the task-level procedure in [REVIEW-IMPROVEMENT.md](REVIEW-IMPROVEMENT.md). The local payment eligibility gate now requires the structured version-2 record below. This validates review completeness and snapshot identity, not the truth of reviewer judgments.
