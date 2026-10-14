@@ -121,10 +121,22 @@ function textContent(value) { return plainText(value).slice(0,1000); }
 // strings inside JSON-LD stay intact; commented-out scripts are never evidence.
 // This remains bounded regex extraction, not a browser HTML parser.
 function activeMarkup(body,onScript=()=>{}) {
-  return body.replace(/<!--[\s\S]*?(?:-->|$)|<(script|style)\b((?:[^"'<>]|"[^"]*"|'[^']*')*)>([\s\S]*?)(?:<\/\1\s*>|$)/gi,(_block,kind,attrs,content)=>{
-    if(kind?.toLowerCase()==='script')onScript(attrs,content);
-    return ' ';
-  });
+  const tokens=/<!--[\s\S]*?(?:-->|$)|<\/?([a-z][a-z0-9:-]*)(?=[\s/>])(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi;
+  let result='',cursor=0,tag;
+  while((tag=tokens.exec(body))) {
+    const kind=tag[1]?.toLowerCase();
+    if(tag[0].startsWith('<!--')) {
+      result+=body.slice(cursor,tag.index)+' ';cursor=tokens.lastIndex;
+    } else if(tag[0][1]!=='/'&&['script','style'].includes(kind)) {
+      const start=tokens.lastIndex;
+      const closing=new RegExp('<\\/'+kind+'\\s*>','gi');closing.lastIndex=start;
+      const end=closing.exec(body);
+      if(kind==='script')onScript(tag[0].slice(1+kind.length,-1),body.slice(start,end?.index??body.length));
+      result+=body.slice(cursor,tag.index)+' ';
+      cursor=end?closing.lastIndex:body.length;tokens.lastIndex=cursor;
+    }
+  }
+  return result+body.slice(cursor);
 }
 // Sample across the fetched document, rather than only its opening markup.
 // These excerpts establish presence, never absence or complete DOM coverage.

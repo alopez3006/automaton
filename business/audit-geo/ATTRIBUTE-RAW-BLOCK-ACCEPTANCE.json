@@ -1,0 +1,61 @@
+{
+  "observedAt": "2026-10-14T20:17:47.447656+00:00",
+  "status": "local_verified",
+  "hypothesis": "Prevent attribute examples from becoming false structured-data evidence or hiding real content",
+  "reproduction": {
+    "input": "A quoted div attribute containing a script application/ld+json example",
+    "before": "One fake parsed JSON-LD block observed",
+    "after": "Only actual script blocks observed; real headings and links preserved"
+  },
+  "implementation": "Document-order complete-tag scanning before excluding comments and raw script/style blocks",
+  "verification": {
+    "tests": 81,
+    "passed": 81,
+    "failed": 0,
+    "controls": [
+      "single and double quoted attributes",
+      "real JSON-LD",
+      "literal comments in JSON strings",
+      "real comments and style blocks",
+      "unclosed script",
+      "discovery links"
+    ],
+    "diffCheck": "passed"
+  },
+  "limits": [
+    "Bounded regex extraction, not a complete HTML parser",
+    "No actual report re-review or customer usefulness proof",
+    "No inference, deployment, mail or sale"
+  ],
+  "followUp": "On next genuine report count excluded attribute decoys and tasks kept/revised/removed after independent review",
+  "externalSpendCents": 0,
+  "growthCandidate": "G42",
+  "supervisorAcceptance": {
+    "at": "2026-10-14T20:36:43.702Z",
+    "status": "accepted_local",
+    "sourceModifiedBySupervisor": false,
+    "verification": {
+      "tests": 97,
+      "passed": 97,
+      "failed": 0,
+      "suites": [
+        "collector",
+        "network",
+        "draft references",
+        "task review",
+        "report",
+        "robots",
+        "source references"
+      ],
+      "syntaxCheck": "passed",
+      "diffCheck": "passed"
+    },
+    "currentSourceSha256": {
+      "evidence.mjs": "b93cc914e3b4881e9408ead36b628a274e29ec65ab7c2da4e5a831a2ccae1157",
+      "evidence.test.mjs": "f94fb16d7344c96c4cbd52b135bbeb99ef89a9b8724615efb6fc711335fc8c37"
+    },
+    "hashBoundary": "Current hashes recorded now; controller artifact had no original hashes for comparison.",
+    "boundary": "Complete tag tokens prevent quoted script/style/comment examples from seeding exclusions or structured data on the controls. Bounded raw-HTML extraction remains separate from complete tree parsing, rendered visibility, semantic report usefulness, Site deployment or paid delivery.",
+    "externalSpendCents": 0
+  }
+}

@@ -294,3 +294,18 @@ test('text element closing boundaries ignore quoted closing-tag decoys',()=>{
  assert.deepEqual(e.h1,[]);assert.deepEqual(e.sections.map(s=>s.heading),['Closed heading']);
  assert.equal(e.sections[0].text,'Actual passage.');
 });
+
+test('raw block and comment decoys inside attributes cannot create or erase evidence',()=>{
+ for(const quote of ['"',"'"]){
+  const opposite=quote==='"'?"'":'"';
+  const decoy='<script type='+opposite+'application/ld+json'+opposite+'>{'+opposite+'fake'+opposite+':true}</script><!--';
+  const html='<div data-example='+quote+decoy+quote+'><h1>Real offer</h1><a href="/pricing">Pricing</a></div><script type="application/ld+json">{"real":true}</script>';
+  const e=extractHtml(html);
+  assert.deepEqual(e.h1,['Real offer']);assert.equal(e.structuredData.blockCount,1);
+  assert.deepEqual(e.structuredData.blocks,[{status:'parsed',value:{real:true}}]);
+  assert.deepEqual(internalCandidates(html,'https://example.com/'),['https://example.com/pricing']);
+ }
+ const e=extractHtml('<div data-note="<style>"><h1>Keep</h1></div><style><h1>Fake</h1></style><!--<h1>Hidden</h1>--><script type="application/ld+json">{"text":"<!-- literal -->"}</script>');
+ assert.deepEqual(e.h1,['Keep']);assert.equal(e.structuredData.blocks[0].value.text,'<!-- literal -->');
+ assert.deepEqual(extractHtml('<h1>Before</h1><script><h1>Hidden</h1>').h1,['Before']);
+});
