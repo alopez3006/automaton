@@ -1,6 +1,33 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {extractHtml,internalCandidates,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('sample covers distinct path groups before repeating a dominant section',()=>{
+ const base='https://example.com/';
+ const paths=['/docs/a','/docs/b','/docs/c','/docs/d','/pricing','/services/consulting','/about'];
+ assert.deepEqual(selectPageSample(paths.map(p=>base.slice(0,-1)+p),base),['/docs/a','/pricing','/services/consulting','/about'].map(p=>base.slice(0,-1)+p));
+});
+test('sample fills remaining slots deterministically and excludes unsafe or duplicate URLs',()=>{
+ const base='https://example.com/';
+ assert.deepEqual(selectPageSample(['/','/x/a','/x/a#copy','/x/b','/y/a','/x/c','https://other.test/z','/secret?q=1','http://example.com/a','/file.pdf'],base,[base]),['/x/a','/y/a','/x/b','/x/c'].map(p=>base.slice(0,-1)+p));
+ assert.deepEqual(selectPageSample([],base),[]);
+});
+test('selection preserves canonical discovery URLs without a second entity decode',()=>{
+ const base='https://example.com/';
+ const candidates=internalCandidates('<a href="/docs/a&amp;amp;b">Page</a><a href="/offer/%26amp%3B">Offer</a>',base);
+ assert.deepEqual(candidates,['https://example.com/docs/a&amp;b','https://example.com/offer/%26amp%3B']);
+ assert.deepEqual(selectPageSample(candidates,base),candidates);
+});
+test('candidate strings cannot inject a different accepted link through markup',()=>{
+ const base='https://example.com/';
+ assert.deepEqual(selectPageSample(['https://other.test/</loc><loc>/pricing','http://example.com/</loc><loc>/about',null,{}],base),[]);
+});
+test('sitemap adds a distinct group without increasing fetch budget or following child links',async()=>{
+ const calls=[];
+ const fetchPage=async url=>{calls.push(url);return {url,status:200,observedAt:'now',headers:{'content-type':url.endsWith('.xml')?'application/xml':'text/html'},body:url.endsWith('.xml')?'<loc>https://example.com/offer</loc>':Array.from({length:8},(_,i)=>`<a href="/docs/${i}">Doc</a>`).join('')};};
+ const e=await collectEvidence('https://example.com/',{fetchPage});
+ assert.deepEqual(e.scope.selectedPages,['https://example.com/docs/0','https://example.com/offer','https://example.com/docs/1','https://example.com/docs/2']);
+ assert.equal(calls.length,7);assert.ok(e.scope.limitations.some(x=>x.includes('heuristic')));
+});
 test('JSON-LD survives cleanup; malformed and oversized blocks remain explicit',()=>{
  const e=extractHtml(`<title>Store</title><meta content='Useful' name='description'><h1>Buy <b>locally</b></h1><script type="application/ld+json">{"@type":"Store"}</script><script type='application/ld+json'>{bad}</script><script type='application/ld+json'>${'x'.repeat(12001)}</script><script>alert(1)</script>`);
  assert.equal(e.structuredData.blockCount,3);assert.equal(e.structuredData.blocks[0].value['@type'],'Store');assert.equal(e.structuredData.blocks[1].status,'invalid_json');assert.equal(e.structuredData.blocks[2].status,'too_large');assert.equal(e.h1[0],'Buy locally');assert.deepEqual(e.descriptions,['Useful']);assert.ok(!e.body.includes('<script'));

@@ -110,15 +110,21 @@ export function extractHtml(body) {
     limitations:['Raw HTML only; JavaScript-rendered content is unmeasured','Parsed JSON is not schema correctness or rich-result eligibility']
   };
 }
+// URL validation is shared; HTML entity decoding belongs only to discovery.
+function canonicalCandidate(value,base) {
+  if(typeof value!=='string'||!value.trim())return null;
+  try{const u=new URL(value.trim(),base);u.hash='';
+    if(u.origin!==new URL(base).origin||u.protocol!=='https:'||u.username||u.password||u.search||/\.(?:xml|pdf|png|jpe?g|gif|webp|zip|css|js)$/i.test(u.pathname))return null;
+    return u.href;
+  }catch{return null;}
+}
 export function internalCandidates(body,base,{sitemap=false}={}) {
   const matches=sitemap?[...body.matchAll(/<loc\b[^>]*>([^<]+)<\/loc>/gi)].map(m=>m[1]):[...body.matchAll(/<a\b[^>]*>/gi)].map(m=>attributes(m[0]).href);
   const result=[];
   for(const value of matches){
-    if(!value)continue;
-    try{const u=new URL(value.replace(/&amp;/g,'&').trim(),base);u.hash='';
-      if(u.origin!==new URL(base).origin||u.protocol!=='https:'||u.username||u.password||u.search||/\.(?:xml|pdf|png|jpe?g|gif|webp|zip|css|js)$/i.test(u.pathname))continue;
-      if(!result.includes(u.href))result.push(u.href);
-    }catch{}
+    if(typeof value!=='string')continue;
+    const safe=canonicalCandidate(value.replace(/&amp;/g,'&'),base);
+    if(safe&&!result.includes(safe))result.push(safe);
     if(result.length>=20)break;
   }
   return result;
@@ -150,6 +156,29 @@ export async function collectPageSpeed(url,{fetchApi=fetch}={}) {
     return summarizePageSpeed(JSON.parse(Buffer.concat(chunks).toString('utf8')),api.href);
   }catch(e){return {status:'unavailable',observedAt:new Date().toISOString(),source:api.href,reason:e.message};}
 }
+// Path diversity is a sampling heuristic, not a relevance or completeness score.
+export function selectPageSample(candidates,base,excluded=[]) {
+  const groups=new Map(),seen=new Set(excluded);
+  for(const candidate of candidates){
+    // Reapply discovery policy so this helper cannot widen the crawl boundary.
+    const safe=canonicalCandidate(candidate,base);
+    if(!safe||seen.has(safe))continue;
+    seen.add(safe);
+    const group=new URL(safe).pathname.split('/').filter(Boolean)[0]??'';
+    if(!groups.has(group))groups.set(group,[]);
+    groups.get(group).push(safe);
+  }
+  const selected=[];
+  while(selected.length<4){
+    let added=false;
+    for(const pages of groups.values()){
+      if(pages.length){selected.push(pages.shift());added=true;}
+      if(selected.length===4)break;
+    }
+    if(!added)break;
+  }
+  return selected;
+}
 export async function collectEvidence(website,{pagespeed=false,fetchPage=publicFetch,renderPage}={}) {
   const url=new URL(website);
   const raw=new Map();
@@ -165,7 +194,7 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
   const observations=await Promise.all(resources.map((target,i)=>observe(target,i?'discovery':'page')));
   const homepage=raw.get(url.href),sitemap=raw.get(resources[2]);
   const candidates=[...internalCandidates(homepage?.status===200?homepage.body:'',homepage?.url??url.href),...internalCandidates(sitemap?.status===200?sitemap.body:'',url.href,{sitemap:true})];
-  const selected=[...new Set(candidates)].filter(u=>!resources.includes(u)&&u!==homepage?.url).slice(0,4);
+  const selected=selectPageSample(candidates,url.href,[...resources,homepage?.url].filter(Boolean));
   for(const target of selected)observations.push(await observe(target,'page'));
   observations.forEach((o,i)=>{o.id=`E${i+1}`;o.method='Public HTTPS GET; raw response, no JavaScript execution';o.limitations??=['Single dated response; actual crawler behavior is unmeasured'];});
   // Renderer is opt-in; unavailable rendering never replaces raw evidence.
@@ -184,5 +213,5 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
   robotsPolicy.evidenceId=observations[1].id;
   let performance={status:'not_requested'};
   if(pagespeed)performance=await collectPageSpeed(url.href);
-  return {website,observations,robotsPolicy,performance,scope:{maxAdditionalPages:4,selectedPages:selected,selection:'First unique same-origin HTML links, then sitemap URLs; no query strings',limitations:['Bounded sample, not a complete crawl','Sitemap indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
+  return {website,observations,robotsPolicy,performance,scope:{maxAdditionalPages:4,selectedPages:selected,selection:'Round-robin by first path segment among bounded same-origin links and sitemap URLs; discovery order within each group; no query strings',limitations:['Path diversity is a heuristic, not semantic relevance or complete coverage','Bounded sample, not a complete crawl','Sitemap indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
 }
