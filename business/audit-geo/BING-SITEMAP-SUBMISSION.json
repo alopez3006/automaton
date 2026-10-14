@@ -1,0 +1,61 @@
+{
+  "observedAt": "2026-10-14T14:20:55.088079+00:00",
+  "status": "ownership_verified_sitemap_submitted_processing",
+  "property": "https://audit.vutler.com/",
+  "ownershipVerified": true,
+  "ownershipEvidence": "Bing displayed Congratulations! Site addition successful then opened property dashboard.",
+  "sitemap": {
+    "url": "https://audit.vutler.com/sitemap.xml",
+    "submitted": true,
+    "submissionsThisPass": 1,
+    "status": "Processing",
+    "lastSubmitDisplayed": "10/14/2026",
+    "lastCrawlDisplayed": "-",
+    "knownSitemaps": 1,
+    "reportedErrors": 0,
+    "reportedWarnings": 0,
+    "totalUrlsDiscovered": 0,
+    "crawlSuccessProven": false
+  },
+  "indexingProven": false,
+  "aiCitationsProven": false,
+  "inventory": {
+    "observedAt": "2026-10-14T14:20:03.103Z",
+    "requested": 0,
+    "prepared": 1,
+    "ineligible": 2,
+    "paymentPending": 0,
+    "delivered": 0,
+    "payments": false,
+    "notifications": false,
+    "scope": "retained first-page inventory, includes administrative/test records"
+  },
+  "ownerDnsAnswerAcknowledged": true,
+  "externalSpendCents": 0,
+  "followUp": "After provider processing (dashboard says up to 48 hours), inspect sitemap crawl/error state without resubmission; on/after 21 October inspect priority URLs, search impressions and AI citations.",
+  "boundaries": [
+    "No Sites credential transfer, source publication, inference, email, payment, purchase or counter reset.",
+    "Submitted is not fetched, indexed or cited."
+  ],
+  "supervisorVerification": {
+    "observedAt": "2026-10-14T14:36:43.527Z",
+    "method": "Connected Chrome read-only observation of Bing Sitemaps for the correct owned property",
+    "property": "https://audit.vutler.com/",
+    "knownSitemaps": 1,
+    "reportedErrors": 0,
+    "reportedWarnings": 0,
+    "totalUrlsDiscovered": 4,
+    "sitemap": {
+      "url": "https://audit.vutler.com/sitemap.xml",
+      "status": "Success",
+      "lastSubmitDisplayed": "10/14/2026",
+      "lastCrawlDisplayed": "10/14/2026",
+      "urlsDiscovered": 4
+    },
+    "screenshot": "business/audit-geo/.reports/bing-sitemap-success.jpg",
+    "indexingProven": false,
+    "aiCitationsProven": false,
+    "additionalSubmissions": 0,
+    "followUp": "Sitemap fetch is accepted. Do not resubmit or repeat unchanged sitemap checks. On/after 21 October inspect priority URL indexing, search impressions and AI citations, or earlier on a genuine provider incident."
+  }
+}
