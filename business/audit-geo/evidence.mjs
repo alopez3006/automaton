@@ -268,9 +268,24 @@ export function selectSitemap(robots,base) {
 export async function collectEvidence(website,{pagespeed=false,fetchPage=publicFetch,renderPage,collectPerformance=collectPageSpeed}={}) {
   const url=new URL(website);
   const raw=new Map();
+  // A demonstrated HTTPS www/apex redirect establishes the canonical host.
+  // Other subdomains, external hops and unproven cross-origin results stay out.
+  const apex=url.hostname.replace(/^www\./,'');
+  function sameWebsiteResponse(target,r){
+    const allowed=value=>{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password&&!u.port&&[apex,'www.'+apex].includes(u.hostname);};
+    if(!allowed(target)||!allowed(r.url))return false;
+    const chain=r.redirectChain??[];
+    if(new URL(target).origin!==new URL(r.url).origin&&!chain.length)return false;
+    let expected=new URL(target).href;
+    for(const hop of chain){
+      if(new URL(hop.url).href!==expected||!allowed(hop.url)||!allowed(hop.nextUrl)||!Number.isInteger(hop.status)||hop.status<300||hop.status>=400)return false;
+      expected=new URL(hop.nextUrl).href;
+    }
+    return !chain.length||expected===new URL(r.url).href;
+  }
   async function observe(target,kind){
     try{const r=await fetchPage(target);
-      if(new URL(r.url).origin!==url.origin)return {url:target,observedAt:r.observedAt,error:'Cross-origin redirect excluded from evidence'};
+      if(!sameWebsiteResponse(target,r))return {url:target,kind,observedAt:r.observedAt,error:'Cross-origin redirect excluded from evidence'};
       raw.set(target,r);
       // Media types are case-insensitive; parameters do not identify the format.
       // Exact matching avoids treating JSON or lookalike types as HTML evidence.
@@ -281,12 +296,14 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
   }
   const resources=[url.href,new URL('/robots.txt',url).href];
   const observations=await Promise.all(resources.map((target,i)=>observe(target,i?'discovery':'page')));
-  const sitemapDiscovery=selectSitemap(raw.get(resources[1]),url.href);
+  const homepage=raw.get(url.href);
+  const canonicalBase=homepage?.status===200?homepage.url:url.href;
+  const sitemapDiscovery=selectSitemap(raw.get(resources[1]),canonicalBase);
   resources.push(sitemapDiscovery.url);
   observations.push(await observe(sitemapDiscovery.url,'discovery'));
-  const homepage=raw.get(url.href),sitemap=raw.get(resources[2]);
-  const candidates=[...internalCandidates(homepage?.status===200?homepage.body:'',homepage?.url??url.href),...internalCandidates(sitemap?.status===200?sitemap.body:'',url.href,{sitemap:true})];
-  const selected=selectPageSample(candidates,url.href,[...resources,homepage?.url].filter(Boolean));
+  const sitemap=raw.get(resources[2]);
+  const candidates=[...internalCandidates(homepage?.status===200?homepage.body:'',canonicalBase),...internalCandidates(sitemap?.status===200?sitemap.body:'',canonicalBase,{sitemap:true})];
+  const selected=selectPageSample(candidates,canonicalBase,[...resources,homepage?.url].filter(Boolean));
   for(const target of selected)observations.push(await observe(target,'page'));
   observations.forEach((o,i)=>{o.id=`E${i+1}`;o.method='Public HTTPS GET; raw response, no JavaScript execution';o.limitations??=['Single dated response; actual crawler behavior is unmeasured'];});
   // Renderer is opt-in; unavailable rendering never replaces raw evidence.
@@ -295,7 +312,7 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
     for(const page of pages){
       try{
         const rendered=await renderPage(page.url);
-        if(new URL(rendered.url).origin!==url.origin)throw Error('Cross-origin rendered page excluded');
+        if(new URL(rendered.url).origin!==new URL(page.url).origin)throw Error('Cross-origin rendered page excluded');
         observations.push({...rendered,id:`E${observations.length+1}`,kind:'rendered_page'});
       }catch(e){observations.push({id:`E${observations.length+1}`,url:page.url,kind:'rendered_page',observedAt:new Date().toISOString(),method:'Chromium render attempted',error:e.message,limitations:['Rendered evidence unavailable; raw HTML retained']});}
     }
@@ -309,5 +326,5 @@ export async function collectEvidence(website,{pagespeed=false,fetchPage=publicF
     const measured=labObservation(performance,url.href,`E${observations.length+1}`);
     if(measured){observations.push(measured);performance.evidenceId=measured.id;}
   }
-  return {website,observations,robotsPolicy,performance,scope:{sitemapDiscovery,maxAdditionalPages:4,selectedPages:selected,selection:'Round-robin by first path segment among bounded same-origin links and sitemap URLs; discovery order within each group; no query strings',limitations:['Path diversity is a heuristic, not semantic relevance or complete coverage','Bounded sample, not a complete crawl','Only one sitemap is fetched; failed declared sitemap has no fallback request; indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
+  return {website,observations,robotsPolicy,performance,scope:{canonicalBase,sitemapDiscovery,maxAdditionalPages:4,selectedPages:selected,selection:'Round-robin by first path segment among bounded same-origin links and sitemap URLs; discovery order within each group; no query strings',limitations:['Only demonstrated HTTPS www/apex redirects are accepted across origins; other subdomains and external hops are excluded','Path diversity is a heuristic, not semantic relevance or complete coverage','Bounded sample, not a complete crawl','Only one sitemap is fetched; failed declared sitemap has no fallback request; indexes are not recursively followed','Missing raw HTML markup does not prove absence in rendered DOM']},unmeasured:['Google Search Console position','consumer ChatGPT visibility','consumer Claude visibility','LLM API prompt cohort']};
 }

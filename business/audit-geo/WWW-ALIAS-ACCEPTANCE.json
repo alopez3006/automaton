@@ -1,0 +1,73 @@
+{
+  "observedAt": "2026-10-14T21:29:59.125Z",
+  "status": "local_fix_and_existing_request_recovered",
+  "hypothesis": "A valid www/apex HTTPS redirect must not be classified as evidence unavailability or an unhelpful website.",
+  "reproduction": {
+    "before": "All three initial observations were rejected as cross-origin, and an incoming request was prematurely closed as ineligible.",
+    "after": "Seven bounded public observations returned HTTP 200 after the demonstrated canonical www/apex redirect."
+  },
+  "implementation": [
+    "Accept only demonstrated ordered HTTPS redirect chains within the exact www/apex hostname pair. Reject unrelated domains/subdomains, external intermediate hops, credentials, nonstandard ports, malformed provenance and unproven alias changes.",
+    "Use the observed successful homepage URL for sitemap selection and same-origin page sampling; retain requested URL and ordered redirect provenance.",
+    "Store unavailable collection evidence privately and keep the request in needs_review without inference or payment, rather than assert a useful-report rejection.",
+    "Add redacted request inspection and an explicit single-request diagnostic retry; terminal paid requests and no-useful-task decisions are excluded. Preserve routine two-request bounds."
+  ],
+  "verification": {
+    "tests": 103,
+    "passed": 103,
+    "failed": 0,
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "controls": [
+      "www to apex and apex to www",
+      "canonical sitemap and internal-page sampling",
+      "unrelated/unsafe origins and external redirect hops",
+      "unproven and inconsistent redirect chains",
+      "targeted retry does not select other customers, paid jobs or ordinary no-action decisions",
+      "routine two-request limit"
+    ],
+    "livePublicCollection": {
+      "successfulObservations": 7,
+      "pageSample": 5,
+      "robots": 1,
+      "sitemap": 1
+    },
+    "existingRequestRecovery": {
+      "matchedProvidedEmail": true,
+      "newRequestCreated": false,
+      "status": "prepared",
+      "inferenceCalls": 1,
+      "sourceReferencesValid": true,
+      "independentUsefulnessApproved": false,
+      "paymentRequested": false,
+      "acceptedEmails": 0
+    }
+  },
+  "sourceSha256": {
+    "evidence.mjs": "a66a896bf09b242c33f4ae5b7447e3f0188d36637085b241ae9f27bf84083bf4",
+    "evidence.test.mjs": "6746a0a7cc43b649751edfb7dc0fb785476d19b63a195688e2e6e8286318434c",
+    "operator.mjs": "9619bcf9e8ff5500f21559743b50217c30d5c3b9165bfb17f5c3f47a38608bac",
+    "operator-requests.mjs": "639af5e3ff9b856c73885399c1d652956be47c05617fac6903be9976e4c49311",
+    "operator-requests.test.mjs": "7f33d5068ee6bf8f5e5a21b891f2cbc7bf62f25005ba2f0ae88a3f35da6b3ba1"
+  },
+  "runtime": {
+    "lifetimeInferenceAttempts": 8,
+    "dailyInferenceAttempts": 1,
+    "externalSpendCents": 0,
+    "reservedCents": 0,
+    "remainingCents": 5000
+  },
+  "email": {
+    "confirmedEnvironmentRevision": 9,
+    "enabled": false,
+    "activation": "Owner answer pending because prior explicit false flag remains authoritative.",
+    "sender": "Audit GEO <audits@vutler.com>",
+    "secretsChanged": false,
+    "siteRedeployed": false
+  },
+  "boundaries": [
+    "No customer identifiers, private links, reports or credentials in this artifact.",
+    "Prepared source-valid draft is not an independently approved useful report or a sale.",
+    "Local collector/operator fix; no Sites source publication or rejected credential transport replay."
+  ]
+}

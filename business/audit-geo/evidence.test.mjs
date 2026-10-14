@@ -1,6 +1,33 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('demonstrated www/apex redirects preserve evidence and canonical discovery in both directions',async()=>{
+ for(const [input,canonical]of [['https://www.example.com/','https://example.com/'],['https://example.com/','https://www.example.com/']]){
+  const calls=[];
+  const fetchPage=async target=>{
+   calls.push(target);const final=new URL(target);final.hostname=new URL(canonical).hostname;
+   const body=final.pathname==='/'?'<h1>Real offer</h1><a href="/pricing">Pricing</a>':final.pathname==='/robots.txt'?`User-agent: *\nAllow: /\nSitemap: ${canonical}maps/main.xml`:final.pathname.endsWith('.xml')?`<loc>${canonical}about</loc>`:'<h1>Public page</h1>';
+   return {url:final.href,requestedUrl:target,redirectChain:target===final.href?[]:[{url:target,status:308,nextUrl:final.href,observedAt:'2026-10-14T00:00:00Z'}],status:200,headers:{'content-type':final.pathname.endsWith('.txt')?'text/plain':final.pathname.endsWith('.xml')?'application/xml':'text/html'},body,observedAt:'2026-10-14T00:00:00Z'};
+  };
+  const e=await collectEvidence(input,{fetchPage});
+  assert.equal(e.website,input);assert.equal(e.scope.canonicalBase,canonical);
+  assert.deepEqual(e.observations[0].h1,['Real offer']);assert.equal(e.observations[0].requestedUrl,input);
+  assert.equal(e.scope.sitemapDiscovery.url,canonical+'maps/main.xml');
+  assert.deepEqual(e.scope.selectedPages,[canonical+'pricing',canonical+'about']);
+  assert.ok(e.observations.every(o=>!o.error));assert.equal(calls.length,5);
+ }
+});
+test('alias handling refuses unrelated hosts, unsafe origins and unproven or external redirect chains',async()=>{
+ const input='https://www.example.com/';
+ for(const destination of ['https://other.example/','https://docs.example.com/','https://example.com.evil.test/','http://example.com/','https://example.com:8443/','https://user:pass@example.com/']){
+  const e=await collectEvidence(input,{fetchPage:async target=>({url:destination,status:200,headers:{'content-type':'text/html'},body:'<h1>Fake</h1><a href="/fake">Fake</a>',redirectChain:[{url:target,status:308,nextUrl:destination}],observedAt:'now'})});
+  assert.ok(e.observations.every(o=>o.error));assert.deepEqual(e.scope.selectedPages,[]);
+ }
+ for(const chain of [[],[{url:input,status:308,nextUrl:'https://other.test/'},{url:'https://other.test/',status:308,nextUrl:'https://example.com/'}],[{url:'https://www.example.com/wrong',status:308,nextUrl:'https://example.com/'}]]){
+  const e=await collectEvidence(input,{fetchPage:async()=>({url:'https://example.com/',status:200,headers:{'content-type':'text/html'},body:'<h1>Fake</h1>',redirectChain:chain,observedAt:'now'})});
+  assert.ok(e.observations[0].error);assert.deepEqual(e.scope.selectedPages,[]);
+ }
+});
 test('text-only example containers cannot seed metadata, JSON-LD or crawl candidates',()=>{
  for(const name of ['textarea','xmp']) {
   const example='<meta name="robots" content="noindex"><script type="application/ld+json">{"@type":"Product"}</script><h1>Fake</h1><a href="/fake">Example</a><!--';
