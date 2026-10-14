@@ -14,6 +14,8 @@ Measurable follow-up: next genuine report: tasks kept/revised/removed because on
 
 Supervisor acceptance, 14 October 2026: inspected the exact change and independently reproduced all 60 affected controls; syntax/whitespace pass. Two additional differential controls compare the previous committed collector with the new code: inactive metadata/headings are rejected while interleaved actual JSON-LD and literal comment-like JSON strings survive; 24 commented sitemap candidates no longer consume the 20-entry discovery allowance ahead of two real pages. No real network request or private snapshot access in these controls. Bounded regex limitations remain explicit; no complete-parser, rendered DOM, semantic approval or commercial-result claim. Existing network/citation/payment gates, watcher, questions, budget and cumulative counters preserved. No publication/provider replay, inference, report migration, email, payment, purchase or DAST result.
 
+Subsequent scheduled startup, 2026-10-14T06:57:11.687Z: the launcher returned PID 91764, but the controller exited immediately and runtime state is failed for run 079c48b3-635d-44e5-a836-173297bd7060. The persisted category is "Business executor failed"; the current-run log does not establish a quota failure. Native account limits report ordinary usage allowed, so no quota exhaustion/reset claim is justified. One consecutive failure, 29 passes today; retry backoff until 2026-10-14T07:27:07.858Z. Original watcher PID 69800 remains alive, budget/inference counters and two questions unchanged. No blind retry, reset credit, paid fallback, credential transfer or new controller. The successful G19 receipt below remains historical; it is not a result of this failed startup.
+
 ```json
 {
   "status": "completed",
