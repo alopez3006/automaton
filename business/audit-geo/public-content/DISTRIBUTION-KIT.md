@@ -65,3 +65,7 @@ Decision at seven days: no observable clicks → reconsider audience/hook; click
 Claims checked against MISSION.md, the existing guide's offer scope and current launch/receipt evidence. Price EUR 9, raw-HTML scope, up-to-three tasks, usefulness/payment gates and email uncertainty retained. No testimonial, customer data, urgency claim, ranking guarantee or available paid-delivery claim. Current channel sources read; Reddit rule access failure explicitly recorded. Draft preparation is complete; reach, demand and publication are unproved.
 
 Owner decision, 14 October 07:16 UTC: owner publishes manually on LinkedIn. Genuine console answer resolved; no Automaton account operation or actual post/reach proved.
+
+## Optional LinkedIn entry label — 14 October 2026
+
+For the owner’s manual LinkedIn homepage link, use https://audit.vutler.com/?source=linkedin#request (version 16 is now deployed). This fixed label is saved only with a submitted request; it is self-reported and spoofable, not a click counter or verified channel attribution. Guide CTA submissions use `guide`; homepage submissions use `home`; missing/invalid labels and legacy requests remain `unknown`. No external post is made by Automaton. Compare retained request and reviewed-summary totals by label after the actual post date; visits and conversion rates remain unknown.

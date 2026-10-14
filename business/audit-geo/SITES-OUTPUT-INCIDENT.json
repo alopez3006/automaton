@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "observedAt": "2026-10-14T10:02:06.880Z",
+  "reportedBy": "completed controller receipt 3fa5628d-5449-4baa-9efa-1373f5434672",
+  "reportedOperation": "Sites get_site",
+  "incident": "Controller reported that a sensitive field was displayed in a native tool output; raw output and value were not redisplayed by the supervisor",
+  "currentMetadataInventory": {
+    "serviceTokenFieldPresent": true,
+    "sourceCredentialFieldPresent": false,
+    "sourceCredentialTokenPresent": false,
+    "sourceCredentialExpiry": null
+  },
+  "projectId": "appgprj_6acd6192fcac8191b47b7b9538517608",
+  "audience": "public",
+  "mitigation": {
+    "orchestrationMetadataAllowlistApplied": true,
+    "fullResponseNotPrintedBySupervisor": true,
+    "missionInstructionsStrengthened": true,
+    "guardType": "execution instructions and filtered supervisor calls; not a new runtime-enforced redaction layer",
+    "credentialNotCopiedToArtifact": true
+  },
+  "rotation": {
+    "status": "awaiting direct owner request",
+    "tool": "Sites generate_siwc_bypass_token",
+    "scope": "existing site service-access token only",
+    "providerConstraint": "Call this explicit token tool only when the user asks for a bypass token",
+    "oldAccessEffect": "old token may remain valid briefly, then stops authorizing access",
+    "runtimeSecretsToPreserve": [
+      "RESEND_API_KEY",
+      "STRIPE_WEBHOOK_SECRET",
+      "TRACKING_LINK_SECRET",
+      "AUDIT_GEO_OPERATOR_TOKEN"
+    ]
+  },
+  "evidenceLimits": [
+    "Historical exposed value and exact historical field were not re-read",
+    "Current metadata confirms service-token presence and no source-credential object",
+    "No external disclosure or unauthorized use independently established",
+    "No use of the service-token header found in the scoped application scripts"
+  ],
+  "independentWorkContinues": true,
+  "externalSpendCents": 0
+}
