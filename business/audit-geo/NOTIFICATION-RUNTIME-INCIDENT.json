@@ -1,0 +1,67 @@
+{
+  "observedAt": "2026-10-14T22:08:42.849Z",
+  "scope": "bounded automatic no-payment notification incident",
+  "runtimeConfiguration": "enabled",
+  "watcher": {
+    "originalRunning": true,
+    "consecutiveProcessFailures": 0,
+    "restarted": false
+  },
+  "notificationObservations": [
+    {
+      "at": "2026-10-14T21:55:18.516Z",
+      "accepted": 0,
+      "pending": 1,
+      "needsReview": 0
+    },
+    {
+      "at": "2026-10-14T22:00:23.819Z",
+      "accepted": 0,
+      "pending": 0,
+      "needsReview": 1
+    }
+  ],
+  "interpretation": "Existing watcher notification became needs_review after repeated bounded pending attempts. Process liveness and zero process failures do not establish notification delivery.",
+  "providerObservation": {
+    "accountScope": "connected Resend account; first 50 returned logs",
+    "matchingSendingCallsAfterActivation": "Only the previously verified native recovery confirmation, before the current no-payment fallback.",
+    "automaticClosureEmailFound": false,
+    "otherAccountsObserved": false
+  },
+  "siteLogObservation": {
+    "errorEvents": 0,
+    "surroundingEvents": 25,
+    "recognizedCause": false,
+    "boundary": "Notification exceptions are caught; absence of error events is not absence of failure."
+  },
+  "rootCause": "not established",
+  "compatibilityHypothesis": {
+    "hypothesis": "redirect error option unsupported",
+    "documentation": "https://developers.cloudflare.com/workers/runtime-apis/request/",
+    "result": "Official Workers documentation lists error among redirect modes. No compatibility rewrite justified from this documentation alone; no actual Workers-runtime probe was available."
+  },
+  "actions": {
+    "secretRead": false,
+    "keyRecreated": false,
+    "siteSourceChanged": false,
+    "rejectedCredentialTransportRetried": false,
+    "watcherRestarted": false,
+    "automaticNotificationReplayed": false,
+    "noPaymentFallback": "Native Resend connector, same event idempotency key; private receipt retained separately."
+  },
+  "externalSpendCents": 0,
+  "nextIndependentDiagnostic": "Determine the caught sending failure with bounded non-secret diagnostics or an accepted supported source publication path; reconcile the fallback receipt before any reset or retry.",
+  "supervisorNotification": {
+    "at": "2026-10-14T22:09:25.025Z",
+    "kind": "no_payment_decision",
+    "channel": "native Resend connector",
+    "idempotency": "Same closed-event key used by Site worker",
+    "providerAccepted": true,
+    "providerStatus": "delivered",
+    "privateReceiptRetained": true,
+    "automaticRuntimeRepaired": false,
+    "humanInboxInspection": false,
+    "fullReportSent": false,
+    "paymentRequested": false
+  }
+}

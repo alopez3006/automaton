@@ -11,6 +11,7 @@ import { reviewedPreview } from './preview.mjs';
 import { summarizeFunnel } from './funnel.mjs';
 import {safePageViewMetrics} from './page-view-metrics.mjs';
 import {selectAuditRequests,unavailableEvidenceMessage} from './operator-requests.mjs';
+import {validateNoActionReview,selectNoActionRequest} from './no-action-review.mjs';
 import { sniparaEnvironment } from '../../scripts/with-snipara.mjs';
 import { loadSniparaTools } from '../../dist/agent/snipara.js';
 import {loadBusinessPolicy,auditCapacity} from '../../dist/business/policy.js';
@@ -28,6 +29,17 @@ const reports=join(root,'.reports');await mkdir(reports,{recursive:true,mode:0o7
 const lock=await open(join(reports,'operator.lock'),'wx',0o600).catch(()=>{throw Error('Another operator is running; inspect its process before removing a stale lock');});
 async function api(method,body){const r=await fetch(new URL('/api/operator/requests',site),{method,headers:{...headers,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,signal:AbortSignal.timeout(20000),redirect:'error'});if(!r.ok)throw Error(`Operator API HTTP ${r.status}`);return r.json();}
 try{
+ if(process.argv.includes('--close-reviewed-no-action')){
+  if(process.argv.length!==4)throw Error('Reviewed closure cannot combine with other modes');
+  const id=process.argv[3],queue=await api('GET');
+  const job=selectNoActionRequest(queue.requests,id);
+  const draft=JSON.parse(await readFile(join(reports,id+'.draft.json'),'utf8'));
+  const evidence=JSON.parse(await readFile(join(reports,id+'.evidence.json'),'utf8'));
+  const review=JSON.parse(await readFile(join(reports,id+'.no-action-review.json'),'utf8'));
+  validateNoActionReview(draft,evidence,review);
+  await api('PATCH',{key:job.key,status:'ineligible',taskCount:0,message:'Independent review found no useful supported change to justify a paid report. No payment is requested.'});
+  console.log(JSON.stringify({status:'ineligible',reviewedNoAction:true,removedTasks:draft.tasks.length,paymentRequested:false}));
+ }else{
  if(process.argv.includes('--retry-unavailable')&&process.argv.includes('--accept-orders'))throw Error('Diagnostic retry cannot invite other orders');
  if(process.argv.includes('--inspect-request')){
   if(process.argv.includes('--accept-orders')||process.argv.includes('--retry-review')||process.argv.includes('--retry-unavailable'))throw Error('Inspection mode cannot mutate orders');
@@ -85,5 +97,6 @@ try{
    count++;console.log(JSON.stringify({requestId:job.id,status:!draft.eligible?'ineligible':accept?'payment_pending':'prepared',usage:r.usage}));
  }
  let notificationState={configured:false};if(typeof queue.notificationsConfigured==='boolean'){const mail=await fetch(new URL('/api/operator/notifications',site),{method:'POST',headers,signal:AbortSignal.timeout(30000),redirect:'error'});if(!mail.ok)throw Error('Notification reconciliation failed');notificationState=await mail.json();}console.log(JSON.stringify({prepared:count,attempts:ledger.attempts,externalPurchaseSpendCents:ledger.externalSpendCents,payment:'not_requested',notifications:notificationState}));
+ }
  }
 }finally{await lock.close();const{unlink}=await import('node:fs/promises');await unlink(join(reports,'operator.lock'));}

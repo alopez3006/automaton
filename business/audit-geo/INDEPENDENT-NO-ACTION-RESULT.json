@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-10-14T21:40:31.542Z",
+  "proposedTasks": 1,
+  "kept": 0,
+  "revised": 0,
+  "removed": 1,
+  "reasonCategory": "positioning_preference_with_counterevidence",
+  "reviewedNoAction": true,
+  "paymentEligible": false,
+  "originalsPreserved": true,
+  "inputDigest": "9ceca454060b542540f1402392cc0596ebb4045f3cc63456ae2836fda4638489",
+  "checks": {
+    "sourceReferenceValidation": true,
+    "currentPaymentGateDenied": true
+  },
+  "proofBoundary": "Actual independent saved-report review; not a semantic benchmark or customer performance result.",
+  "serverVerifiedAt": "2026-10-14T21:40:53.929Z",
+  "serverClosureVerified": true,
+  "inventoryBefore": {
+    "total": 4,
+    "prepared": 2,
+    "ineligible": 2,
+    "payment_pending": 0,
+    "delivered": 0
+  },
+  "inventoryAfter": {
+    "total": 4,
+    "prepared": 1,
+    "ineligible": 3,
+    "payment_pending": 0,
+    "delivered": 0
+  },
+  "notificationsConfigured": true,
+  "paymentsConfigured": false,
+  "tests": {
+    "passed": 23,
+    "failed": 0
+  },
+  "inferenceCounters": {
+    "lifetime": 8,
+    "daily": 1
+  },
+  "externalSpendCents": 0,
+  "notificationProof": "Closed notification left to existing watcher; no provider or inbox acceptance verified this pass.",
+  "sourceHashes": {
+    "operator.mjs": "af28ff0749550c94f739d120ddbb44a7c4da79921cb788915f90eb9e049f68b0",
+    "no-action-review.mjs": "c574810b8036a11c9637e3595ab477258a2a01098d4ad87ddbefd537634e6523",
+    "no-action-review.test.mjs": "08e27581d4408df4b3259b6ad8af515309f63dc8569dc4450da31488ae07e9c7"
+  },
+  "supervisorAcceptance": {
+    "at": "2026-10-14T22:08:42.849Z",
+    "status": "accepted_after_independent_validation",
+    "sourceModified": false,
+    "sourceHashMatches": true,
+    "privateOriginalAndRefusalDigestValid": true,
+    "tests": {
+      "passed": 48,
+      "failed": 0,
+      "syntax": "passed",
+      "diffCheck": "passed"
+    },
+    "serverStatusVerified": "ineligible",
+    "paymentRequested": false,
+    "scope": "Actual usefulness refusal for one saved draft; not a semantic benchmark or site-wide SEO/GEO certification."
+  },
+  "supervisorNotification": {
+    "at": "2026-10-14T22:09:25.025Z",
+    "kind": "no_payment_decision",
+    "channel": "native Resend connector",
+    "idempotency": "Same closed-event key used by Site worker",
+    "providerAccepted": true,
+    "providerStatus": "delivered",
+    "privateReceiptRetained": true,
+    "automaticRuntimeRepaired": false,
+    "humanInboxInspection": false,
+    "fullReportSent": false,
+    "paymentRequested": false
+  }
+}

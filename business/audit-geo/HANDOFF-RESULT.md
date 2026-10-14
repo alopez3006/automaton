@@ -1,3 +1,29 @@
+# Supervisor verification and notification incident — 2026-10-14T22:08:42.849Z
+
+G44 accepted without source edits: actual private original/refusal digest validates, all three controller source hashes match, 48 targeted controls plus syntax/diff pass. The existing request is verified ineligible after independent review removed one positioning-preference task; no payment requested or report disclosed.
+
+Automatic closed notification did not complete: watcher reported three pending observations, then needsReview=1 at 22:00:23 UTC. Original watcher remains alive with zero process failure streak; no restart, reset or blind replay. Connected Resend logs contain the prior native confirmation, with no matching automatic closure; error-only Site logs are empty and surrounding events provide no cause. These scope-limited observations do not establish provider outage or a repaired Site runtime. NOTIFICATION-RUNTIME-INCIDENT.json records the independent diagnosis.
+
+Native no-payment fallback uses the same closed-event idempotency key. Provider acceptance and delivered status are verified; its receipt is retained privately. This does not repair the automatic Site path or prove human inbox inspection. Preserve that receipt and the earlier confirmation; do not replay either or infer paid delivery. No purchase or new inference; cumulative counters/budget retained. Continue the existing heartbeat's eligible controller decision and let it choose the next useful diagnosis/action under the mission. No new owner instruction fabricated or unchanged publication question repeated.
+
+---
+
+# Execution receipt — 2026-10-14T21:41:39.453Z
+
+Status: completed (actual independent review and server no-payment closure). External spend this pass: EUR 0.
+
+Hypothesis: resolving the newly recovered prepared request through independent usefulness review has greater immediate value than another discovery poll or a publication-dependent cosmetic change.
+
+Action: read the final saved report and seven-observation evidence snapshot. Removed the sole proposed title clarification: title/H1 and broader business-response metadata are consistent; narrowing the brand to one present use case is a positioning preference, with no sufficiently useful paid correction established. Kept 0, revised 0, removed 1 of 1 proposed tasks. Saved a real digest-bound refusal privately, preserving original draft/evidence. Added a generic guarded --close-reviewed-no-action operator mode because no existing mode could apply this reviewed refusal to a prepared record without re-inference. Applied it to exactly the existing uninvited request. Artifact: INDEPENDENT-NO-ACTION-RESULT.json; private assessment stays in ignored job storage.
+
+Verification: 23 targeted refusal/request/review controls pass; operator syntax and git diff checks pass. Actual server closure returned ineligible/no payment. Anonymous first-page inventory changed from 2 prepared/2 ineligible to 1 prepared/3 ineligible across 4 retained records; zero pending payments or delivered. Existing legacy prepared record was not changed. Original draft/evidence remain digest-matched. Sending remains configured true, payments false. Eight lifetime and one daily inference attempts preserved; EUR 0 spent/reserved, EUR 50 available. Hosted memory recall succeeded through authorized broker networking after a sandbox DNS failure. Console inbox empty at checkpoints.
+
+Four workstreams: acquisition guides/navigation/sitemap already published; discovery measurement due 21 October, LinkedIn requires actual owner post URL and aggregates. Conversion GET patch remains blocked on accepted Sites source transport; no rejected mechanism replay or repeated authorization request. Offer quality advanced through an actual semantic review/refusal rather than a synthetic approval. Delivery advanced by closing the real retained request; the existing watcher owns the normal closed notification, and this pass did not send or verify that email. A useful independently approved report and capacity still precede checkout activation; customer-authorized payment and verified delivery remain unproved.
+
+Measurable follow-up: verify the existing watcher's closed-notification acceptance/needs-review outcome for this decision without replaying the earlier confirmation. On the next useful request record proposed/kept/revised/removed tasks, reasons and actual eligibility before payment. Do not regenerate this report or reopen the same title suggestion without new evidence. No purchase, inference, full report disclosure, Site deployment, new controller/timer or commercial-success claim. Unrelated untracked assessment preserved.
+
+---
+
 # Owner-authorized email activation — 2026-10-14T21:36:41.093Z
 
 Transactional sending is now enabled in production. Native Sites changed only RESEND_EMAILS_ENABLED and successfully redeployed the existing public version 18 with environment revision 10; source and all other entries/secrets preserved. Authenticated operator readback confirms notificationsConfigured=true, with payments still false and the recovered existing request prepared. EMAIL-ACTIVATION.json is the current proof.
