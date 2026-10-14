@@ -59,3 +59,7 @@ Connected Chrome checks executed: CTA, empty URL/malformed email, consent, payme
 G15 follow-up 14 October 03:38 UTC: native Chrome copy/paste verified complete 1472-character prompt, six steps and finished no-action condition; local draft cleared without submission. Virtual clipboard failure was an automation limitation. Copy acceptance done; download and real request-to-delivery remain separate. Do not repeat copying without changed evidence.
 
 G15 download follow-up 14 October 03:58 UTC: native Chrome click produced explicit “Blocked by your organisation” for example.md in recent downloads. No bytes accepted; browser policy prerequisite identified, no bypass or alternate transfer. Do not repeat under unchanged policy. No server defect or universal visitor failure inferred.
+
+## G16 — Public discovery baseline, 14 October 2026
+
+Executed five bounded public-search probes via agent-reach/Exa and connected web search. Zero audit-origin URLs observed: three empty responses, two Exa responses with five off-target URLs each. DISCOVERY-BASELINE.json preserves queries, URLs, backend limitations and unknowns. This is not non-indexation proof, a Google ranking check or conversion evidence. Prioritize the existing guide release and authorized distribution; no speculative redesign/domain purchase. Next check on/after 21 October or actual publication/new verified Search Console access, not every heartbeat. URL Inspection needs a verified property; do not repeat the unchanged access blocker.

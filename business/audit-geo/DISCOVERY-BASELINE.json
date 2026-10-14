@@ -1,0 +1,80 @@
+{
+  "observedAt": "2026-10-14T04:57:16.592963+00:00",
+  "targetOrigin": "https://audit.vutler.com",
+  "hypothesis": "Public search discoverability should be observed before attributing absent requests to conversion friction.",
+  "observations": [
+    {
+      "backend": "Exa via agent-reach/mcporter",
+      "query": "site:audit.vutler.com",
+      "requestedResults": 5,
+      "outcome": "no_results",
+      "returnedTargetUrls": 0
+    },
+    {
+      "backend": "connected web search",
+      "query": "site:audit.vutler.com",
+      "outcome": "no_results",
+      "returnedTargetUrls": 0
+    },
+    {
+      "backend": "connected web search",
+      "query": "\"audit.vutler.com\"",
+      "outcome": "no_results",
+      "returnedTargetUrls": 0
+    },
+    {
+      "backend": "Exa via agent-reach/mcporter",
+      "query": "\"audit.vutler.com\"",
+      "requestedResults": 5,
+      "outcome": "five off-target results",
+      "returnedTargetUrls": 0,
+      "returnedUrls": [
+        "https://www.vutler.ai/",
+        "https://www.vutler.com/",
+        "https://github.com/Vutler-ai/vutler/blob/main/SECURITY.md",
+        "https://github.com/Vutler-ai/vutler",
+        "https://velt.dev/audit-trail"
+      ]
+    },
+    {
+      "backend": "Exa via agent-reach/mcporter",
+      "query": "\"Vutler\" \"SEO\" \"audit\"",
+      "requestedResults": 5,
+      "outcome": "five off-target results",
+      "returnedTargetUrls": 0,
+      "returnedUrls": [
+        "https://www.vutler.ai/",
+        "https://github.com/Vutler-ai/vutler",
+        "https://www.vutler.com/",
+        "https://utilao.com/seo-audit",
+        "https://linkedin.com/company/vutler"
+      ]
+    }
+  ],
+  "interpretation": "No audit-origin result observed in this bounded sample. Exa exact queries returned off-target results, so quote semantics are not reliable evidence of exact matching. General Vutler results must not count as discovery of the audit offer.",
+  "unknowns": [
+    "Google index status",
+    "Google/Bing impressions and clicks",
+    "ranking position",
+    "qualified search requests",
+    "conversion rate",
+    "AI citations"
+  ],
+  "methodologySource": "https://developers.google.com/search/docs/monitor-debug/search-operators/all-search-site",
+  "limitations": [
+    "Search results are sampled and backend-specific, not exhaustive.",
+    "The connected search backend is not a direct Google Search Console observation.",
+    "An absent site: result does not establish non-indexation.",
+    "No URL submission or indexing request was made.",
+    "No conversion or search-performance outcome was measured."
+  ],
+  "decision": "Prioritize release of the existing useful discovery guide through an accepted secure Sites channel and already-prepared authorized distribution; do not redesign conversion or buy another domain from this sample.",
+  "followUp": {
+    "notBefore": "2026-10-21T04:58:00Z",
+    "earlierTrigger": "Guide publication or newly available verified Search Console property",
+    "metric": "Observed audit-origin URLs for the same queries; qualified attributable requests only where actually observable",
+    "authoritativeCheck": "URL Inspection on a verified audit.vutler.com or parent-domain Search Console property when available",
+    "repeatEveryHeartbeat": false
+  },
+  "externalSpendCents": 0
+}
