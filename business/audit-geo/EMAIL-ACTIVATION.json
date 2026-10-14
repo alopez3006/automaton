@@ -1,0 +1,43 @@
+{
+  "observedAt": "2026-10-14T21:36:41.093Z",
+  "ownerAuthority": "Direct owner instruction to activate transactional emails on 14 October 2026; supersedes the earlier disabled-email setting.",
+  "projectId": "appgprj_6acd6192fcac8191b47b7b9538517608",
+  "siteVersion": 18,
+  "sourceCommit": "8cc86254198f958d9534da3baa9886f5696adc08",
+  "savedVersionId": "appgprj_6acd6192fcac8191b47b7b9538517608~appgver_c0f5657271f481918482e7096c31ffd2",
+  "deploymentId": "appgdep_6acff549d00081919a12a3b219e66ebd",
+  "deploymentStatus": "succeeded",
+  "previousEnvironmentRevision": 9,
+  "environmentRevision": 10,
+  "updatedKeys": [
+    "RESEND_EMAILS_ENABLED"
+  ],
+  "emailsEnabled": true,
+  "from": "Audit GEO <audits@vutler.com>",
+  "otherEnvironmentEntriesUnchanged": true,
+  "trackingSecretPreserved": true,
+  "scopedResendKeyPreserved": true,
+  "paymentsEnabled": false,
+  "sandboxEnabled": false,
+  "sourceChanged": false,
+  "runtimeVerification": {
+    "authenticatedOperatorNotificationsConfigured": true,
+    "existingRequestStatus": "prepared",
+    "independentUsefulnessApproved": false,
+    "paymentRequested": false
+  },
+  "receiptRecovery": {
+    "channel": "native Resend connector",
+    "idempotent": true,
+    "accepted": true,
+    "providerStatus": "delivered",
+    "privateReceipt": "Retained only in ignored request storage; no customer identifier or private link in this artifact.",
+    "fullReportSent": false
+  },
+  "boundary": [
+    "Provider delivered status does not prove recipient inbox inspection.",
+    "Recovery confirmation was sent through the connected Resend tool; this is not proof of a Sites-runtime email send or payment-to-report fulfillment.",
+    "New transactional notifications use the already existing Site runtime and watcher; no additional controller or schedule."
+  ],
+  "externalSpendCents": 0
+}

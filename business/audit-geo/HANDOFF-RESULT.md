@@ -1,3 +1,13 @@
+# Owner-authorized email activation — 2026-10-14T21:36:41.093Z
+
+Transactional sending is now enabled in production. Native Sites changed only RESEND_EMAILS_ENABLED and successfully redeployed the existing public version 18 with environment revision 10; source and all other entries/secrets preserved. Authenticated operator readback confirms notificationsConfigured=true, with payments still false and the recovered existing request prepared. EMAIL-ACTIVATION.json is the current proof.
+
+A missing receipt was recovered through the native Resend connector using a stable idempotency key. Provider acceptance and delivered status verified; private receipt retained in ignored request storage. No full report, private link or payment request sent. Do not replay that confirmation or infer Sites-runtime sending, human inbox inspection or a paid delivery. Independent usefulness review remains required for the prepared draft. Original watcher/heartbeat continue; no purchase, inference or new controller.
+
+The prior pending activation question is resolved by the genuine owner instruction in the main chat; do not ask it again or restore historical false flags.
+
+---
+
 # Supervisor incident recovery — 2026-10-14T21:29:59.125Z
 
 Owner-reported missing receipt traced to two confirmed conditions: production RESEND_EMAILS_ENABLED remains false, and initial www/apex canonical redirects were refused by the local collector. Fixed the generic HTTPS alias/provenance policy without broadening arbitrary domain access. Seven bounded public observations now succeed; source-valid draft prepared for the same existing request, matching the supplied address. No duplicate intake, independent usefulness approval, payment invitation or email delivery claimed.

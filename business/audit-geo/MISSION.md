@@ -61,3 +61,9 @@ Read owner messages at major checkpoints, reply and acknowledge handled instruct
 Pause future autonomous work: `node scripts/mission-cycle.mjs --pause`. Resume: `node scripts/mission-cycle.mjs --resume`. A current pass finishes within its timeout; scheduled supervision respects the flag.
 
 When the owner answers a question in a normal chat message, use `node business/console/message.mjs resolve <question id> <owner message id>` to link that genuine reply. Never fabricate a human answer or leave an already answered question pending. The resolver verifies the original owner message and preserves its text and timestamp.
+
+## Transactional email activation — owner instruction, 14 October 2026
+
+The owner explicitly said to activate emails. This supersedes earlier instructions to preserve RESEND_EMAILS_ENABLED=false and the pending activation question. Production now uses RESEND_EMAILS_ENABLED=true after successful redeployment of the existing public version 18 at environment revision 10. Preserve this enabled setting, the scoped Resend credential, sender and tracking secret. Transactional request receipts, reviewed summaries, no-payment decisions and verified-paid report links are authorized within the existing incoming channel; keep report and payment gates, idempotency and retry limits. This does not authorize marketing/outreach.
+
+EMAIL-ACTIVATION.json records the native deployment and runtime configuration proof. An idempotent recovery confirmation was delivered according to Resend through the native connector; its private receipt is in ignored request storage. Do not duplicate it or claim inbox inspection, a Sites-runtime send or actual paid delivery from that evidence. The recovered request remains prepared and needs independent usefulness review before any payment invitation.

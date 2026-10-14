@@ -63,7 +63,8 @@
     "activation": "Owner answer pending because prior explicit false flag remains authoritative.",
     "sender": "Audit GEO <audits@vutler.com>",
     "secretsChanged": false,
-    "siteRedeployed": false
+    "siteRedeployed": false,
+    "activationSupersededBy": "EMAIL-ACTIVATION.json"
   },
   "boundaries": [
     "No customer identifiers, private links, reports or credentials in this artifact.",
