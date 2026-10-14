@@ -1,34 +1,32 @@
-# Execution receipt — 2026-10-14T04:57:16.592963+00:00
+# Execution receipt — 2026-10-14T05:24:18.787692+00:00
 
-Hypothesis: public discovery should be observed before treating absent demand as a conversion defect. Action: queried public search through agent-reach/Exa and connected web search; saved the bounded observations in DISCOVERY-BASELINE.json. No audit-origin URL was returned. Three probes returned no results; two Exa probes returned five off-target URLs each. Exa relaxes exact queries in this sample; general Vutler pages do not count as offer discovery. This is a measurement artifact, not acquisition uplift or proof of non-indexation.
+Hypothesis: the connected Search Console account might already provide authoritative discovery evidence without a deployment or purchase. Action: executed the read-only list_properties tool and checked coverage of audit.vutler.com. The authenticated call succeeded and returned six properties; none covers the target. Saved only the target-specific result in SEARCH-CONSOLE-ACCESS.json, omitting unrelated property identities. No URL inspection, sitemap submission, property creation, reauthentication or account mutation occurred. This is an access finding, not growth or indexing proof.
 
-Verification: completed tool responses recorded, exact returned URL lists retained for the Exa responses, JSON parsed and whitespace checked. Google documentation explicitly says site: results are not exhaustive and absence requires URL Inspection rather than a non-indexation conclusion: [Search Central](https://developers.google.com/search/docs/monitor-debug/search-operators/all-search-site). Search Console status, impressions, clicks, visitor denominators, qualified demand and real sales remain unknown.
+Verification: actual connected response inspected; JSON parsed and whitespace checked. Accessible properties are account-scoped: absence here does not establish absence elsewhere. Memory recall initially failed under sandbox DNS, then succeeded through the authorized hosted broker with network permission. No secret files read or credential values transferred.
 
-Alternatives evaluated: acquisition release (G2) and delivery release (G14) already have prepared artifacts but require the accepted Sites channel; external promotion (G6) requires channel authority. Conversion copying/layout is already accepted; downloads require a browser-policy change. Quality improvements are implemented and need genuine report review outcomes rather than another synthetic audit. Resend setup and receipt verification remain the launch bottleneck. Domain replacement has no demonstrated benefit. These constraints were not retried.
+Alternatives: acquisition guide and notification fix are already prepared and require the accepted Sites publication channel. External promotion has ready copy but requires channel/account authority. Conversion layout and copy are accepted; download requires changed browser policy. Quality fixtures are complete and need genuine report/review outcomes, not a new synthetic audit. Delivery requires secured Resend configuration and actual receipt. No new evidence justifies redrafting these artifacts, purchasing a domain, repeating search probes before their follow-up date, or building the deferred renderer. No new code or customer changes were made.
 
-Follow-up: recheck the same bounded query set no earlier than 21 October, or after actual guide publication/new verified Search Console access. Count only observed audit-origin URLs and actually attributable requests; never interpret sampled result counts as indexed-page totals. No new timer/controller was created. Budget remains EUR 50 available, no reservation or purchase. Owner inbox was empty at major checkpoints; supplied authority and current mission were used. Hosted memory was recalled through the safe broker.
+Follow-up: only after a covering verified property becomes accessible, inspect homepage and public example and record actual index status; later count impressions/clicks and qualified requests separately. No duplicate owner question or timer. Existing pending questions and cumulative counters preserved. Console empty at checkpoints; no inference, email, deployment, payment or purchase. EUR 50 remains available.
 
 ```json
 {
   "status": "completed",
   "summary": [
-    "Base de découvrabilité publique mesurée et enregistrée ; aucune URL de l’offre observée dans cinq recherches bornées.",
-    "Aucune publication, inférence, sollicitation, activation commerciale ni dépense."
+    "Accès Search Console vérifié : aucune propriété accessible ne couvre l’offre.",
+    "Preuve ciblée enregistrée ; aucune modification du compte ni dépense."
   ],
   "evidence": [
-    "DISCOVERY-BASELINE.json : trois réponses sans résultat, deux réponses Exa avec cinq URL hors cible chacune.",
-    "Absence de résultat distincte de non-indexation ; statut Search Console et conversion inconnus.",
+    "SEARCH-CONSOLE-ACCESS.json : appel authentifié réussi, six propriétés accessibles, zéro propriété couvrante.",
     "Console vide aux checkpoints ; budget 0 utilisé, 0 réservé, 5000 centimes disponibles."
   ],
   "blockers": [
-    "Guide et correction prêts : canal sécurisé Sites accepté requis après rejet automatique historique du transfert de jeton pour risque d’exposition.",
-    "Resend : configuration sécurisée et réception réelle non prouvées.",
-    "Diffusion externe : autorité de compte en attente ; indexation officielle : propriété Search Console vérifiée requise."
+    "Inspection officielle : propriété couvrante vérifiée requise sur le compte connecté.",
+    "Publication Sites : canal sécurisé accepté requis après rejet automatique historique du transfert de jeton pour risque d’exposition.",
+    "Livraison réelle Resend et autorité de diffusion externe toujours non prouvées."
   ],
   "nextActions": [
-    "Publier les actifs déjà prêts dès disponibilité du canal Sites accepté, puis vérifier leur identité publique.",
-    "Reprendre les mêmes recherches à partir du 21 octobre, ou après publication ; compter uniquement les URL de l’offre et les demandes attribuables réellement observées.",
-    "Vérifier le sender Resend et la réception réelle avant ouverture commerciale."
+    "Après confirmation d’une propriété couvrante, inspecter accueil et exemple ; ne pas répéter la liste sans changement.",
+    "Publier les actifs déjà prêts par le canal accepté et vérifier la réception Resend avant ouverture commerciale."
   ],
   "externalSpendCents": 0
 }
@@ -36,6 +34,4 @@ Follow-up: recheck the same bounded query set no earlier than 21 October, or aft
 
 ## Supervisor reconciliation
 
-The supervisor checked the retained artifact: five observations, three empty responses, ten returned URL entries across two Exa responses, and zero exact audit-origin matches. Counts and target-origin classification are consistent; searches were not independently rerun. Independently read the cited Google source through direct web access and agent-reach/Jina: site: results are non-exhaustive, absence is not non-indexation proof, and URL Inspection is the appropriate Google follow-up. These sampled backends are not a Search Console or direct Google ranking measurement. Exa's off-target results are observed; a relaxed-query implementation is an interpretation, not a verified provider mechanism. The 21 October/changed-publication-or-access follow-up remains; no new schedule, search-submit, deployment, customer record, inference, email, payment or purchase. Original controller outcome, healthy existing watcher, mission counters and pending questions retained.
-
-A single read-only native GSC capability probe confirms an authenticated server and documents the default management guard around add_site. It does not establish a verified Vutler property or its permissions; no site added, destructive guard changed, account reauthenticated or OAuth material read. A verified scoped property remains a prerequisite for authoritative URL Inspection, not an additional requirement for launching the current bounded audit offer. No duplicate owner question created.
+The supervisor inspected the target-only access artifact and reconciled it with the completed controller state. It retains successful authenticated-call status, six accessible properties and no observed covering property, while omitting unrelated property identities. The GSC list was not independently repeated. This is account-scoped access evidence, not proof of absent properties elsewhere, non-indexation or commercial performance. No property creation, global management-guard change, account reauthentication or broader access attempted. URL Inspection remains dependent on verified covering access; that optional index measurement is not an additional launch requirement for the bounded raw-HTML offer. Existing mission, healthy watcher, budget/inference counters and pending questions remain intact; original controller outcome retained. No new durable learning or repeated unchanged suite/provider probe.

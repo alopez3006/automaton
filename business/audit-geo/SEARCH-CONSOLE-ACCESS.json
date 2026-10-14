@@ -1,0 +1,15 @@
+{
+  "observedAt": "2026-10-14T05:24:18.787692+00:00",
+  "tool": "gscServer.list_properties",
+  "authenticatedCallSucceeded": true,
+  "accessiblePropertyCount": 6,
+  "targetOrigin": "https://audit.vutler.com",
+  "coveringPropertyObserved": false,
+  "urlInspectionPerformed": false,
+  "accountMutated": false,
+  "limitations": [
+    "Accessible-property list is account-scoped, not proof that no property exists elsewhere.",
+    "No indexing, impressions, clicks or customer conversion conclusion follows."
+  ],
+  "followUp": "Recheck only after owner confirms a verified covering property is available on the connected account; then inspect homepage and public example. Do not add properties or reauthenticate broader accounts automatically."
+}

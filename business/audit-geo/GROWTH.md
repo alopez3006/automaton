@@ -63,3 +63,5 @@ G15 download follow-up 14 October 03:58 UTC: native Chrome click produced explic
 ## G16 — Public discovery baseline, 14 October 2026
 
 Executed five bounded public-search probes via agent-reach/Exa and connected web search. Zero audit-origin URLs observed: three empty responses, two Exa responses with five off-target URLs each. DISCOVERY-BASELINE.json preserves queries, URLs, backend limitations and unknowns. This is not non-indexation proof, a Google ranking check or conversion evidence. Prioritize the existing guide release and authorized distribution; no speculative redesign/domain purchase. Next check on/after 21 October or actual publication/new verified Search Console access, not every heartbeat. URL Inspection needs a verified property; do not repeat the unchanged access blocker.
+
+G16 Search Console follow-up 2026-10-14T05:24:18.787692+00:00: actual read-only list_properties succeeded; six accessible properties, none covering audit.vutler.com. Target-only SEARCH-CONSOLE-ACCESS.json retained. No URL inspection, account mutation or non-indexation claim. Do not repeat until a verified covering property becomes accessible; no duplicate owner question.
