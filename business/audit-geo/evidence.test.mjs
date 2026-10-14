@@ -1,6 +1,27 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('text references yield readable evidence without interpreting encoded markup',()=>{
+ const e=extractHtml('<title>Caf&#233; &amp; tea</title><meta name="description" content="&#x1F600; &quot;offer&quot;"><h1>Price&nbsp;&lt;strong&gt;9&#8364;&lt;/strong&gt;</h1><p>It&apos;s <b>ready</b> &amp;amp; safe.</p>');
+ assert.equal(e.title,'Café & tea');assert.deepEqual(e.descriptions,['😀 "offer"']);
+ assert.equal(e.h1[0],'Price <strong>9€</strong>');
+ assert.equal(e.sections[0].heading,e.h1[0]);assert.equal(e.sections[0].text,"It's ready &amp; safe.");
+ assert.ok(e.body.includes('&#8364;'));
+});
+test('unknown malformed invalid and control references stay explicit',()=>{
+ const text='&copy; &AMP; &amp &#0; &#xD800; &#1114112; &#x80; &#10; &#xZZ;';
+ assert.equal(extractHtml(`<h1>${text}</h1>`).h1[0],text);
+});
+test('text decoding preserves structured data canonical and discovery contracts',()=>{
+ const e=extractHtml('<link rel="canonical" href="https://example.com/a?x=1&amp;y=2"><script type="application/ld+json">{"name":"A &amp; B","code":"&#8364;"}</script><h1>A &amp; B</h1>');
+ assert.deepEqual(e.structuredData.blocks[0].value,{name:'A &amp; B',code:'&#8364;'});
+ assert.equal(e.canonicals[0],'https://example.com/a?x=1&amp;y=2');
+ assert.deepEqual(internalCandidates('<a href="/a&amp;amp;b">A</a>','https://example.com/'),['https://example.com/a&amp;b']);
+});
+test('section limits apply to decoded text and retain truncation evidence',()=>{
+ const e=extractHtml(`<h1>Offer</h1><p>${'&#8364;'.repeat(701)}</p>`);
+ assert.equal(e.sections[0].text,'€'.repeat(700));assert.equal(e.sections[0].textTruncated,true);
+});
 test('comments and script/style strings cannot supply metadata, headings, JSON-LD or discovery',()=>{
  const fake='<title>Fake</title><meta name="description" content="Fake"><meta name="robots" content="noindex"><link rel="canonical" href="/fake"><h1>Fake</h1><a href="/fake">';
  const html=`<!-- ${fake}<script type="application/ld+json">{"fake":true}</script> --><SCRIPT>const x = '${fake}';</SCRIPT ><style>${fake}</style><title>Real</title><meta name="description" content="Real"><meta name="robots" content="index"><link rel="canonical" href="/real"><h1>Real</h1><a href="/real">Real</a>`;

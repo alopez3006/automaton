@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-14T10:10:14.920230+00:00",
+  "hypothesis": "Readable decoded text evidence reduces misleading quotations and unnecessary content corrections.",
+  "action": "Local collector decodes common semicolon-terminated named and printable Unicode numeric references once after stripping markup, in titles, H1, heading passages and descriptions.",
+  "verification": {
+    "command": "node --test business/audit-geo/evidence.test.mjs business/audit-geo/network.test.mjs business/audit-geo/source-reference.test.mjs business/audit-geo/report.test.mjs business/audit-geo/task-review.test.mjs",
+    "passed": 54,
+    "failed": 0,
+    "syntax": "passed",
+    "diffCheck": "passed"
+  },
+  "boundaries": [
+    "Unknown named, malformed, invalid Unicode and control references stay raw; not a complete HTML parser.",
+    "Existing pre-decoding cleaned HTML body field, canonical attributes, discovery decoding and parsed JSON-LD remain unchanged; body is not a byte-for-byte original fetched response.",
+    "No frozen snapshots migrated; changed fresh evidence requires a fresh independent review.",
+    "No customer outcome, inference, email, payment, deployment or purchase."
+  ],
+  "followUp": "On next genuine report count decoded quotations used and tasks corrected or removed due to encoded-text ambiguity.",
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "observedAt": "2026-10-14T10:44:08.847575+00:00",
+    "focusedControlsPassed": 54,
+    "additionalUnseenControlsPassed": true,
+    "singlePassConfirmed": true,
+    "encodedTagsRemainLiteral": true,
+    "historicalBodyContractPreserved": true,
+    "JSONLDAndDiscoveryPreserved": true,
+    "baseline": "current committed pre-change collector loaded for differential comparison",
+    "syntaxPassed": true,
+    "diffCheckPassed": true,
+    "noSnapshotMigration": true
+  }
+}

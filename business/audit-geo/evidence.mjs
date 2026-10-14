@@ -71,7 +71,22 @@ function attributes(tag) {
   for(const m of tag.matchAll(/([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g)) result[m[1].toLowerCase()]=m[2]??m[3]??m[4];
   return result;
 }
-function textContent(value) { return value.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,1000); }
+// Decode once, after removing markup: encoded angle brackets are text, not tags.
+// Deliberately bounded support; unknown named references remain verbatim.
+function decodeTextReferences(value) {
+  const named={amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:'\u00a0'};
+  return value.replace(/&(#(?:x[0-9a-f]+|[0-9]+)|amp|lt|gt|quot|apos|nbsp);/gi,(raw,key)=>{
+    if(!key.startsWith('#'))return named[key]??raw;
+    const hex=key[1].toLowerCase()==='x';
+    const point=Number.parseInt(key.slice(hex?2:1),hex?16:10);
+    if(!Number.isSafeInteger(point)||point<=0||point>0x10ffff||point>=0xd800&&point<=0xdfff)return raw;
+    // Keep control and legacy encoding references raw rather than misinterpret them.
+    if(point<32||point>=127&&point<=159)return raw;
+    return String.fromCodePoint(point);
+  });
+}
+function plainText(value) { return decodeTextReferences(value.replace(/<[^>]*>/g,' ')).replace(/\s+/g,' ').trim(); }
+function textContent(value) { return plainText(value).slice(0,1000); }
 // Walk comments and raw script/style blocks in document order. Comment-like
 // strings inside JSON-LD stay intact; commented-out scripts are never evidence.
 // This remains bounded regex extraction, not a browser HTML parser.
@@ -90,15 +105,14 @@ export function extractSections(clean) {
     const index=count===1?0:Math.round(i*(headings.length-1)/(count-1));
     const h=headings[index];
     const heading=textContent(h[2]);
-    const passage=clean.slice(h.index+h[0].length,headings[index+1]?.index??clean.length)
-      .replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+    const passage=plainText(clean.slice(h.index+h[0].length,headings[index+1]?.index??clean.length));
     return {heading:heading.slice(0,200),headingTruncated:heading.length>200,
       level:Number(h[1]),headingIndex:index,text:passage.slice(0,700),
       textTruncated:passage.length>700};
   });
   return {sections,sectionCoverage:{headingCount:headings.length,retained:count,
     omitted:headings.length-count,selection:'Up to 12 evenly spaced headings in document order; up to 700 text characters per section',
-    limitations:['Raw HTML heading sections only; content before the first heading is not sampled here','Omitted or truncated passages cannot support absence claims; HTML entities are not decoded']}};
+    limitations:['Raw HTML heading sections only; content before the first heading is not sampled here','Omitted or truncated passages cannot support absence claims','Text decodes semicolon-terminated amp/lt/gt/quot/apos/nbsp and printable Unicode numeric references once; other references remain raw']}};
 }
 export function extractHtml(body) {
   const structuredData=[];
@@ -115,7 +129,7 @@ export function extractHtml(body) {
   const links=[...clean.matchAll(/<link\b[^>]*>/gi)].map(m=>attributes(m[0]));
   return {
     title:textContent(clean.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]??''),
-    descriptions:meta.filter(m=>m.name?.toLowerCase()==='description').map(m=>m.content??''),
+    descriptions:meta.filter(m=>m.name?.toLowerCase()==='description').map(m=>decodeTextReferences(m.content??'')),
     robots:meta.filter(m=>['robots','googlebot'].includes(m.name?.toLowerCase())).map(m=>({agent:m.name,content:m.content??''})),
     canonicals:links.filter(m=>m.rel?.toLowerCase().split(/\s+/).includes('canonical')).map(m=>m.href??''),
     h1:[...clean.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].slice(0,20).map(m=>textContent(m[1])),
