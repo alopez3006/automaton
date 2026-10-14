@@ -1,0 +1,48 @@
+{
+  "observedAt": "2026-10-14T08:15:52.651050+00:00",
+  "hypothesis": "Delivery failure must not revoke a paid report; scoped configuration can remain safely disabled until an owner-controlled receipt test.",
+  "runtime": {
+    "environmentRevision": 9,
+    "resendApiKeySecretPresent": true,
+    "trackingLinkSecretPresent": true,
+    "emailsEnabled": false,
+    "paymentsEnabled": false,
+    "sandboxEnabled": false
+  },
+  "localAcceptance": {
+    "command": "node --test business/audit-geo/launch-acceptance.test.mjs",
+    "passed": 7,
+    "failed": 0,
+    "controls": [
+      "Configured disabled sender makes zero provider calls and no storage changes",
+      "Paid download survives HTTP 429, HTTP 503, thrown timeout, invalid JSON, missing receipt",
+      "Immediate retries are suppressed; later retry preserves exact payload, private capability and idempotency key",
+      "Accepted markers suppress further sends",
+      "Request, unpaid denial, reviewed summary, signed payment and report link sequence"
+    ]
+  },
+  "additionalCheck": "Existing notification regression script passed; git diff --check passed",
+  "ownerTest": {
+    "questionId": "934807f5-276e-4b8e-bacd-02da331ea34b",
+    "state": "awaiting owner-controlled recipient and explicit isolated-send agreement",
+    "subject": "Audit GEO \u2014 one-time delivery verification",
+    "text": "This is the single delivery verification email you requested for the Audit GEO pilot. No payment has been taken, no audit has been purchased, and customer notifications remain disabled. Please confirm receipt in the owner console, including whether this arrived in your inbox or spam folder.",
+    "procedure": [
+      "After genuine owner answer, send exactly one transactional test using connected Resend, from Audit GEO <audits@vutler.com>; keep Sites RESEND_EMAILS_ENABLED=false.",
+      "Record non-secret provider message ID and acceptance; do not automatically resend ambiguous outcomes.",
+      "Ask owner to confirm actual inbox/spam receipt; provider accepted/delivered status is separate.",
+      "A native connector send proves provider/sender path, not use of the Sites runtime credential; production payment-to-email proof remains separately required."
+    ]
+  },
+  "providerAcceptance": null,
+  "inboxReceipt": null,
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "observedAt": "2026-10-14T08:25:49.736462+00:00",
+    "command": "node --test business/audit-geo/launch-acceptance.test.mjs",
+    "passed": 7,
+    "failed": 0,
+    "diffCheckPassed": true,
+    "scope": "Local mocked controls independently rerun; no production send or inbox proof"
+  }
+}

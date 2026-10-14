@@ -1,6 +1,54 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from './site/worker/index.js';
+import {digest, retainNotificationLink, sendNotification, flushNotifications} from './site/worker/notifications.mjs';
+
+test('configured but disabled mail never calls provider or alters paid entitlement (local only)', async () => {
+  const data=new Map(), token='d'.repeat(64), key='requests/'+await digest(token)+'.json';
+  const bucket={async put(k,v){data.set(k,v);},async get(k){return data.has(k)?{json:async()=>JSON.parse(data.get(k))}:null;},async list(){return {objects:[{key}]};}};
+  const env={BUCKET:bucket,RESEND_EMAILS_ENABLED:'false',RESEND_API_KEY:'re_synthetic_only',RESEND_FROM:'Audit GEO <audits@vutler.com>',TRACKING_LINK_SECRET:'a'.repeat(64),PUBLIC_SITE_ORIGIN:'https://audit.vutler.com'};
+  const r={id:'disabled_paid_fixture',createdAt:new Date().toISOString(),status:'delivered',paymentReceipt:'cs_fixture',website:'https://example.com/',email:'synthetic@example.com',report:'# Paid fixture'};
+  data.set(key,JSON.stringify(r));
+  const before=JSON.stringify([...data]),originalFetch=globalThis.fetch;
+  let calls=0;
+  try {
+    globalThis.fetch=async()=>{calls++;throw Error('unexpected network');};
+    assert.equal((await sendNotification(env,r,key,'delivered')).state,'waiting_configuration');
+    assert.deepEqual(await flushNotifications(env),{configured:false,accepted:0,pending:0,needsReview:0});
+    const res=await worker.fetch(new Request(env.PUBLIC_SITE_ORIGIN+'/request/'+token+'/report.md'),env);
+    assert.equal(res.status,200);assert.equal(await res.text(),r.report);
+    assert.equal(calls,0);assert.equal(JSON.stringify([...data]),before);
+  } finally {globalThis.fetch=originalFetch;}
+});
+
+for(const [name,refusal] of [
+  ['rate limit',async()=>Response.json({error:'rate limit'},{status:429})],
+  ['provider outage',async()=>Response.json({error:'unavailable'},{status:503})],
+  ['timeout',async()=>{throw new DOMException('Synthetic timeout','TimeoutError');}],
+  ['invalid JSON',async()=>new Response('not JSON')],
+  ['missing receipt',async()=>Response.json({})],
+]) test('paid report survives '+name+'; one bounded retry uses identical capability and idempotency (local only)', async()=>{
+  const data=new Map(),token='e'.repeat(64),key='requests/'+await digest(token)+'.json';
+  const bucket={async put(k,v){data.set(k,v);},async get(k){return data.has(k)?{json:async()=>JSON.parse(data.get(k))}:null;},async list(){return {objects:[{key}]};}};
+  const env={BUCKET:bucket,RESEND_EMAILS_ENABLED:'true',RESEND_API_KEY:'re_synthetic_only',RESEND_FROM:'Audit GEO <audits@vutler.com>',TRACKING_LINK_SECRET:'a'.repeat(64),PUBLIC_SITE_ORIGIN:'https://audit.vutler.com'};
+  const r={id:'failure_fixture',createdAt:new Date().toISOString(),status:'delivered',paymentReceipt:'cs_fixture',website:'https://example.com/',email:'synthetic@example.com',report:'# PRIVATE_PAID_FIXTURE'};
+  data.set(key,JSON.stringify(r));await retainNotificationLink(env,r,key,token);
+  const original=data.get(key),sent=[],marker='notifications/'+r.id+'/delivered.json';
+  const failed=async(url,options)=>{sent.push({url,key:options.headers['Idempotency-Key'],body:options.body});return refusal();};
+  assert.equal((await sendNotification(env,r,key,'delivered',{fetchApi:failed})).state,'pending');
+  assert.equal(JSON.parse(data.get(marker)).attempts,1);
+  assert.equal((await sendNotification(env,r,key,'delivered',{fetchApi:failed})).state,'pending');
+  assert.equal(sent.length,1); // immediate retry is cooling down
+  const pending=JSON.parse(data.get(marker));pending.lastAttemptAt=new Date(Date.now()-61000).toISOString();data.set(marker,JSON.stringify(pending));
+  const accepted=async(url,options)=>{sent.push({url,key:options.headers['Idempotency-Key'],body:options.body});return Response.json({id:'synthetic_provider_receipt'});};
+  assert.equal((await sendNotification(env,r,key,'delivered',{fetchApi:accepted})).state,'accepted');
+  assert.deepEqual(sent[0],sent[1]);assert.ok(!sent[0].body.includes('PRIVATE_PAID_FIXTURE'));
+  assert.equal(JSON.parse(data.get(marker)).attempts,2);
+  assert.equal((await sendNotification(env,r,key,'delivered',{fetchApi:failed})).state,'accepted');
+  assert.equal(sent.length,2);assert.equal(data.get(key),original);
+  const download=await worker.fetch(new Request(env.PUBLIC_SITE_ORIGIN+'/request/'+token+'/report.md'),env);
+  assert.equal(download.status,200);assert.equal(await download.text(),r.report);
+});
 
 test('request → reviewed teaser → signed payment → gated report and deduplicated email (local only)', async () => {
   const origin='https://audit.vutler.com', data=new Map(), mails=[];
