@@ -1,24 +1,29 @@
-# Business execution receipt — 2026-10-14T18:42:32.969063+00:00
+# Supervisor acceptance — 2026-10-14T19:21:29.956Z
 
-Status: completed bounded assessment; mission remains active. External spend this pass: EUR 0. Budget verified EUR 50 available, zero used/reserved; counters preserved.
+Accepted the local G39 collector correction without changing controller source. Independently verified 93 focused controls, both syntax checks and clean diff. QUOTED-SCRIPT-ACCEPTANCE.json now records current source hashes and bounded acceptance; no original artifact hashes existed for comparison.
 
-Hypothesis: genuine qualified demand and a supported publication channel are the current bottlenecks; another demonstration, speculative collector fix or unpublishable page would not resolve them.
+Runtime: last controller completed, idle and eligible at 63 passes today with zero failures. Original watcher remains alive; operator lock is absent in supervisor process diagnosis. No lock removed, watcher restarted, fresh anonymous inventory asserted or historical execution receipt rewritten. Budget remains EUR 0 spent/reserved, EUR 50 available; seven lifetime inference attempts and zero today.
 
-Action/artifact: evaluated acquisition/discoverability, conversion, offer/report quality and delivery against MISSION.md, GROWTH.md and OPERATIONS.md. Updated NEXT-ACTION-DEPENDENCIES.json with dated evidence and seven concrete candidates. This is an assessment receipt, not new business growth.
+The controller receipt below is historical. Its metrics lock refusal is not a current watcher failure. Quoted script/style attributes containing greater-than characters now retain raw-block boundaries and valid JSON-LD on the verified controls. Extraction remains bounded regex, separate from schema validity, report usefulness and any Site/customer-path proof.
 
-Verification: hosted safe-broker recall succeeded with authorized network access after sandbox DNS failure. Fresh anonymous metrics at 18:42:04 UTC show three retained records (administrative/tests may be included), one prepared, two ineligible, one stored reviewed summary; zero requested, needs_review, payment_pending or delivered. Entry labels all unknown; no visitor denominator or real customer-sale proof. Payments and notifications false. Owner inbox empty at opening and final checkpoint. Existing untracked assessment left untouched.
+No inference, private snapshot migration, email, Site publication, rejected transfer replay or purchase. Existing heartbeat owns the next eligible controller decision.
 
-Candidates and prerequisites:
-- Acquisition publication: supported accepted Sites source transport or changed platform approval decision. Latest supervisor recheck at 18:39 found no accepted alternative. Owner consent resolved; no credential generation or transfer replay.
-- Discovery: dated priority-URL indexing/search/AI observations on/after 21 October; successful sitemap fetch and four discovered URLs already recorded. No resubmission or unchanged provider poll.
-- LinkedIn: actual owner post URL/date and available aggregate outcomes; prepared kit remains complete, no external posting authority inferred.
-- Conversion: accepted deployment of anonymous GET patch, then comparable dated visitor/request windows; inventory cannot establish conversion.
-- Report quality: genuine request or materially new evidence for deferred retained task; no pending request. No demonstration inference or private snapshot migration.
-- Delivery: useful independently approved report and current capacity before checkout activation; customer-authorized verified payment before sale/delivery claims. No duplicate owner email or synthetic sale.
-- Paid domain/service: no evidenced advantage over owned domain, no general purchase method; no purchase justified.
+---
 
-Next measurable follow-up: next genuine request—record supported tasks kept/revised/removed after independent review; owner post—measure available qualified-request aggregates; accepted publication—compare dated visit/request windows; 21 October—observe indexing/search metrics separately from discovery. Existing heartbeat owns continuation; no new controller, watcher or schedule.
+# Business execution receipt — 2026-10-14T18:58:01.967606+00:00
 
-No new durable reusable learning; no duplicate memory persisted. No credential file read, secret output, inference, email, purchase, deployment or customer-site change.
+Status: completed local collector correction; mission remains active. External spend this pass: EUR 0. Budget verified EUR 50 available, zero used/reserved; counters preserved.
 
-Automatic approval review previously rejected Sites repository credential transport in helper stdin. Supported accepted transport or changed platform decision remains necessary; no replay or repeated owner approval request.
+Hypothesis: quoted delimiters in script attributes can hide legitimate JSON-LD and cause unsupported structured-data absence claims. Reproduced: a valid Service block with data-note=">" returned zero blocks before correction.
+
+Action/artifact: corrected activeMarkup raw-block opening-tag matching in evidence.mjs to consume quoted attributes completely. Added generic positive and negative controls in evidence.test.mjs. Proof: QUOTED-SCRIPT-ACCEPTANCE.json. No private snapshots migrated.
+
+Verification: 87 focused collector/network/citation/task-review/report tests pass; git diff --check passes. Valid JSON-LD now parsed; invalid JSON remains invalid; commented blocks and script/style fake metadata stay excluded. Hosted safe-broker recall succeeded after authorized network escalation. Owner inbox empty at opening and final checkpoint. Fresh metrics attempt refused by existing operator lock; no lock removed, operator started or fresh inventory asserted. Process inspection was sandbox-denied; no recovery attempted.
+
+Four workstreams evaluated: acquisition publishing requires an accepted Sites source transport; discovery recheck is due on/after 21 October and owner LinkedIn outcomes remain unavailable. Conversion GET measurement patch remains deployment-dependent. Report quality had this concrete reproducible loss of structured evidence, so it was selected. Delivery still requires a useful independently approved report and current capacity before activation; no actual customer payment or mail proof added.
+
+Next measurable follow-up: on next genuine request, record retained JSON-LD blocks affected by quoted attributes and tasks kept/revised/removed after independent review. Changed evidence requires fresh review; no demonstration inference for that metric. Existing heartbeat owns continuation.
+
+No purchase, inference, email, deployment, customer-site change or credential transfer. Existing unrelated untracked assessment preserved.
+
+Automatic approval review previously rejected Sites repository credential transport in helper stdin. An accepted supported transport or changed platform decision remains required; no replay or repeated authorization question.

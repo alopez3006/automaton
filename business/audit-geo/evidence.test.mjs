@@ -1,6 +1,19 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('quoted script delimiters retain JSON-LD and exclude raw-block markup',()=>{
+ for(const attr of ['data-note="a > b"',"data-note='a > b'",'data-note="<meta name=robots content=noindex>"']) {
+  const html=`<script ${attr} type="application/ld+json">{"@type":"Service","name":"Audit"}</script><style ${attr}>.x::after { content: '<meta name="robots" content="noindex">'; }</style><h1>Real offer</h1>`;
+  const e=extractHtml(html);
+  assert.equal(e.structuredData.blockCount,1);
+  assert.deepEqual(e.structuredData.blocks,[{status:'parsed',value:{'@type':'Service',name:'Audit'}}]);
+  assert.deepEqual(e.robots,[]);assert.deepEqual(e.h1,['Real offer']);
+ }
+ const invalid=extractHtml('<script data-note=">" type="application/ld+json">{bad}</script>');
+ assert.equal(invalid.structuredData.blocks[0].status,'invalid_json');
+ const control=extractHtml('<!-- <script data-note=">" type="application/ld+json">{}</script> --><script data-note=">" type="text/javascript"><meta name="robots" content="noindex"></script>');
+ assert.equal(control.structuredData.blockCount,0);assert.deepEqual(control.robots,[]);
+});
 test('quoted tag delimiters preserve metadata and discovered links',()=>{
  const html=`<META data-note="a > b" name="robots" content="noindex"><meta data-note='x > y' name=description content="Real description"><link data-note="a > b" rel=canonical href="/real"><a title='x > y' href="/pricing">Pricing</a>`;
  const e=extractHtml(html);

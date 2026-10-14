@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-14T18:58:01.967606+00:00",
+  "hypothesis": "Quoted script attributes must not hide valid structured-data evidence.",
+  "reproducedBefore": {
+    "input": "script data-note=\">\" type=\"application/ld+json\" containing Service JSON",
+    "status": "not_observed_in_raw_html",
+    "blockCount": 0
+  },
+  "after": {
+    "blockCount": 1,
+    "status": "parsed"
+  },
+  "verification": {
+    "tests": 87,
+    "passed": 87,
+    "failed": 0,
+    "controls": [
+      "single and double quoted delimiters",
+      "tag-like attribute text",
+      "invalid JSON",
+      "commented JSON-LD",
+      "non-JSON scripts",
+      "style false metadata"
+    ],
+    "diffCheck": "passed"
+  },
+  "boundary": "Local raw-HTML extraction only; no schema validity, report usefulness, deployment or sale proof.",
+  "externalSpendCents": 0,
+  "supervisorAcceptance": {
+    "at": "2026-10-14T19:21:29.956Z",
+    "status": "accepted_local",
+    "sourceModifiedBySupervisor": false,
+    "verification": {
+      "tests": 93,
+      "passed": 93,
+      "failed": 0,
+      "includes": "87 collector/network/reference/task-review/report controls plus 6 robots controls",
+      "syntaxCheck": "passed",
+      "diffCheck": "passed"
+    },
+    "currentSourceSha256": {
+      "evidence.mjs": "094f206c6c868eb748ab616a081c8b03ac2a5dea0ef2ac73295b84f626c8bfb3",
+      "evidence.test.mjs": "c8cc57e40a94aa0beab20ed364aef52bc5d3b3e4cca900a1dd50ef0a935f8cc8"
+    },
+    "hashBoundary": "Current hashes recorded by supervisor; controller artifact contained no original source hashes to compare.",
+    "runtimeObservation": {
+      "controllerRunning": false,
+      "canStart": true,
+      "usedToday": 63,
+      "failures": 0,
+      "watcherRunning": true,
+      "watcherStartedAt": "2026-10-13T14:14:49.312Z",
+      "operatorLock": "Absent in supervisor process diagnosis; no lock removed or watcher recovery attempted.",
+      "inventory": "No fresh inventory observation; earlier controller lock refusal remains historical."
+    },
+    "boundary": "Bounded local raw-HTML extraction, not complete HTML/DOM parsing, schema validity, semantic usefulness, deployment or customer-path proof.",
+    "externalSpendCents": 0
+  }
+}

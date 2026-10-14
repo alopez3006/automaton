@@ -103,7 +103,7 @@ function textContent(value) { return plainText(value).slice(0,1000); }
 // strings inside JSON-LD stay intact; commented-out scripts are never evidence.
 // This remains bounded regex extraction, not a browser HTML parser.
 function activeMarkup(body,onScript=()=>{}) {
-  return body.replace(/<!--[\s\S]*?(?:-->|$)|<(script|style)\b([^>]*)>([\s\S]*?)(?:<\/\1\s*>|$)/gi,(_block,kind,attrs,content)=>{
+  return body.replace(/<!--[\s\S]*?(?:-->|$)|<(script|style)\b((?:[^"'<>]|"[^"]*"|'[^']*')*)>([\s\S]*?)(?:<\/\1\s*>|$)/gi,(_block,kind,attrs,content)=>{
     if(kind?.toLowerCase()==='script')onScript(attrs,content);
     return ' ';
   });
