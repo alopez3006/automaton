@@ -29,7 +29,7 @@
       "workstream": "acquisition",
       "action": "Publish the accepted anonymous GET measurement patch or another justified owned-page improvement",
       "state": "blocked",
-      "prerequisite": "Supported accepted Sites source transport; existing question 338a6610-7c36-4312-a4b7-fe96e96b42b6. No new credential or transfer attempt."
+      "prerequisite": "Supported accepted Sites source transport or changed platform approval decision. Owner answer is resolved; no repeated permission question, new credential or rejected transfer retry."
     },
     {
       "workstream": "acquisition",
@@ -75,5 +75,11 @@
     "mission": "Enabled, eligible for next decision pass; original watcher running",
     "validation": "Artifact consistency and diff only; no unchanged test/lab/provider replay",
     "newDurableLearning": false
+  },
+  "ownerResponseReview": {
+    "at": "2026-10-14T13:34:01.047067+00:00",
+    "resolved": true,
+    "answerMessageId": "054b80c8-c8cd-41a0-8a31-c3cc7c3f28c0",
+    "technicalTransportStillBlocked": true
   }
 }

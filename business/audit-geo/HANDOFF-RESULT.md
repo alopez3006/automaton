@@ -1,15 +1,17 @@
-# Execution receipt — 2026-10-14T13:34:01.047067+00:00
+# Execution receipt — 2026-10-14T13:37:36.375742+00:00
 
-Status: blocked publication; standing mission remains active.
+Status: completed bounded research/preparation; Bing execution awaits owner-selected authenticated session. Mission remains active.
 
-Hypothesis: the genuine owner answer may resolve the publication dependency; distinguish human consent from acceptance of the previously rejected credential transport.
+Hypothesis: Bing ownership verification and sitemap submission offer a free discovery route independent of the blocked Sites repository transport.
 
-Action/artifact: resolved and acknowledged owner answer 054b80c8-c8cd-41a0-8a31-c3cc7c3f28c0; inspected official Sites workflow and callable contracts; captured credential-free native metadata in PUBLICATION-CHANNEL-RESPONSE.json. Updated acceptance/backlog/dependency evidence. No new business deployment or growth outcome.
+Action/artifact: researched official requirements, inspected Bing landing through connected Chrome, verified live public robots/sitemap, prepared three public discovery URLs in public-content/BING-SUBMISSION-URLS.txt and BING-DISCOVERY-PREPARATION.json. Asked one new account-session question in the French console; retained the Bing tab for handoff. No account/login/DNS/submission action performed.
 
-Verification: native Sites confirms public version 18, active, current owner access. All four local source hashes match prior PUBLIC-GET-ACCEPTANCE.json. Existing local tests remain historical acceptance; no unchanged rerun. No supported secret-reference/direct-sync alternative exposed. Owner consent is resolved, not pending. Prior automatic review rejected repository credential in helper tool arguments; no credential regenerated or transport retried.
+Verification: public robots and sitemap HTTP 200; four public URLs; robots declares the sitemap and excludes request/API paths. Official Bing documentation supports account-specific ownership verification and sitemap submission. IndexNow requires a hosted key file, so is deferred. No Bing connector exposed; Chrome displays Sign In. Exa sandbox DNS failed; connected web supplied official sources. Safe hosted memory recall succeeded with authorized network access.
 
-Workstreams/candidates: acquisition publication requires accepted source transport; bounded discovery follows on/after 21 October or newly verified covering Search Console access; external distribution requires actual owner LinkedIn post evidence. Conversion needs published GET measurement and comparable request windows. Report quality requires genuine demand or materially changed evidence for the deferred task; retained inventory is the dated prior observation, not a fresh poll. Delivery requires useful independent approval and customer-authorized payment. Completed examples, mobile checks and owner receipt test stay complete.
+Workstreams: acquisition now has a concrete Bing candidate and session dependency, alongside the accepted-publication-channel dependency and manual LinkedIn evidence. Conversion requires deployed anonymous GET metrics/comparable windows. Quality requires genuine request/useful independent review; delivery requires that approval/capacity and customer-authorized payment. Prior dated inventory remains historical; no repeated inventory or unchanged test polling.
 
-Measurable follow-up: after accepted transport, deploy the exact reviewed patch, verify public response/anonymous aggregation, then compare dated page GET and request windows with bots/repeats/cache limits. No historical inventory divided by new counts.
+Measurable follow-up: after session availability, obtain exact Bing DNS requirement, prove ownership, submit sitemap once and record submission/fetch result. Inspect three priority URLs on/after 21 October; actual impressions, clicks and citations remain unknown. No search-result probe repeated early.
 
-External spend this pass: EUR 0. No budget/quota reset, email, payment, new controller or timer.
+External spend this pass: EUR 0. No new inference, email, payment, deployment, credential transfer, controller/timer, budget or quota reset.
+
+Supervisor reconciliation: 2026-10-14T13:54:37.197Z — Supervisor verified genuine owner-role answers linked to the existing Sites and Bing questions without displaying private reply text. Sites answer is acknowledged; Bing answer remains incoming for the controller. Three prepared priority URLs are an exact public owned-origin allowlist, without credentials/query/fragment; four pending Site source hashes still match acceptance. No browser/account/DNS/submission step or repeated provider check performed. Updated question history distinguishes answered owner consent from unresolved platform transport. No tests, inference, email, payment, purchase, credential transfer, deployment or counter reset; original receipts retained.
