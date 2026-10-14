@@ -1,0 +1,52 @@
+diff --git a/scripts/test-notifications.mjs b/scripts/test-notifications.mjs
+index e5ee7ef..1f6a8a6 100644
+--- a/scripts/test-notifications.mjs
++++ b/scripts/test-notifications.mjs
+@@ -29,3 +29,23 @@ assert.equal((await sendNotification(env,failed,key,'summary',{fetchApi:async()=
+ assert.equal((await sendNotification({...env,RESEND_EMAILS_ENABLED:'false'},{...record,id:'disabled_fixture'},key,'summary',{fetchApi})).state,'waiting_configuration');
+ assert.equal((await worker.fetch(new Request('https://audit.vutler.com/api/operator/notifications',{method:'POST'}),env)).status,401);
+ console.log('Unpaid preview, gated download, encrypted links, Resend body separation, deduplication, legacy links and retry boundaries passed (mock provider only).');
++// Cooling early records must not starve a paid delivery; paid mail takes the first slot.
++data.clear();
++for(let i=0;i<3;i++){
++ const r={...record,id:'cooling_'+i,status:'requested'};
++ data.set('requests/cooling_'+i+'.json',JSON.stringify(r));
++ data.set('notifications/'+r.id+'/received.json',JSON.stringify({state:'pending',attempts:1,firstAttemptAt:new Date().toISOString(),lastAttemptAt:new Date().toISOString()}));
++}
++data.set('requests/new.json',JSON.stringify({...record,id:'new_request',status:'requested'}));
++data.set('requests/paid.json',JSON.stringify({...delivered,id:'paid_request'}));
++const originalFetch=globalThis.fetch,order=[];
++try{
++ globalThis.fetch=async(url,options)=>{order.push(options.headers['Idempotency-Key']);return Response.json({id:'mock_'+order.length});};
++ const result=await flushNotifications(env);
++ assert.deepEqual(order,['paid_request:delivered','new_request:received']);
++ assert.equal(result.accepted,2);assert.equal(result.pending,3);
++ assert.equal(JSON.parse(data.get('notifications/cooling_0/received.json')).attempts,1);
++ assert.equal(JSON.parse(data.get('requests/paid.json')).status,'delivered');
++ const second=await flushNotifications(env);assert.equal(second.accepted,0);assert.equal(order.length,2);
++}finally{globalThis.fetch=originalFetch;}
++console.log('Paid-first reconciliation, cooldown starvation, two-send bound and accepted deduplication passed (mock provider only).');
+diff --git a/worker/notifications.mjs b/worker/notifications.mjs
+index 3790e4f..3463452 100644
+--- a/worker/notifications.mjs
++++ b/worker/notifications.mjs
+@@ -82,13 +82,18 @@ export async function sendNotification(env,r,key,kind,{fetchApi=fetch}={}){
+ export async function flushNotifications(env){
+  if(!notificationsReady(env))return {configured:false,accepted:0,pending:0,needsReview:0};
+  const list=await env.BUCKET.list({prefix:'requests/',limit:50});let accepted=0,pending=0,needsReview=0,processed=0;
+- for(const item of list.objects){if(processed>=2)break;const object=await env.BUCKET.get(item.key);if(!object)continue;const r=await object.json();
++ const candidates=[];
++ for(const item of list.objects){const object=await env.BUCKET.get(item.key);if(!object)continue;const r=await object.json();candidates.push({item,r});}
++ // Paid fulfillment comes first within the existing bounded inventory.
++ candidates.sort((a,b)=>(b.r.status==='delivered')-(a.r.status==='delivered'));
++ for(const {item,r} of candidates){if(processed>=2)break;
+   if(Date.now()-Date.parse(r.createdAt)>(r.status==='delivered'?90:30)*86400000)continue;
+   const kind=r.status==='delivered'?'delivered':r.status==='payment_pending'?'summary':r.status==='ineligible'?'closed':r.status==='requested'&&Date.now()-Date.parse(r.createdAt)<86400000?'received':null;
+   if(!kind)continue;if(kind==='closed'&&!await env.BUCKET.get('notification-links/'+r.id+'.json'))continue;
+   const marker=await env.BUCKET.get('notifications/'+r.id+'/'+kind+'.json');const prior=marker?await marker.json():null;
+   if(prior?.state==='accepted')continue;
+   if(prior?.attempts>=3||prior?.firstAttemptAt&&Date.now()-Date.parse(prior.firstAttemptAt)>23*3600000){needsReview++;continue;}
++  if(prior?.lastAttemptAt&&Date.now()-Date.parse(prior.lastAttemptAt)<60000){pending++;continue;}
+   processed++;const result=await sendNotification(env,r,item.key,kind);if(result.state==='accepted')accepted++;else if(result.state==='needs_review')needsReview++;else pending++;
+  }
+  return {configured:true,accepted,pending,needsReview};

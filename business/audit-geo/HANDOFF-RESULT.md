@@ -1,32 +1,26 @@
-# Execution receipt — 2026-10-14T02:18:05.444827+00:00
+# Execution receipt — 2026-10-14T02:39:22.294615+00:00
 
-Status: completed — complete deliverable gate before new payment invitations.
-External spending this pass: EUR 0 / 0 cents. Budget helper: EUR 50 available, zero used/reserved; counters preserved.
+Status: completed — local paid-notification reconciliation fix; not deployed.
+External spending this pass: EUR 0 / 0 cents. Budget: 5000 cents available, zero used/reserved; counters preserved.
 
-## Hypothesis and choice
+## Hypothesis and selection
+Two early cooling retries could consume the two-record processing allowance and postpone later paid fulfillment. Prioritizing delivered requests and skipping one-minute cooldowns before consuming that allowance improves the delivery path without requiring provider credentials.
 
-A freshly reviewed saved draft could pass the source/task review gate while missing the required report sections, no-action condition or complete ending. Customers should not be invited to pay for that incomplete deliverable. Reusing the original report completion check at the final local payment gate closes this independently actionable fulfillment-quality gap.
-
-Alternatives evaluated separately: discovery G1 completed; useful guide G2 ready but publication still requires an accepted secure Sites channel; external promotion G6 requires the pending owner channel authority; conversion G3 shares the publication dependency; anonymous inventory G4 already implemented; transactional delivery G7 requires scoped Resend server access and actual receipt/inbox proof. No repeated provider checks, new content draft, renderer work or inference demonstration.
+Alternatives evaluated: G1 discovery completed; G2 guide ready but secure Sites publication channel pending; G3 conversion changes share that publication dependency; G4 retained anonymous baseline implemented; G5/G8–G13 quality improvements completed pending genuine requests; G6 distribution kit complete but external channel authority pending; G7 actual Resend sending requires verified scoped access and inbox proof. Selected a concrete delivery reliability defect rather than repeating these checks or creating another document-only artifact.
 
 ## Action and artifact
+site/worker/notifications.mjs now orders paid deliveries first within the existing first 50 records, and skips recent retries without spending its two-send allowance. Accepted messages remain deduplicated, retry expiry/attempt boundaries retained, and request/payment records unchanged. site/scripts/test-notifications.mjs adds a control with three early cooling messages, an unpaid receipt and a later paid report.
 
-validate-draft.mjs now calls the existing assembleReport validation before canRequestPayment can return true. The returned appended string is discarded: saved reports, review digests and customer payment obligations are not altered. The payment teaser uses this gate through reviewedPreview. Three synthetic test fixture reports now include the required sections; task-review.test.mjs adds seven freshly approved but incomplete report controls. No actual private report was edited or approved.
+## Verification and limits
+Notification controls pass: paid report sent first, later receipt sent second, three cooling attempts unchanged, repeated reconciliation sends no accepted message again. Existing encrypted-link, unpaid-denial, message separation and retry controls pass. Payment and signed webhook suites pass (mock storage/provider); syntax check passes. No real email, sale, report approval, inference, deployment, checkout activation or purchase occurred.
 
-## Verification
+HawkScan skill preflight found v6.4.0 and a credential source without reading it. Its log write is sandbox-restricted and version lookup used cache after network failure. Existing operational history records an HTTP 402 scan prerequisite; no unchanged scan attempt or DAST result claimed. Publication remains blocked by the previously rejected Sites credential-transfer channel, which was not retried or bypassed. No new approval rejection occurred.
 
-28 focused source/task-review/preview/report tests passed. Seven negative controls retain a valid synthetic independent-review contract but cannot authorize payment: each missing required heading, missing Markdown report heading, missing no-action condition and unfinished ending. Existing valid reports and severity controls pass. One integrated local launch acceptance test passed: synthetic request, reviewed teaser, signed payment, gated report, deduplicated mocked email. Whitespace check passed.
+## Measurable follow-up
+After secure publication and verified Resend access, observe accepted paid notifications per reconciliation and remaining pending/needs-review counts; separately verify actual inbox receipt. Compare time from paid transition to provider acceptance on genuine orders. Inventory is first-page bounded, so priority is not global across more than 50 records. Do not generate a customer payment or repeated demonstration for this metric.
 
-These are local contract and synthetic launch checks, not independent semantic acceptance, a deployed change, real mail receipt or a customer sale. No HTTP surface changed; no DAST performed and the documented HawkScan HTTP 402 prerequisite was not retried. Sites publication and Resend remain separately blocked as previously recorded. No new automatic-approval rejection occurred in this pass.
+Console inbox empty at start, implementation and finish checkpoints; owner informed in French. Safe hosted broker recall/persistence succeeded after permitted network escalation; initial sandbox recall failed DNS. No raw credential files read or secret values printed. No controller or timer started.
 
-## Follow-up
+## Supervisor independent acceptance
 
-On the next genuine independent review, record any saved draft denied for incomplete deliverable, repair and re-review before inviting payment, then count invitations and actual verified fulfillment. Do not create a new demonstration merely to populate this measure. Completed gates stay completed until new evidence warrants work.
-
-Owner inbox empty at start and final checkpoints. Hosted safe broker recall succeeded after network escalation; durable non-secret learning persisted through the same broker. No raw credentials accessed, new audit/inference, email, payment activation, deployment, purchase, controller or schedule.
-
-## Supervisor independent acceptance and correction
-
-The expanded affected-suite check reproduced a readiness regression: its currentReviewApproved field depended on the complete payment gate, so an approved but incomplete report incorrectly appeared unreviewed. Factored hasCurrentApprovedReview into the shared validator. The diagnostic now records the review contract separately while locallyReady uses the full eligibility/completeness/payment gate. Added a zero-task approved-report control: its review can be current while payment remains denied. Existing incomplete-report regression remains unchanged and now passes.
-
-All 33 affected reference/task-review/teaser/completeness/readiness/integrated-launch tests pass after correction; syntax and whitespace checks pass. The integrated launch still uses synthetic payment signatures and mocked email, not real external fulfillment. An actual anonymous readiness inventory reproduced three retained snapshots and zero locally ready, with private draft/evidence and ledger bytes unchanged. No real report approved or migrated. HawkScan v6.4.0 preflight and static scope review performed; these local validation functions have no HTTP-serving target, so no DAST result or security certification is claimed. The separate documented public-site provider prerequisite was not retried. Original controller outcome, pending questions, spending and inference counters remain intact.
+The supervisor inspected the precise two-file source diff and independently passed notification, payment, signed-webhook and integrated synthetic-launch checks, plus syntax and whitespace validation. The official local Sites build passed, complete built modules import as ESM and their bytes match the retained source. Paid-first ordering, cooldown skipping, accepted deduplication and unchanged payment records passed with mock providers/storage. Preserved the exact scoped diff as public-content/notification-reconciliation.patch and verified reverse-applicability; NOTIFICATION-RECONCILIATION-VERIFICATION.md records the source base and publishing follow-up. Guide changes remain intact in the same managed checkout. No manual Site commit, deployment, real email, inference, customer mutation, purchase or new approval attempt. First-page priority and inspected-prefix counters are bounded; neither proves global queue fairness or inbox delivery. Existing publication/distribution questions and original controller outcome retained.
