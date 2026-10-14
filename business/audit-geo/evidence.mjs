@@ -127,7 +127,7 @@ function activeMarkup(body,onScript=()=>{}) {
     const kind=tag[1]?.toLowerCase();
     if(tag[0].startsWith('<!--')) {
       result+=body.slice(cursor,tag.index)+' ';cursor=tokens.lastIndex;
-    } else if(tag[0][1]!=='/'&&['script','style'].includes(kind)) {
+    } else if(tag[0][1]!=='/'&&['script','style','textarea','xmp'].includes(kind)) {
       const start=tokens.lastIndex;
       const closing=new RegExp('<\\/'+kind+'\\s*>','gi');closing.lastIndex=start;
       const end=closing.exec(body);
@@ -178,7 +178,7 @@ export function extractHtml(body) {
     structuredData:{status:jsonLdCount?'observed':'not_observed_in_raw_html',blockCount:jsonLdCount,blocks:structuredData,truncated:jsonLdCount>10},
     body:clean.slice(0,16000),bodyTruncated:clean.length>16000,
     ...extractSections(clean),
-    limitations:['Raw HTML only; JavaScript-rendered content is unmeasured','Bounded regex extraction excludes comments and script/style blocks; not a complete HTML parser','Parsed JSON is not schema correctness or rich-result eligibility']
+    limitations:['Raw HTML only; JavaScript-rendered content is unmeasured','Bounded regex extraction excludes comments and script/style/textarea/xmp blocks; not a complete HTML parser; textarea/xmp text is not sampled','Parsed JSON is not schema correctness or rich-result eligibility']
   };
 }
 // URL validation is shared; HTML entity decoding belongs only to discovery.

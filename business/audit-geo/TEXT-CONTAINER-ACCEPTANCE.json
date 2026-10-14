@@ -1,0 +1,68 @@
+{
+  "observedAt": "2026-10-14T20:58:18.889Z",
+  "hypothesis": "Literal markup in textarea/xmp examples must not become indexing, structured-data or crawl evidence.",
+  "reproduction": {
+    "before": {
+      "robots": "false noindex",
+      "jsonLd": "false Product block",
+      "crawlCandidate": "/fake"
+    },
+    "after": {
+      "robots": [],
+      "jsonLd": [],
+      "crawlCandidates": []
+    }
+  },
+  "action": "Shared activeMarkup excludes textarea/xmp through their closing tag or end of input.",
+  "validation": {
+    "testsPassed": 88,
+    "testsFailed": 0,
+    "syntax": true,
+    "diffCheck": true,
+    "controls": [
+      "both container types",
+      "quoted opening attributes",
+      "case-insensitive closing tags and whitespace",
+      "unclosed containers",
+      "real metadata/JSON-LD/headings/links after closed containers",
+      "lookalike tags and visible encoded text"
+    ]
+  },
+  "hashes": {
+    "evidence.mjs": "3cf90b80de0edc36f7665200b9f79aa5c559e88d394bd03f7134c18e2e0f1ca3",
+    "evidence.test.mjs": "7d51646f4d0b48252847dfea77880716fdd7df25164b46c45d049f6e2fde3fa1"
+  },
+  "limits": [
+    "Bounded raw HTML extraction, not HTML tree/DOM or semantic usefulness proof",
+    "Textarea/xmp text intentionally not sampled; explicit collector limitation",
+    "No private snapshot migration, inference, deployment or actual customer outcome"
+  ],
+  "externalSpendCents": 0,
+  "supervisorAcceptance": {
+    "at": "2026-10-14T21:17:30.892Z",
+    "status": "accepted_local",
+    "sourceModifiedBySupervisor": false,
+    "sourceHashMatches": {
+      "evidence.mjs": true,
+      "evidence.test.mjs": true
+    },
+    "verification": {
+      "tests": 98,
+      "passed": 98,
+      "failed": 0,
+      "suites": [
+        "collector",
+        "network",
+        "draft references",
+        "task review",
+        "report",
+        "robots",
+        "source references"
+      ],
+      "syntaxCheck": "passed",
+      "diffCheck": "passed"
+    },
+    "boundary": "Textarea/xmp contents are intentionally excluded from raw evidence and text sampling. These controls do not establish complete HTML/DOM parsing, rendered visibility, semantic report usefulness, Site deployment or paid delivery.",
+    "externalSpendCents": 0
+  }
+}

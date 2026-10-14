@@ -1,6 +1,23 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('text-only example containers cannot seed metadata, JSON-LD or crawl candidates',()=>{
+ for(const name of ['textarea','xmp']) {
+  const example='<meta name="robots" content="noindex"><script type="application/ld+json">{"@type":"Product"}</script><h1>Fake</h1><a href="/fake">Example</a><!--';
+  for(const close of [`</${name.toUpperCase()} >`,'']) {
+   const html=`<${name} data-note="a > b">${example}${close}<meta name=description content="Real"><script type="application/ld+json">{"@type":"Service"}</script><h1>Real offer</h1><a href="/real">Real</a>`;
+   const e=extractHtml(html);
+   assert.deepEqual(e.robots,[]);
+   assert.deepEqual(e.h1,close?['Real offer']:[]);
+   assert.deepEqual(e.descriptions,close?['Real']:[]);
+   assert.deepEqual(e.structuredData.blocks,close?[{status:'parsed',value:{'@type':'Service'}}]:[]);
+   assert.deepEqual(internalCandidates(html,'https://example.com/'),close?['https://example.com/real']:[]);
+  }
+ }
+ const e=extractHtml('<h1>Visible textarea example</h1><p>&lt;textarea&gt; and xmp are words.</p><textarea-example><meta name=description content=Retained></textarea-example>');
+ assert.equal(e.sections[0].text,'<textarea> and xmp are words.');
+ assert.deepEqual(e.descriptions,['Retained']);
+});
 test('quoted inline attributes do not leak into citable text',()=>{
  for(const attr of ['data-note="x > fabricated"',"data-note='x > fabricated'",'data-note="<b>fabricated</b>"']) {
   const e=extractHtml(`<title>Offer <span ${attr}>Real</span></title><h1>Offer <span ${attr}>Real</span></h1><p>Price <a ${attr}>EUR 9</a> &amp; scope.</p>`);
