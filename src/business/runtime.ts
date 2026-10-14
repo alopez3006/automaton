@@ -165,16 +165,30 @@ export async function runBusiness(options: {
             if (event.type === "item.started" || event.type === "item.completed") {
               void status("running", { activity: event.item?.type ?? "work" }).catch(() => {});
             }
-            if (event.type === "error" || event.type === "turn.failed") failureReason = executorFailure(event);
+            if (event.type === "error" || event.type === "turn.failed") {
+              const category = executorFailure(event);
+              if (category !== "Business executor failed") failureReason = category;
+            }
             if (event.type === "turn.failed") failed = true;
             if (event.type === "turn.completed") console.log(JSON.stringify({ event: "business_turn_completed", usage: event.usage }));
           } catch { /* Ignore non-event lines rather than logging potentially sensitive output. */ }
         }
       });
-      child.stderr.resume(); child.stdin.on("error", () => {});
-      const clean = () => { clearTimeout(timer); clearTimeout(forceTimer); process.removeListener("SIGTERM", stop); process.removeListener("SIGINT", stop); };
+      // Startup failures may appear only on stderr. Keep a bounded in-memory
+      // window for classification; never persist or forward its contents.
+      let diagnosticWindow = "", stderrFailureReason = "Business executor failed";
+      child.stderr.on("data", chunk => {
+        diagnosticWindow = (diagnosticWindow + chunk.toString()).slice(-8192);
+        const category = executorFailure({ message: diagnosticWindow });
+        if (stderrFailureReason === "Business executor failed" && category !== stderrFailureReason) stderrFailureReason = category;
+      });
+      child.stdin.on("error", () => {});
+      const clean = () => { diagnosticWindow = ""; clearTimeout(timer); clearTimeout(forceTimer); process.removeListener("SIGTERM", stop); process.removeListener("SIGINT", stop); };
       child.on("error", () => { clean(); reject(new Error("Cannot start Codex business executor")); });
-      child.on("close", code => { clean(); code === 0 && !failed && !timedOut ? accept() : reject(new Error(timedOut ? "Business run timed out" : failureReason)); });
+      child.on("close", code => {
+        const reason = failureReason === "Business executor failed" ? stderrFailureReason : failureReason;
+        clean(); code === 0 && !failed && !timedOut ? accept() : reject(new Error(timedOut ? "Business run timed out" : reason));
+      });
       child.stdin.end(prompt);
     });
     await chmod(resultPath, 0o600);

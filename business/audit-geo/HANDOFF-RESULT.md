@@ -1,23 +1,21 @@
-# Latest supervisor update — executor startup failure
+# Latest supervisor update — diagnostic acceptance
 
-2026-10-14T15:02:46.423Z — Supervisor attempted one scheduled controller pass; it exited as failed before producing a receipt. First consecutive failure, existing retry backoff until 2026-10-14T15:26:05.270Z. Original watcher remains active; no spend, reservation or inference increment. CLI version/options, saved ChatGPT login status and ordinary account usage metadata checked; no required enabled MCP server. Exact cause remains unknown because raw executor stderr is intentionally discarded. No immediate retry, source/security change, fabricated receipt or counter reset. Private startup-diagnostic.json retains bounded evidence; next eligible scheduled pass remains subject to mission/backoff guards.
+2026-10-14T16:04:32.417Z — Supervisor accepted G35 after reproducing and fixing diagnostic precedence: a generic structured event no longer erases a specific category; specific structured errors take priority over the bounded stderr fallback. Four additional subprocess controls; 29 runtime/policy checks and local TypeScript compilation pass. Source/test/compiled hashes in EXECUTOR-DIAGNOSTIC-ACCEPTANCE.json. Last scheduled controller completed a real receipt after the prior isolated startup failure; original watcher and zero-spend/reservation/seven-attempt counters preserved. Historical failure cause remains unknown; categories are heuristic hints, not provider root-cause proof. No raw stderr retained, immediate executor replay, purchase, inference, Site publication or commercial claim.
 
-## Prior completed controller receipt (historical)
+## Prior controller receipt (historical)
 
-# Business execution receipt — 2026-10-14T14:40:31.797998+00:00
+# Business execution receipt — 2026-10-14T15:37:22.250Z
 
-Status: completed (bounded decision pass); mission remains enabled. External spending this pass: EUR 0.
+Status: completed bounded local reliability improvement; mission remains active. Spending this pass: EUR 0.
 
-Hypothesis: prioritize qualified demand and useful fulfillment over repeated discovery checks or unsupported local changes.
+Hypothesis: safely classifying stderr-only startup failures improves diagnosis of operator availability, a fulfillment prerequisite. The new 15:02 startup failure justified this independent action over another unchanged inventory or discovery poll.
 
-Action/artifact: evaluated acquisition, conversion, report quality and delivery against current mission and growth evidence. Refreshed anonymous inventory through the safe operator; reconciled the supervisor's already recorded Bing Success/four discovered URLs. Updated NEXT-ACTION-DEPENDENCIES.json with seven candidates and exact prerequisites. No sitemap resubmission or browser/provider polling.
+Action/artifact: src/business/runtime.ts now classifies an 8192-character bounded in-memory stderr window into existing fixed categories, discards raw text and clears the window on close. Compiled local runtime updated. EXECUTOR-DIAGNOSTIC-ACCEPTANCE.json records acceptance. Historical failure cause remains unknown.
 
-Verification: owner inbox empty at both checkpoints; hosted memory broker succeeded after sandbox DNS failure, without raw credential access. Current inventory at 14:39:06 UTC: three retained records, zero requested, zero payment-pending, one prepared, two ineligible, zero delivered; all entry labels unknown. This is not a customer-only lifetime cohort. Budget helper confirms EUR 50 total, zero used/reserved. Payments and notifications remain disabled. Existing untracked GEO-SEO-CLAUDE-ASSESSMENT.md preserved. No inference, email, purchase, deployment, controller, counter reset or rejected secret transfer.
+Verification: 25 runtime/policy controls pass, including five stderr-only subprocess cases with split chunks and non-retention of private fixture strings. TypeScript compilation and git diff --check pass. Corepack could not write its cache; installed local test/compiler entrypoints completed without installation. Owner inbox empty at both checkpoints; budget EUR 50 total, zero spent/reserved. Safe hosted memory broker succeeded after sandbox DNS failure. No real executor replay, new controller, inference, email, purchase, Site deployment, secret transfer or counter reset. Existing untracked assessment preserved.
 
-Candidates/prerequisites: owned publication and GET measurement require accepted Sites transport; discovery/indexing measurement due 21 October or new covering-property access; LinkedIn measurement requires actual owner post URL/date and aggregates; useful report requires genuine request or materially new evidence for deferred task; checkout requires independently useful approved report and current capacity, followed by customer-authorized payment; domain/service purchase has no justified benefit and no general payment access. No new safe useful action established. This pass is assessment, not business growth or mission completion.
+Alternatives evaluated: acquisition/public measurement still needs accepted Sites source transport; discovery measurement due 21 October; LinkedIn requires owner post evidence. Conversion needs visitor denominators and genuine requests. Report usefulness needs a genuine request or materially new evidence; repeated G17 review/demonstration inference excluded. Commercial activation needs a useful approved report and current delivery capacity. New startup incident made bounded reliability work the highest-value independent action this pass.
 
-Measurable follow-up: next genuine request — retained label and independently reviewed useful tasks; accepted GET publication — comparable dated GET/request windows; on/after 21 October — priority URL indexing/impressions/citations. Bing fetch/discovery is already accepted separately from these outcomes.
+Measurable follow-up: next scheduled execution—receipt present or absent; any new failure classified or unknown. No immediate replay to obtain this metric. Genuine request remains priority over maintenance.
 
-Publication dependency: automatic approval review previously rejected the Sites credential transport in helper stdin arguments. Owner publication consent is resolved; supported accepted transport or changed platform decision remains required. No repeat permission question or transfer attempted.
-
-No new durable learning to persist; existing hosted notes contain earlier intermediate Bing state, superseded by current local evidence.
+Publication blocker: automatic approval review previously rejected the Sites credential transport through helper stdin arguments. Owner consent is resolved; accepted supported transport remains necessary. No retry or duplicate authorization question.

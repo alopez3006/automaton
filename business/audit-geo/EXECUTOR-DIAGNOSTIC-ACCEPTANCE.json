@@ -1,0 +1,49 @@
+{
+  "observedAt": "2026-10-14T15:37:22.250Z",
+  "hypothesis": "Classify stderr-only executor failures safely so scheduled operator recovery can distinguish access, quota and connection failures without raw logs.",
+  "action": "Bounded 8192-character in-memory stderr window mapped to existing fixed categories; window cleared at child close. Compiled local runtime.",
+  "verification": {
+    "testsPassed": 25,
+    "files": [
+      "src/__tests__/business-runtime.test.ts",
+      "src/__tests__/business-policy.test.ts"
+    ],
+    "typescript": "passed",
+    "diffCheck": "passed",
+    "controls": "Split stderr chunks, usage/authentication/connection/context categories and unknown failure; raw fixture marker absent from status."
+  },
+  "limits": [
+    "Historical startup cause unknown",
+    "No real executor replay or controller launch",
+    "No customer path, sale or deployment proof"
+  ],
+  "followUp": "Next scheduled executor failure: classified versus unknown category and receipt presence. Do not replay the failed pass solely to measure.",
+  "externalSpendCents": 0,
+  "supervisorAcceptance": {
+    "at": "2026-10-14T16:04:32.417Z",
+    "regressionReproduced": "Specific stderr failure was overwritten by a later generic structured event in the initial patch; targeted subprocess control failed before correction.",
+    "correction": "Preserve specific structured categories across generic events; use a separate stderr fallback only when structured category is unknown. Successful receipts remain successful regardless of stderr category.",
+    "testsPassed": 29,
+    "testFiles": [
+      "src/__tests__/business-runtime.test.ts",
+      "src/__tests__/business-policy.test.ts"
+    ],
+    "additionalControls": [
+      "Specific stderr then generic structured failure",
+      "Specific structured then generic failure",
+      "Structured category takes priority over stderr",
+      "Successful receipt with error-like stderr"
+    ],
+    "typescript": "passed",
+    "sourceHashes": {
+      "src/business/runtime.ts": "fa4530349819a5a12d633b99f6c10eadeca34299469cf48f878406b7930f2006",
+      "src/__tests__/business-runtime.test.ts": "0c2eb83407ebaa3aecb998859b1051fff1d2844ad712117798e313a2338a6237",
+      "dist/business/runtime.js": "8b6055f3501db56279d55246b6a030f0796e361914a01bbbf6a2f1384afcab3a"
+    },
+    "limits": [
+      "Fixed heuristic categories are diagnostic hints, not proof of the underlying provider failure.",
+      "Historical failure cause remains unknown.",
+      "No raw stderr retained, provider replay, Site publication, customer fulfillment or purchase."
+    ]
+  }
+}

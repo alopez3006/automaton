@@ -70,6 +70,57 @@ describe('Automaton local business mode',()=>{
    const status=await readFile(join(dir,'.automaton-business/status.json'),'utf8');expect(JSON.parse(status).error).toBe('Business executor connection failed');expect(status).not.toContain('private diagnostic');expect(status).not.toContain('rk_live_fixture');
   }finally{await rm(dir,{recursive:true,force:true});}
  });
+ it.each([
+  ['usage limit reached', 'Business executor usage limit reached'],
+  ['authentication failed', 'Business executor authentication failed'],
+  ['DNS connection failed', 'Business executor connection failed'],
+  ['context window exceeded', 'Business executor context limit reached'],
+  ['unrecognized private failure', 'Business executor failed'],
+ ])('classifies stderr-only startup failure %s without retaining raw output',async(message,expected)=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-stderr-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Fixture task');
+   const executable=join(dir,'executor.mjs');await writeFile(executable,`#!/usr/bin/env node\nprocess.stdin.resume();process.stderr.write(${JSON.stringify(message.slice(0,4))});setTimeout(()=>{process.stderr.write(${JSON.stringify(message.slice(4)+' rk_live_fixture private payload')});process.exitCode=1},10);\n`,{mode:0o700});
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow(expected);
+   const status=await readFile(join(dir,'.automaton-business/status.json'),'utf8');expect(JSON.parse(status).error).toBe(expected);expect(status).not.toContain('rk_live_fixture');expect(status).not.toContain('private payload');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('preserves a classified stderr startup failure when a later structured event is generic',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-stderr-order-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Fixture task');
+   const executable=join(dir,'executor.mjs');await writeFile(executable,'#!/usr/bin/env node\nprocess.stdin.resume();process.stderr.write("authentication failed private payload");setTimeout(()=>{console.log(JSON.stringify({type:"turn.failed",error:{message:"executor exited"}}));process.exitCode=1},20);\n',{mode:0o700});
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('Business executor authentication failed');
+   const status=await readFile(join(dir,'.automaton-business/status.json'),'utf8');expect(status).not.toContain('private payload');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('preserves a classified structured error when a generic failure event follows',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-json-error-order-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Fixture task');
+   const executable=join(dir,'executor.mjs');await writeFile(executable,'#!/usr/bin/env node\nprocess.stdin.resume();console.log(JSON.stringify({type:"error",message:"usage limit reached private payload"}));console.log(JSON.stringify({type:"turn.failed",error:{message:"executor exited"}}));process.exitCode=1;\n',{mode:0o700});
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('Business executor usage limit reached');
+   const status=await readFile(join(dir,'.automaton-business/status.json'),'utf8');expect(status).not.toContain('private payload');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('uses a classified structured error instead of an unrelated stderr category',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-json-error-priority-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Fixture task');
+   const executable=join(dir,'executor.mjs');await writeFile(executable,'#!/usr/bin/env node\nprocess.stdin.resume();process.stderr.write("authentication failed private payload");setTimeout(()=>{console.log(JSON.stringify({type:"turn.failed",error:{message:"usage limit reached"}}));process.exitCode=1},20);\n',{mode:0o700});
+   await expect(runBusiness({workspace:dir,executable,context:'Fixture'})).rejects.toThrow('Business executor usage limit reached');
+   const status=await readFile(join(dir,'.automaton-business/status.json'),'utf8');expect(status).not.toContain('private payload');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
+ it('does not turn diagnostic text on stderr into a failed successful receipt',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-success-stderr-fixture-'));
+  try{
+   await mkdir(join(dir,'business/audit-geo'),{recursive:true});await writeFile(join(dir,'business/audit-geo/HANDOFF.md'),'Fixture task');
+   const executable=join(dir,'executor.mjs');await writeFile(executable,`#!/usr/bin/env node\nimport fs from 'node:fs';\nprocess.stderr.write('DNS connection failed private payload');fs.writeFileSync(process.argv[process.argv.indexOf('-o')+1],JSON.stringify(${JSON.stringify(receipt)}));process.stdin.resume();\n`,{mode:0o700});
+   await runBusiness({workspace:dir,executable,context:'Fixture'});
+   const status=await readFile(join(dir,'.automaton-business/status.json'),'utf8');expect(JSON.parse(status).state).toBe('waiting_for_user');expect(status).not.toContain('private payload');
+  }finally{await rm(dir,{recursive:true,force:true});}
+ });
  it('continues an authorized standing mission without a new owner message, then enforces its daily limit',async()=>{
   const dir=await mkdtemp(join(tmpdir(),'automaton-standing-mission-fixture-'));
   try{
