@@ -1,0 +1,93 @@
+{
+  "observedAt": "2026-10-14T19:38:39.796640+00:00",
+  "scope": "local raw-HTML collector only",
+  "hypothesis": "Quoted opening attributes contaminate title and heading evidence even after inline-tag stripping.",
+  "reproducedBefore": {
+    "title": "b\">Real title",
+    "h1": [
+      "b\">Real heading"
+    ]
+  },
+  "action": "Shared complete-tag token scan for title, H1 and sampled heading boundaries; excludes tag-like quoted attribute decoys.",
+  "verification": {
+    "command": "node --test business/audit-geo/evidence.test.mjs business/audit-geo/network.test.mjs business/audit-geo/report.test.mjs business/audit-geo/source-references.test.mjs",
+    "passed": 61,
+    "failed": 0,
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "controls": [
+      "single and double quotes",
+      "attribute fake title/H1",
+      "all section boundaries",
+      "ordinary uppercase markup",
+      "inline emphasis",
+      "encoded visible angle brackets"
+    ]
+  },
+  "sourceHashes": {
+    "evidence.mjs": "bc5653866de203d6936253104845ef63c8da1edc577ac94bedc5f4cb2ede2482",
+    "evidence.test.mjs": "0f608809eef18cb4ebe842c076f908f2cc655b4655bbd2afa21f08ce50eaf45d"
+  },
+  "limits": [
+    "Not a complete HTML parser or rendered visibility test",
+    "No private evidence migration, inference, deployment, payment, email or sale",
+    "Fresh inventory unavailable: hosted memory prerequisite DNS failed"
+  ],
+  "followUp": "Next genuine collected report: count affected titles/headings and tasks kept, corrected or removed in independent review.",
+  "supervisorAcceptance": {
+    "at": "2026-10-14T19:58:27.562Z",
+    "status": "accepted_local_after_correction",
+    "sourceModifiedBySupervisor": true,
+    "reproducedRemainingDefect": {
+      "input": "<h1>Real <span data-note=\"</h1>\">heading</span></h1><p>Actual passage.</p>",
+      "beforeHeading": "Real <span data-note=\"",
+      "beforePassage": "\">heading Actual passage.",
+      "afterHeading": "Real heading",
+      "afterPassage": "Actual passage."
+    },
+    "correction": "Pair opening and closing boundaries through the same complete-tag token scan; quoted closing-tag decoys cannot truncate elements. Keep at most one unmatched opening per selected name; preserve other independently closed headings.",
+    "verification": {
+      "tests": 96,
+      "passed": 96,
+      "failed": 0,
+      "suites": [
+        "collector",
+        "network",
+        "draft references",
+        "task review",
+        "report",
+        "robots",
+        "source references"
+      ],
+      "syntaxCheck": "passed",
+      "diffCheck": "passed",
+      "additionalControls": [
+        "single and double quoted closing-tag decoys",
+        "title/H1/H2 closing boundaries and passages",
+        "unclosed heading does not hide a separately closed heading"
+      ]
+    },
+    "currentSourceSha256": {
+      "evidence.mjs": "0b034776bd5f0b862a97b63e17d3de28afe9a6de6ec4d7bc065158f5069543b6",
+      "evidence.test.mjs": "0b3cadfb19b8d954a4542d1ec6c7f10acc5715388fd74318e3d25a45473c17db"
+    },
+    "hashBoundary": "Supervisor hashes supersede original controller source hashes after this additional correction.",
+    "inventoryObservation": {
+      "observedAt": "2026-10-14T19:56:01.139Z",
+      "scope": "first-page retained anonymous inventory, includes administrative/test records, not lifetime cohort",
+      "total": 3,
+      "requested": 0,
+      "prepared": 1,
+      "ineligible": 2,
+      "paymentPending": 0,
+      "delivered": 0,
+      "reviewedSummaries": 1,
+      "paymentsEnabled": false,
+      "notificationsEnabled": false,
+      "visitorAndVerifiedSaleDenominators": "unknown"
+    },
+    "accessBoundary": "Supervisor hosted recall and metrics-only succeeded now. Earlier controller DNS failures remain historical; this does not establish the cause or guarantee future executor connectivity.",
+    "boundary": "Bounded raw-HTML token extraction, not complete HTML tree parsing, browser visibility, schema validity, semantic report usefulness, deployment or paid customer-path proof.",
+    "externalSpendCents": 0
+  }
+}

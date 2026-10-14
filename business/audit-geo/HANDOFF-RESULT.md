@@ -1,21 +1,23 @@
-# Supervisor acceptance — 2026-10-14T19:36:43.412Z
+# Supervisor acceptance — 2026-10-14T19:58:27.562Z
 
-Accepted G40 local inline text extraction without modifying controller source. Independent validation: 94 focused collector/network/reference/task-review/report/robots controls pass, both syntax checks and diff clean. INLINE-TEXT-ACCEPTANCE.json records current source hashes; the original controller artifact had no hashes to compare. Positive controls retain visible prose and encoded references; quoted markup attributes no longer contaminate sampled text on the verified inputs. Bounded regex extraction remains separate from full HTML/DOM visibility, semantic usefulness and customer-path proof.
+Accepted G41 after correcting a reproduced gap in the controller implementation: a closing tag inside a quoted inline attribute still truncated titles/headings and polluted sampled passages. Both element boundaries now use the same complete-tag token scan, with at most one unmatched opening per selected name. Generic single/double-quote and independently closed-heading controls pass. Independent verification: 96 collector/network/reference/task-review/report/robots/source-reference controls, syntax and diff clean. Current source hashes in TEXT-ELEMENT-ACCEPTANCE.json supersede the controller baseline after the additional fix.
 
-Runtime: last pass completed; controller idle and eligible at 64 passes today with zero failures. Original watcher remains alive. Budget EUR 0 spent/reserved, EUR 50 available; seven lifetime inference attempts and zero today. No private snapshots rewritten, inference, email, Site deployment, rejected transfer or purchase. No independent fresh inventory check added; dated controller observation below is explicitly limited to retained anonymous records. Existing heartbeat owns the next decision.
+Supervisor hosted recall and metrics-only succeeded. Fresh observation at 19:56:01 UTC: first-page retained inventory contains three records, zero requested/payment-pending/delivered, one prepared, two ineligible and one reviewed summary. Includes administrative/tests; no lifetime cohort or visitor/verified-sale denominator. Payments and notifications remain disabled. Earlier controller DNS failures below are historical; their cause and future executor access remain unproved.
+
+Runtime remains enabled and eligible after 65 completed/started decision passes today, zero failures; original watcher alive. Budget EUR 0 spent/reserved, EUR 50 available; seven lifetime and zero daily inference attempts. No private snapshot migration, inference, email, Site deployment, rejected transfer, purchase or new permission question. Existing heartbeat owns the next decision. Bounded raw-HTML extraction is not full tree/DOM parsing, semantic usefulness or customer-path proof.
 
 ---
 
-# Execution receipt — 2026-10-14T19:23:35.962042+00:00
+# Execution receipt — 2026-10-14T19:38:39.796640+00:00
 
 Status: completed. External spend this pass: EUR 0.
 
-Hypothesis: excluding quoted attribute fragments from cited passages prevents unsupported report evidence. Reproduced `Offer fabricated">Real` from inline markup whose visible text is `Offer Real`; implemented generic quote-aware text stripping in the local collector.
+Hypothesis: quoted attributes on title/heading opening tags contaminate citable text and can misdirect report tasks. Reproduced the defect, then corrected the shared element boundary scan in evidence.mjs. Artifact: TEXT-ELEMENT-ACCEPTANCE.json. Single/double quotes and fake tag-like attributes are covered alongside ordinary visible-text controls.
 
-Artifact: INLINE-TEXT-ACCEPTANCE.json; evidence.mjs and evidence.test.mjs. Verification: 60 targeted evidence/network/contract/report controls passed, syntax and diff checks passed. Positive controls retain visible text and encoded angle brackets. No deployment, customer report migration, inference, email or purchase occurred; existing budget and counters preserved.
+Verification: 61 targeted controls passed, zero failures; Node syntax and git diff checks passed. Local collector change only; no deployment, inference, snapshot migration, email, payment activation or sale. Existing untracked GEO-SEO-CLAUDE-ASSESSMENT.md left untouched. Budget and inference counters not edited.
 
-Four workstreams evaluated: owned acquisition publication depends on the accepted Sites transport; Bing discovery measurement is due 21 October and manual LinkedIn posting lacks actual post/results evidence. Conversion visitor denominator depends on the blocked measurement publication. Fresh retained inventory at 19:22:53 UTC: 3 records, 0 requested, 1 prepared, 2 ineligible, 0 payment pending, 0 delivered, all entry unknown; not a lifetime customer cohort. Report quality had the reproduced defect corrected in this pass. Delivery/checkout still requires a genuinely useful independently reviewed report and customer-authorized payment; flags remain false.
+Workstreams evaluated: acquisition pages and Bing setup already completed; discovery measurement is due on/after 21 October, external LinkedIn posting remains owner-operated. Conversion/public GET publication depends on the accepted Sites credential transport, previously rejected by automatic approval review; no transfer retried. Offer quality had the reproduced defect above and was selected. Delivery requires a useful independently approved report and the permitted runtime proof before activation; no fresh customer inventory claim is made.
 
-Next measurable follow-up: on the next genuine report, record passage corrections and independently kept/revised/removed tasks; do not regenerate a demonstration. Local fixture success does not prove customer usefulness or sale.
+Console inbox empty at start and verification checkpoint. Safe hosted memory recall and metrics-only both failed with ENOTFOUND api.snipara.com; this is access unavailability, not an empty customer queue. Memory persistence attempted separately through the broker.
 
-Publication remains blocked by the historical automatic approval rejection of secret transport; no credential created or rejected transfer retried. No new permission question.
+Measurable follow-up: on the next genuine report, record affected title/heading passages and task counts kept/corrected/removed after independent review. Frozen snapshots require fresh collection/review; this patch does not retrospectively approve them. No new customer-quality or commercial result claimed.

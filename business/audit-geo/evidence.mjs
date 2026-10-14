@@ -73,6 +73,24 @@ function openingTags(markup,name) {
   return [...markup.matchAll(/<\/?([a-z][a-z0-9:-]*)(?=[\s/>])(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi)]
     .filter(m=>m[0][1]!=='/'&&m[1].toLowerCase()===name).map(m=>m[0]);
 }
+// Find text elements through complete tag tokens, including quoted attributes.
+function textElements(markup, names) {
+  const result=[];
+  const pending=new Map();
+  const tokens=/<\/?([a-z][a-z0-9:-]*)(?=[\s/>])(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi;
+  for(const tag of markup.matchAll(tokens)) {
+    const name=tag[1].toLowerCase();
+    if(!names.includes(name))continue;
+    if(tag[0][1]==='/') {
+      const open=pending.get(name);if(!open)continue;
+      result.push({index:open.index,end:tag.index+tag[0].length,name,content:markup.slice(open.start,tag.index)});
+      pending.delete(name);
+    } else if(!pending.has(name)) {
+      pending.set(name,{index:tag.index,start:tag.index+tag[0].length});
+    }
+  }
+  return result.sort((a,b)=>a.index-b.index);
+}
 function attributes(tag) {
   const result=Object.create(null);
   // HTML discards later duplicate attributes, including case variants.
@@ -111,15 +129,15 @@ function activeMarkup(body,onScript=()=>{}) {
 // Sample across the fetched document, rather than only its opening markup.
 // These excerpts establish presence, never absence or complete DOM coverage.
 export function extractSections(clean) {
-  const headings=[...clean.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)];
+  const headings=textElements(clean,['h1','h2','h3','h4','h5','h6']);
   const count=Math.min(headings.length,12);
   const sections=Array.from({length:count},(_,i)=>{
     const index=count===1?0:Math.round(i*(headings.length-1)/(count-1));
     const h=headings[index];
-    const heading=textContent(h[2]);
-    const passage=plainText(clean.slice(h.index+h[0].length,headings[index+1]?.index??clean.length));
+    const heading=textContent(h.content);
+    const passage=plainText(clean.slice(h.end,headings[index+1]?.index??clean.length));
     return {heading:heading.slice(0,200),headingTruncated:heading.length>200,
-      level:Number(h[1]),headingIndex:index,text:passage.slice(0,700),
+      level:Number(h.name[1]),headingIndex:index,text:passage.slice(0,700),
       textTruncated:passage.length>700};
   });
   return {sections,sectionCoverage:{headingCount:headings.length,retained:count,
@@ -140,11 +158,11 @@ export function extractHtml(body) {
   const meta=openingTags(clean,'meta').map(attributes);
   const links=openingTags(clean,'link').map(attributes);
   return {
-    title:textContent(clean.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]??''),
+    title:textContent(textElements(clean,['title'])[0]?.content??''),
     descriptions:meta.filter(m=>m.name?.toLowerCase()==='description').map(m=>decodeTextReferences(m.content??'')),
     robots:meta.filter(m=>['robots','googlebot'].includes(m.name?.toLowerCase())).map(m=>({agent:m.name,content:m.content??''})),
     canonicals:links.filter(m=>m.rel?.toLowerCase().split(/\s+/).includes('canonical')).map(m=>m.href??''),
-    h1:[...clean.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].slice(0,20).map(m=>textContent(m[1])),
+    h1:textElements(clean,['h1']).slice(0,20).map(m=>textContent(m.content)),
     structuredData:{status:jsonLdCount?'observed':'not_observed_in_raw_html',blockCount:jsonLdCount,blocks:structuredData,truncated:jsonLdCount>10},
     body:clean.slice(0,16000),bodyTruncated:clean.length>16000,
     ...extractSections(clean),

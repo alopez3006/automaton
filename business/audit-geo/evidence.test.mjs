@@ -270,3 +270,27 @@ test('unavailable declared sitemap stays unknown without a fallback or child-map
  assert.equal(calls.length,3);assert.equal(e.observations[2].error,'timeout');assert.deepEqual(e.scope.selectedPages,[]);
  assert.ok(e.scope.limitations.some(x=>x.includes('no fallback')));
 });
+
+test('text element boundaries preserve quoted delimiters and exclude attribute decoys',()=>{
+ for(const quote of ['"',"'"]){
+ const e=extractHtml(`<div data-fake=${quote}<title>Fake title</title><h1>Fake heading</h1>${quote}></div><title data-note=${quote}a > b${quote}>Real &amp; title</title><h1 data-note=${quote}a > b${quote}>Real heading</h1><p>First passage.</p><h2 data-note=${quote}x > y${quote}>Second heading</h2><p>Second passage.</p>`);
+ assert.equal(e.title,'Real & title');assert.deepEqual(e.h1,['Real heading']);
+ assert.deepEqual(e.sections.map(s=>s.heading),['Real heading','Second heading']);
+ assert.deepEqual(e.sections.map(s=>s.text),['First passage.','Second passage.']);
+ assert.deepEqual(e.sections.map(s=>s.level),[1,2]);
+ }
+ const e=extractHtml('<TITLE>Ordinary</TITLE><H1>Visible <em>heading</em></H1><p>Keep &lt;angle&gt; text.</p><h6>Last</h6><p>End.</p>');
+ assert.equal(e.title,'Ordinary');assert.deepEqual(e.h1,['Visible heading']);assert.equal(e.sections[0].text,'Keep <angle> text.');assert.equal(e.sections[1].level,6);
+});
+
+test('text element closing boundaries ignore quoted closing-tag decoys',()=>{
+ for(const quote of ['"',"'"]){
+  const e=extractHtml(`<title>Real <span data-note=${quote}</title>${quote}>title</span></title><h1>Real <span data-note=${quote}</h1>${quote}>heading</span></h1><p>First passage.</p><h2>Second <a data-note=${quote}</h2>${quote}>heading</a></h2><p>Second passage.</p>`);
+  assert.equal(e.title,'Real title');assert.deepEqual(e.h1,['Real heading']);
+  assert.deepEqual(e.sections.map(s=>s.heading),['Real heading','Second heading']);
+  assert.deepEqual(e.sections.map(s=>s.text),['First passage.','Second passage.']);
+ }
+ const e=extractHtml('<h1>Unclosed<h2>Closed heading</h2><p>Actual passage.</p>');
+ assert.deepEqual(e.h1,[]);assert.deepEqual(e.sections.map(s=>s.heading),['Closed heading']);
+ assert.equal(e.sections[0].text,'Actual passage.');
+});
