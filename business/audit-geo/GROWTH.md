@@ -108,3 +108,7 @@ Hypothesis: compare retained requests and reviewed summaries by a fixed entry la
 ## G23 — Readable text references, 2026-10-14T10:10:14.920230+00:00
 
 Implemented locally: bounded one-pass decoding of common named and printable Unicode numeric HTML references for textual evidence, after markup removal. Unknown/invalid/control references remain raw with explicit limitations. Raw body, URLs/discovery and JSON-LD unchanged. 54 focused controls, syntax and diff checks pass; TEXT-REFERENCE-ACCEPTANCE.json. No report migration, inference, Site deployment, email or purchase. Follow-up on next genuine report: decoded quotations used and actual tasks revised/removed due to encoding ambiguity, independently reviewed.
+
+## G24 — Nonempty report sections, 2026-10-14T10:48:32.469033+00:00
+
+Implemented locally: each required section must contain body text outside comments/code examples; combined heading cannot supply all four sections. 26 targeted controls and 14 mocked launch scenarios pass; fresh synthetic task approval cannot bypass empty-section refusal. REPORT-SECTION-ACCEPTANCE.json. Structural acceptance does not prove useful supported tasks; independent review remains necessary. No inference, report migration, deployment or expense. Next genuine report: count structural rejections, repaired/re-reviewed drafts and actual useful tasks before invitation.

@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-14T10:48:32.469033+00:00",
+  "hypothesis": "Nonempty report sections prevent incomplete deliverables reaching payment invitation",
+  "artifact": [
+    "report.mjs",
+    "report.test.mjs",
+    "task-review.test.mjs"
+  ],
+  "verification": {
+    "targetedTests": 26,
+    "localMockedLaunchScenarios": 14,
+    "syntax": "passed",
+    "diffCheck": "passed"
+  },
+  "limits": [
+    "Structural content only, not semantic usefulness",
+    "No production deployment or customer outcome",
+    "No private snapshot migration"
+  ],
+  "nextMetric": "Actual drafts rejected, repaired and re-reviewed before invitation",
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T10:54:12Z",
+    "targetedTests": 26,
+    "localMockedLaunchScenarios": 14,
+    "commands": [
+      "node --test business/audit-geo/report.test.mjs business/audit-geo/task-review.test.mjs business/audit-geo/review-readiness.test.mjs business/audit-geo/preview.test.mjs",
+      "node business/audit-geo/launch-acceptance.test.mjs",
+      "node --check business/audit-geo/report.mjs",
+      "git diff --check"
+    ],
+    "result": "passed",
+    "boundary": "Local structural completeness and invitation refusal; no semantic quality, production delivery or sale proof"
+  }
+}

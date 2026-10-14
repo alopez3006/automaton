@@ -28,3 +28,14 @@ test('fresh independent approval cannot authorize an incomplete deliverable',()=
   assert.equal(canRequestPayment(d,evidence),false);
  }
 });
+test('fresh task approval cannot authorize an empty or example-only report section',()=>{
+ const original=make();
+ for(const title of ['Scope','Evidence','Tasks','Measurement']){
+  for(const body of ['', '<!-- Placeholder. -->', '```markdown\nExample only.\n```']){
+   const report=original.report.replace(new RegExp(`(## ${title}\\n)[\\s\\S]*?(?=\\n## |$)`),`$1${body}\n`)+'\n## End\nFinished.';
+   const d=approveFixture({...structuredClone(original),report},evidence);
+   assert.equal(validateTaskReview(d,evidence).approved,true);
+   assert.equal(canRequestPayment(d,evidence),false,`${title}: ${body}`);
+  }
+ }
+});
