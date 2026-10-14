@@ -1,0 +1,18 @@
+{
+  "observedAt": "2026-10-14T07:19:00Z",
+  "domain": "vutler.com",
+  "action": "Verify DNS Records clicked once",
+  "before": "Not Started",
+  "after": "Pending",
+  "publicDnsRequirementsMatched": true,
+  "receivingEnabled": false,
+  "runtimeNotificationsConfigured": false,
+  "runtimePaymentsConfigured": false,
+  "providerAcceptance": null,
+  "inboxDelivery": null,
+  "limitations": [
+    "Pending is not Verified",
+    "No mail.vutler.com verification inferred",
+    "No key or email created"
+  ]
+}

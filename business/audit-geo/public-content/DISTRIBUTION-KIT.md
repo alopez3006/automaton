@@ -36,7 +36,7 @@ For the owner to review and, if appropriate, publish manually. Do not use on HN.
 >
 > Scope and illustrative example: https://audit.vutler.com/
 
-The link intentionally uses the existing public homepage. The guide is NOT deployed; do not link to its pending route. No private report or customer finding is included.
+The link intentionally uses the existing public homepage. Version 13 published the guide on 14 October: https://audit.vutler.com/seo-geo-audit is available as an educational alternative. No private report or customer finding is included.
 
 ## Draft B — shorter invitation, after the educational post
 
@@ -63,3 +63,5 @@ Decision at seven days: no observable clicks → reconsider audience/hook; click
 ## Preparation verification
 
 Claims checked against MISSION.md, the existing guide's offer scope and current launch/receipt evidence. Price EUR 9, raw-HTML scope, up-to-three tasks, usefulness/payment gates and email uncertainty retained. No testimonial, customer data, urgency claim, ranking guarantee or available paid-delivery claim. Current channel sources read; Reddit rule access failure explicitly recorded. Draft preparation is complete; reach, demand and publication are unproved.
+
+Owner decision, 14 October 07:16 UTC: owner publishes manually on LinkedIn. Genuine console answer resolved; no Automaton account operation or actual post/reach proved.
