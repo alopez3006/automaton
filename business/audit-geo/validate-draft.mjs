@@ -1,3 +1,4 @@
+import {validateTaskReview} from './task-review.mjs';
 // Source identity checks are not semantic entailment or a usefulness review.
 export function validateDraft(draft,evidence) {
   const fail=message=>{throw Error(`Report requires review: ${message}`);};
@@ -21,5 +22,5 @@ export function validateDraft(draft,evidence) {
   return {version:1,sourceReferencesValid:true,semanticSupportReviewed:false};
 }
 export function canRequestPayment(draft,evidence){
-  try{validateDraft(draft,evidence);return draft.eligible&&draft.taskCount>0&&draft.review?.usefulnessApproved===true&&draft.review?.sourceSupportApproved===true;}catch{return false;}
+  try{validateDraft(draft,evidence);return draft.eligible&&draft.taskCount>0&&draft.review?.usefulnessApproved===true&&draft.review?.sourceSupportApproved===true&&validateTaskReview(draft,evidence).approved;}catch{return false;}
 }

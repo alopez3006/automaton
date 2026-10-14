@@ -2,7 +2,21 @@
 
 Use this checklist alongside the existing source-reference validator and independent review gates. It is a reviewer procedure, not an automated approval or evidence of SEO/GEO performance. Public reports remain English.
 
-Apply the task-level procedure and private review template in [REVIEW-IMPROVEMENT.md](REVIEW-IMPROVEMENT.md). It records semantic support, counterevidence and actual reproduction, with explicit future implementation controls and quality measures.
+Apply the task-level procedure in [REVIEW-IMPROVEMENT.md](REVIEW-IMPROVEMENT.md). The local payment eligibility gate now requires the structured version-2 record below. This validates review completeness and snapshot identity, not the truth of reviewer judgments.
+
+## Implemented private review contract — 14 October 2026
+
+`canRequestPayment` and therefore `reviewedPreview` reject legacy aggregate-only approvals. Model review fields are still discarded by the operator. An independent reviewer must first validate source references and read the final report, then save `draft.review` in the existing private job storage with:
+
+- `version: 2`, nonempty `reviewer`, parseable `reviewedAt`, existing `sourceSupportApproved: true` and `usefulnessApproved: true`.
+- `inputDigest: reviewDigest(draft, evidence)` from `task-review.mjs`, computed on the final draft and saved evidence. Review fields are excluded. Any report/task/evidence change requires a new review. Serialization order is significant; preserve the saved JSON snapshot. This digest is not authentication or a signature.
+- `findings`: exactly one record per task in the same order. Each has the exact `title`, `decision: "keep"`, `semanticSupport: "supported" | "conditional"`, independent `severity: "critical" | "medium" | "low"`, and the exact unique set of referenced `evidenceIds`.
+- Every finding includes nonempty `reason`, `supportReason`, `counterevidence`, `coverage`, `value`, `change`, `acceptance`, and `noAction` strings, each at most 4000 characters. Record examined counterevidence and unknown scope honestly; absence from a partial excerpt is not an absence finding.
+- `reproduction: {status: "reproduced" | "source_only" | "unknown", reason: "method/date/result or explicit limitation"}`. Critical additionally requires supported semantics, reproduced status and `intendedIndexing: true`. Unknown decisive evidence still fails source-support approval; a source-only minor clarification need not claim live reproduction.
+
+Unsupported/unknown semantics or revise/remove decisions cannot authorize payment. Edit/remove those tasks, align final report/counts/eligibility, and review the new snapshot. Zero useful tasks stays ineligible. `validateTaskReview` returns bounded per-task rejection reasons for review diagnostics. Measure these on real reviews; no production quality score is claimed.
+
+Do not use `task-review-fixture.mjs` for actual approvals: it supplies synthetic test records only. Existing server-side summaries or already pending payments are not retroactively revoked by this local change. Re-review any legacy prepared draft before a new invitation or commercial activation; preserve verified-payment delivery obligations. No production approval or private job migration was performed in this pass.
 
 ## Evidence and scope
 

@@ -56,7 +56,7 @@ Unmeasured outcomes / follow-up method:
 | Demonstrated noindex on a page intended for indexing | Supported technical task; severity still requires intent and scope evidence. |
 | Complete sample with no useful supported task | Ineligible; no checkout. |
 
-These are acceptance cases to implement with synthetic fixtures before changing payment gates. They have not been run as a semantic benchmark. Include unseen controls when evaluating the generic change; do not tune only to one report.
+Implemented 14 October: `task-review.mjs` and the local payment/preview gate enforce a complete independent record bound to the final saved draft/evidence. Synthetic controls cover the reviewer outcomes above plus additional unsupported citation and stale-pricing judgments. They test contract enforcement given reviewer classifications, not automatic semantic reasoning; no semantic benchmark or production review is claimed. See QUALITY-REVIEW.md for version-2 fields and legacy migration requirements.
 
 ## Measure and prioritize
 

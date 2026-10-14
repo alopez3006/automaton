@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {validateDraft,canRequestPayment} from './validate-draft.mjs';
+import {approveFixture} from './task-review-fixture.mjs';
 const evidence={observations:[{id:'E1',url:'https://example.org/',observedAt:'2026-10-13T00:00:00Z',status:200,title:'Example',descriptions:[''],body:'Observed public offer'}]};
 const make=()=>({report:'Improve description — E1',eligible:true,reason:'Useful',taskCount:1,tasks:[{title:'Improve description',references:[{evidenceId:'E1',url:'https://example.org/',observedAt:'2026-10-13T00:00:00Z',field:'descriptions.0',excerpt:''}]}]});
-test('observed empty description is supported but needs usefulness review',()=>{const d=make();assert.equal(validateDraft(d,evidence).sourceReferencesValid,true);assert.equal(canRequestPayment(d,evidence),false);d.review={usefulnessApproved:true,sourceSupportApproved:true};assert.equal(canRequestPayment(d,evidence),true);});
+test('observed empty description is supported but needs usefulness review',()=>{const d=make();assert.equal(validateDraft(d,evidence).sourceReferencesValid,true);assert.equal(canRequestPayment(d,evidence),false);approveFixture(d,evidence);assert.equal(canRequestPayment(d,evidence),true);});
 test('invented identity, dates, fields and excerpts fail closed',()=>{for(const patch of [{evidenceId:'E99'},{url:'https://other.org/'},{observedAt:'yesterday'},{field:'__proto__.title'},{field:'descriptions.1'},{field:'title',excerpt:'Invented'},{field:'title',excerpt:''}]){const d=make();Object.assign(d.tasks[0].references[0],patch);assert.throws(()=>validateDraft(d,evidence));assert.equal(canRequestPayment(d,evidence),false);}});
 test('failed fetch cannot support a task',()=>{assert.throws(()=>validateDraft(make(),{observations:[{...evidence.observations[0],error:'Unavailable'}]}));});
 test('counts, absent tasks, omitted report citations and duplicate titles fail',()=>{for(const mutate of [d=>d.taskCount=2,d=>delete d.tasks,d=>d.report='Improve description',d=>d.report='E1 only',d=>{d.tasks.push(d.tasks[0]);d.taskCount=2;}]){const d=make();mutate(d);assert.throws(()=>validateDraft(d,evidence));}});
