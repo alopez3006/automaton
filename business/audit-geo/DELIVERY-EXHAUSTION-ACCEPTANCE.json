@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-14T09:16:39.037070+00:00",
+  "hypothesis": "Persisting exhausted email retries as needs_review prevents ambiguous pending markers from hiding delivery incidents.",
+  "action": "Published generic retry exhaustion persistence in direct send and polling paths.",
+  "version": 15,
+  "commit": "57f17c89f3fbd1296a45e40b8b9040048f9c26e5",
+  "deploymentId": "appgdep_6acf484199d08191a2d01d3c3f5cec68",
+  "deploymentStatus": "succeeded",
+  "environmentRevision": 9,
+  "verification": {
+    "retryBoundaryControls": 4,
+    "launchScenariosPassed": 14,
+    "notificationRegressions": "passed",
+    "syntax": "passed",
+    "diffCheck": "passed",
+    "build": "passed"
+  },
+  "boundaries": [
+    "Mock providers only; no exhausted live incident observed.",
+    "No email, payment activation or real customer sale.",
+    "Existing environment unchanged."
+  ],
+  "followUp": "On first actual exhausted notification verify persistent needs_review, fixed reason, zero automatic replay and preserved paid entitlement.",
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "observedAt": "2026-10-14T09:31:19.919769+00:00",
+    "nativeSavedVersionId": "appgprj_6acd6192fcac8191b47b7b9538517608~appgver_eb06ce696aec8191bfd5b877f9cda53a",
+    "nativeDeploymentStatus": "succeeded",
+    "archiveHash": "sha256:1e6e5b3bde862357f2829f9b5d040f5998800053ade1627fee552eb130dd4c0c",
+    "sourceIdentityConfirmed": true,
+    "managedSourceClean": true,
+    "notificationBuildMatchesSource": true,
+    "retryBoundaryControlsPassed": 4,
+    "launchScenariosPassed": 14,
+    "notificationRegressionsPassed": true,
+    "diffCheckPassed": true,
+    "environmentRevision": 9,
+    "noProviderSend": true
+  }
+}
