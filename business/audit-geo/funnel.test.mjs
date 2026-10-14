@@ -21,3 +21,8 @@ test('bounded entry aggregates redact unknown source and keep legacy records unk
  assert.equal(result.attribution.byEntry.guide.reviewedSummaries,1);assert.equal(result.attribution.byEntry.linkedin.total,1);assert.equal(result.attribution.byEntry.unknown.total,2);assert.equal(result.attribution.byEntry.unknown.statuses.ineligible,1);assert.equal(result.outcomes.conversionRate,null);assert.equal(result.outcomes.qualifiedRequests,null);assert.doesNotMatch(JSON.stringify(result),/private.invalid|secret/);
  assert.equal(Object.values(result.attribution.byEntry).reduce((n,x)=>n+x.total,0),result.inventory.total);
 });
+
+test('distinct guides aggregate separately without rewriting historical guide labels',()=>{
+ const result=summarizeFunnel({requests:[{status:'requested',acquisitionSource:'guide-audit'},{status:'prepared',acquisitionSource:'guide-visibility',taskCount:1,previewApproved:true,preview:{critical:0,medium:1,low:0,total:1}},{status:'ineligible',acquisitionSource:'guide'}]});
+ assert.equal(result.attribution.byEntry['guide-audit'].total,1);assert.equal(result.attribution.byEntry['guide-visibility'].reviewedSummaries,1);assert.equal(result.attribution.byEntry.guide.statuses.ineligible,1);assert.equal(result.attribution.byEntry.unknown.total,0);assert.equal(Object.values(result.attribution.byEntry).reduce((n,x)=>n+x.total,0),3);assert.equal(result.outcomes.conversionRate,null);
+});

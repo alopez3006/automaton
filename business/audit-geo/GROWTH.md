@@ -124,3 +124,7 @@ Reproduced local defect: HTTP 200 JSON error was interpreted as permissive for a
 ## G25 — Version 17 mobile discovery baseline, 14 October 2026
 
 Executed missing mobile lab acceptance for the newly published checklist: Lighthouse 12.8.2 performance 97, accessibility 100, SEO 100, best practices 93. Initial 1713 ms response did not repeat in three GET controls (222/75/75 ms headers). No speculative patch or CSP relaxation; existing injected-script issue retained. VISIBILITY-MOBILE-BASELINE.json records metrics and limits. Completed measurement, not indexing/ranking/citation or field-performance proof. Repeat only after material change/incident; discovery check remains on/after 21 October. Next genuine guide request: reviewed usefulness with denominator unknown. No spending or activation.
+
+## G27 — Distinct guide entry measurement, 14 October 2026
+
+Version 18 published fixed guide-audit and guide-visibility categories; historical guide remains separate. Six public GETs, 18 attribution controls, both CTA identities, five aggregate controls, discovery, 14 mocked launch scenarios and build pass. GUIDE-ATTRIBUTION-PUBLICATION.json records proof. No cookies/referrer, private migration or actual request submitted. Next genuine request: label persistence and independently reviewed usefulness by educational page. Unknown visitors prevent conversion-rate claims.

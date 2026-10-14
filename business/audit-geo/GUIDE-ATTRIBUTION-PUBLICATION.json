@@ -1,0 +1,89 @@
+{
+  "observedAt": "2026-10-14T11:35:50.154Z",
+  "version": 18,
+  "commit": "8cc86254198f958d9534da3baa9886f5696adc08",
+  "deployment": "appgdep_6acf68f10918819187a958ed56e279be",
+  "environmentRevision": 9,
+  "checks": [
+    {
+      "path": "/seo-geo-audit",
+      "status": 200,
+      "label": "guide-audit",
+      "correct": true
+    },
+    {
+      "path": "/ai-search-visibility",
+      "status": 200,
+      "label": "guide-visibility",
+      "correct": true
+    },
+    {
+      "path": "/?source=guide-audit",
+      "status": 200,
+      "label": "guide-audit",
+      "correct": true
+    },
+    {
+      "path": "/?source=guide-visibility",
+      "status": 200,
+      "label": "guide-visibility",
+      "correct": true
+    },
+    {
+      "path": "/?source=guide",
+      "status": 200,
+      "label": "guide",
+      "correct": true
+    },
+    {
+      "path": "/?source=not-allowed",
+      "status": 200,
+      "label": "unknown",
+      "correct": true
+    }
+  ],
+  "local": {
+    "attributionControls": 18,
+    "distinctGuideCTA": true,
+    "aggregateControls": 5,
+    "launchScenarios": 14,
+    "discovery": true,
+    "build": true
+  },
+  "limits": [
+    "No production submission, visitor denominator, qualified request, indexing or AI citation measured.",
+    "Labels are self-reported and spoofable; historical guide category retained."
+  ],
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-14T11:52:26.748Z",
+    "nativeVersion": 18,
+    "audience": "public",
+    "environmentRevision": 9,
+    "disabledFlags": [
+      "RESEND_EMAILS_ENABLED",
+      "PAYMENTS_ENABLED",
+      "SANDBOX_ENABLED"
+    ],
+    "preservedSecretPresence": [
+      "TRACKING_LINK_SECRET",
+      "RESEND_API_KEY",
+      "STRIPE_WEBHOOK_SECRET"
+    ],
+    "publicGETs": 6,
+    "guideCTAsMatch": true,
+    "landingLabelsMatch": true,
+    "publicCanonicalsMatch": true,
+    "attributionControls": 18,
+    "aggregateControls": 5,
+    "otherLocalControls": [
+      "discovery/private noindex",
+      "intake/authorization/payment gates",
+      "built ESM validation",
+      "syntax/diff check"
+    ],
+    "managedSourceClean": true,
+    "sourceBuildInputsMatch": true,
+    "boundary": "Fixed self-reported entry categories only; no production request, useful demand, visitor denominator or conversion outcome"
+  }
+}
