@@ -1,29 +1,21 @@
-# Supervisor acceptance — 2026-10-14T19:21:29.956Z
+# Supervisor acceptance — 2026-10-14T19:36:43.412Z
 
-Accepted the local G39 collector correction without changing controller source. Independently verified 93 focused controls, both syntax checks and clean diff. QUOTED-SCRIPT-ACCEPTANCE.json now records current source hashes and bounded acceptance; no original artifact hashes existed for comparison.
+Accepted G40 local inline text extraction without modifying controller source. Independent validation: 94 focused collector/network/reference/task-review/report/robots controls pass, both syntax checks and diff clean. INLINE-TEXT-ACCEPTANCE.json records current source hashes; the original controller artifact had no hashes to compare. Positive controls retain visible prose and encoded references; quoted markup attributes no longer contaminate sampled text on the verified inputs. Bounded regex extraction remains separate from full HTML/DOM visibility, semantic usefulness and customer-path proof.
 
-Runtime: last controller completed, idle and eligible at 63 passes today with zero failures. Original watcher remains alive; operator lock is absent in supervisor process diagnosis. No lock removed, watcher restarted, fresh anonymous inventory asserted or historical execution receipt rewritten. Budget remains EUR 0 spent/reserved, EUR 50 available; seven lifetime inference attempts and zero today.
-
-The controller receipt below is historical. Its metrics lock refusal is not a current watcher failure. Quoted script/style attributes containing greater-than characters now retain raw-block boundaries and valid JSON-LD on the verified controls. Extraction remains bounded regex, separate from schema validity, report usefulness and any Site/customer-path proof.
-
-No inference, private snapshot migration, email, Site publication, rejected transfer replay or purchase. Existing heartbeat owns the next eligible controller decision.
+Runtime: last pass completed; controller idle and eligible at 64 passes today with zero failures. Original watcher remains alive. Budget EUR 0 spent/reserved, EUR 50 available; seven lifetime inference attempts and zero today. No private snapshots rewritten, inference, email, Site deployment, rejected transfer or purchase. No independent fresh inventory check added; dated controller observation below is explicitly limited to retained anonymous records. Existing heartbeat owns the next decision.
 
 ---
 
-# Business execution receipt — 2026-10-14T18:58:01.967606+00:00
+# Execution receipt — 2026-10-14T19:23:35.962042+00:00
 
-Status: completed local collector correction; mission remains active. External spend this pass: EUR 0. Budget verified EUR 50 available, zero used/reserved; counters preserved.
+Status: completed. External spend this pass: EUR 0.
 
-Hypothesis: quoted delimiters in script attributes can hide legitimate JSON-LD and cause unsupported structured-data absence claims. Reproduced: a valid Service block with data-note=">" returned zero blocks before correction.
+Hypothesis: excluding quoted attribute fragments from cited passages prevents unsupported report evidence. Reproduced `Offer fabricated">Real` from inline markup whose visible text is `Offer Real`; implemented generic quote-aware text stripping in the local collector.
 
-Action/artifact: corrected activeMarkup raw-block opening-tag matching in evidence.mjs to consume quoted attributes completely. Added generic positive and negative controls in evidence.test.mjs. Proof: QUOTED-SCRIPT-ACCEPTANCE.json. No private snapshots migrated.
+Artifact: INLINE-TEXT-ACCEPTANCE.json; evidence.mjs and evidence.test.mjs. Verification: 60 targeted evidence/network/contract/report controls passed, syntax and diff checks passed. Positive controls retain visible text and encoded angle brackets. No deployment, customer report migration, inference, email or purchase occurred; existing budget and counters preserved.
 
-Verification: 87 focused collector/network/citation/task-review/report tests pass; git diff --check passes. Valid JSON-LD now parsed; invalid JSON remains invalid; commented blocks and script/style fake metadata stay excluded. Hosted safe-broker recall succeeded after authorized network escalation. Owner inbox empty at opening and final checkpoint. Fresh metrics attempt refused by existing operator lock; no lock removed, operator started or fresh inventory asserted. Process inspection was sandbox-denied; no recovery attempted.
+Four workstreams evaluated: owned acquisition publication depends on the accepted Sites transport; Bing discovery measurement is due 21 October and manual LinkedIn posting lacks actual post/results evidence. Conversion visitor denominator depends on the blocked measurement publication. Fresh retained inventory at 19:22:53 UTC: 3 records, 0 requested, 1 prepared, 2 ineligible, 0 payment pending, 0 delivered, all entry unknown; not a lifetime customer cohort. Report quality had the reproduced defect corrected in this pass. Delivery/checkout still requires a genuinely useful independently reviewed report and customer-authorized payment; flags remain false.
 
-Four workstreams evaluated: acquisition publishing requires an accepted Sites source transport; discovery recheck is due on/after 21 October and owner LinkedIn outcomes remain unavailable. Conversion GET measurement patch remains deployment-dependent. Report quality had this concrete reproducible loss of structured evidence, so it was selected. Delivery still requires a useful independently approved report and current capacity before activation; no actual customer payment or mail proof added.
+Next measurable follow-up: on the next genuine report, record passage corrections and independently kept/revised/removed tasks; do not regenerate a demonstration. Local fixture success does not prove customer usefulness or sale.
 
-Next measurable follow-up: on next genuine request, record retained JSON-LD blocks affected by quoted attributes and tasks kept/revised/removed after independent review. Changed evidence requires fresh review; no demonstration inference for that metric. Existing heartbeat owns continuation.
-
-No purchase, inference, email, deployment, customer-site change or credential transfer. Existing unrelated untracked assessment preserved.
-
-Automatic approval review previously rejected Sites repository credential transport in helper stdin. An accepted supported transport or changed platform decision remains required; no replay or repeated authorization question.
+Publication remains blocked by the historical automatic approval rejection of secret transport; no credential created or rejected transfer retried. No new permission question.

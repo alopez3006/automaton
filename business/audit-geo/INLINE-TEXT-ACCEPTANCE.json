@@ -1,0 +1,73 @@
+{
+  "observedAt": "2026-10-14T19:23:35.962042+00:00",
+  "hypothesis": "Exclude quoted HTML attribute fragments from citable passages to prevent unsupported report evidence.",
+  "reproduction": {
+    "input": "<h1>Offer <span data-note=\"x > fabricated\">Real</span></h1>",
+    "before": [
+      "Offer fabricated\">Real"
+    ],
+    "after": [
+      "Offer Real"
+    ]
+  },
+  "action": "Generic quote-aware inline markup removal shared by title, H1 and heading-section text.",
+  "verification": {
+    "tests": 60,
+    "passed": 60,
+    "failed": 0,
+    "controls": [
+      "double and single quotes",
+      "tag-like attribute values",
+      "visible prose",
+      "encoded angle brackets and Unicode"
+    ],
+    "syntax": true,
+    "diffCheck": true
+  },
+  "limits": [
+    "Bounded raw HTML extraction, not a complete browser parser",
+    "No private snapshot migration or independent customer review",
+    "No deployment, inference, sending or purchase"
+  ],
+  "followUp": "On the next genuine report count attribute contamination corrections and independently kept/revised/removed tasks.",
+  "externalSpendCents": 0,
+  "growthCandidate": "G40",
+  "supervisorAcceptance": {
+    "at": "2026-10-14T19:36:43.412Z",
+    "status": "accepted_local",
+    "sourceModifiedBySupervisor": false,
+    "currentSourceSha256": {
+      "evidence.mjs": "071cbbcb1a5ed1648af1a1f1e1345df5163da661f2953df7601b30f4eb4cec00",
+      "evidence.test.mjs": "b8aba60a92eaabb27da40d067fb1fb2646d0377905d2df63bef29c5abb969442"
+    },
+    "hashBoundary": "Current hashes recorded now; original controller artifact contained no source hashes for comparison.",
+    "verification": {
+      "tests": 94,
+      "passed": 94,
+      "failed": 0,
+      "suites": [
+        "collector",
+        "network",
+        "draft references",
+        "task review",
+        "report",
+        "robots"
+      ],
+      "syntaxCheck": "passed",
+      "diffCheck": "passed"
+    },
+    "boundary": "Bounded raw-HTML text stripping only, not full browser/DOM visibility, semantic report usefulness, deployment or customer-path proof.",
+    "runtimeObservation": {
+      "controllerRunning": false,
+      "usedToday": 64,
+      "failures": 0,
+      "watcherRunning": true,
+      "watcherStartedAt": "2026-10-13T14:14:49.312Z",
+      "externalSpendCents": 0,
+      "reservedCents": 0,
+      "remainingCents": 5000,
+      "inferenceAttempts": 7,
+      "inferenceToday": 0
+    }
+  }
+}

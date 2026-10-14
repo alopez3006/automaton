@@ -97,7 +97,7 @@ function decodeTextReferences(value) {
     return String.fromCodePoint(point);
   });
 }
-function plainText(value) { return decodeTextReferences(value.replace(/<[^>]*>/g,' ')).replace(/\s+/g,' ').trim(); }
+function plainText(value) { return decodeTextReferences(value.replace(/<[^"'<>]*(?:"[^"]*"[^"'<>]*|'[^']*'[^"'<>]*)*>/g,' ')).replace(/\s+/g,' ').trim(); }
 function textContent(value) { return plainText(value).slice(0,1000); }
 // Walk comments and raw script/style blocks in document order. Comment-like
 // strings inside JSON-LD stay intact; commented-out scripts are never evidence.

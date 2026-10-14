@@ -1,6 +1,17 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {extractHtml,internalCandidates,selectPageSample,collectEvidence,publicFetch,publicAddress} from './evidence.mjs';
+test('quoted inline attributes do not leak into citable text',()=>{
+ for(const attr of ['data-note="x > fabricated"',"data-note='x > fabricated'",'data-note="<b>fabricated</b>"']) {
+  const e=extractHtml(`<title>Offer <span ${attr}>Real</span></title><h1>Offer <span ${attr}>Real</span></h1><p>Price <a ${attr}>EUR 9</a> &amp; scope.</p>`);
+  assert.equal(e.title,'Offer Real');
+  assert.deepEqual(e.h1,['Offer Real']);
+  assert.equal(e.sections[0].text,'Price EUR 9 & scope.');
+ }
+ const e=extractHtml('<h1>Plain &lt;offer&gt; &amp; &#233;</h1><p>5 &gt; 3 <em>visible</em></p>');
+ assert.deepEqual(e.h1,['Plain <offer> & é']);
+ assert.equal(e.sections[0].text,'5 > 3 visible');
+});
 test('quoted script delimiters retain JSON-LD and exclude raw-block markup',()=>{
  for(const attr of ['data-note="a > b"',"data-note='a > b'",'data-note="<meta name=robots content=noindex>"']) {
   const html=`<script ${attr} type="application/ld+json">{"@type":"Service","name":"Audit"}</script><style ${attr}>.x::after { content: '<meta name="robots" content="noindex">'; }</style><h1>Real offer</h1>`;
