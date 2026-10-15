@@ -40,21 +40,39 @@
     "boundary": "Owner consent handled; no accepted alternate transport or deployment inferred"
   },
   "pluginWorkflowRecheck": {
-    "at": "2026-10-14T18:39:20.092Z",
-    "trigger": "Installed Sites skill changed to the currently exposed 1.0.0 package.",
-    "skillPath": "/Users/alopez/.codex/plugins/cache/openai-curated-remote/sites/1.0.0/skills/sites/SKILL.md",
-    "helperPath": "/Users/alopez/.codex/plugins/cache/openai-curated-remote/sites/1.0.0/scripts/site-workflow.mjs",
+    "at": "2026-10-15T06:00:37.349Z",
+    "trigger": "Installed skill catalog now selects Sites 1.0.2-remix-b.1 again.",
+    "skillPath": "/Users/alopez/.codex/plugins/cache/openai-curated-remote/sites/1.0.2-remix-b.1/skills/sites/SKILL.md",
+    "helperPath": "/Users/alopez/.codex/plugins/cache/openai-curated-remote/sites/1.0.2-remix-b.1/scripts/site-workflow.mjs",
     "helperSha256": "34c3408f93a12684c993adf0256d7fe138f2baa43ead46a63921c87e36935acd",
-    "supportedInput": "One credential JSON object via masked stdin, containing token, auth_mode, remote_url and branch.",
+    "byteIdenticalToPreviousHelper": true,
+    "supportedInput": "Repository credential JSON via masked stdin; still the documented source helper path.",
     "credentialReferenceOrDirectPublicSourceSyncExposed": false,
-    "privatePublishOnPush": "Still requires pushing source with the repository credential; not an alternate credential transport or authorization to change the public audience.",
-    "previousHelperPathUnavailable": true,
-    "oldHelperPath": "/Users/alopez/.codex/plugins/cache/openai-curated-remote/sites/1.0.2-remix-b.1/scripts/site-workflow.mjs",
     "nativeCallsMade": false,
     "newCredentialCreated": false,
     "transferRetried": false,
     "sourceCheckoutChanged": false,
     "deployed": false,
-    "conclusion": "Current documented helper and native source/save contracts do not expose an accepted alternate transport. Owner consent stays resolved; earlier transport rejection remains effective. Use current installed skill paths if a genuinely accepted supported channel becomes available."
-  }
+    "conclusion": "The newer catalog entry does not change the previously rejected credential transport. Current documentation and callable tool names expose no accepted alternative. Keep owner consent resolved, existing public Site identity and all pending source changes; do not recreate credentials or replay the transfer."
+  },
+  "pluginWorkflowRecheckHistory": [
+    {
+      "at": "2026-10-14T18:39:20.092Z",
+      "trigger": "Installed Sites skill changed to the currently exposed 1.0.0 package.",
+      "skillPath": "/Users/alopez/.codex/plugins/cache/openai-curated-remote/sites/1.0.0/skills/sites/SKILL.md",
+      "helperPath": "/Users/alopez/.codex/plugins/cache/openai-curated-remote/sites/1.0.0/scripts/site-workflow.mjs",
+      "helperSha256": "34c3408f93a12684c993adf0256d7fe138f2baa43ead46a63921c87e36935acd",
+      "supportedInput": "One credential JSON object via masked stdin, containing token, auth_mode, remote_url and branch.",
+      "credentialReferenceOrDirectPublicSourceSyncExposed": false,
+      "privatePublishOnPush": "Still requires pushing source with the repository credential; not an alternate credential transport or authorization to change the public audience.",
+      "previousHelperPathUnavailable": true,
+      "oldHelperPath": "/Users/alopez/.codex/plugins/cache/openai-curated-remote/sites/1.0.2-remix-b.1/scripts/site-workflow.mjs",
+      "nativeCallsMade": false,
+      "newCredentialCreated": false,
+      "transferRetried": false,
+      "sourceCheckoutChanged": false,
+      "deployed": false,
+      "conclusion": "Current documented helper and native source/save contracts do not expose an accepted alternate transport. Owner consent stays resolved; earlier transport rejection remains effective. Use current installed skill paths if a genuinely accepted supported channel becomes available."
+    }
+  ]
 }
