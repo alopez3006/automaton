@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "startedAt": "2026-10-15T08:30:00.000Z",
+  "reviewAt": "2026-10-29T08:30:00.000Z",
+  "targetQualifiedRequests": 10,
+  "segment": "small-saas-with-website-agent",
+  "segmentHypothesis": "Owners of small public B2B software websites who can implement a supported fix through their repository or CMS agent.",
+  "priceCents": 900,
+  "currency": "eur",
+  "humanHourlyCostCents": 2400,
+  "maxHumanSecondsPerSale": 900,
+  "channels": ["owned-site", "owner-manual-linkedin"],
+  "deliveryMode": "assisted-native-resend",
+  "nativeTransactionalChannelVerified": true,
+  "nativeChannelEvidence": "EMAIL-DECISION-RECONCILIATION.json: provider delivery and genuine owner-supplied message bodies; does not prove paid report access",
+  "automaticDeliveryVerified": false,
+  "sourcePublicationUnblocked": false,
+  "notes": "Owner accepted the premortem action plan on 15 October. Segment, time ceiling and hourly valuation are experiment assumptions, not validated demand, cash spending or changed external-account authority. Review date is a decision checkpoint, not a timer or automatic pause."
+}

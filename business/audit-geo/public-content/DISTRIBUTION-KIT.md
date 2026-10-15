@@ -1,5 +1,27 @@
 # Acquisition experiment — educational post
 
+## Current ten-request pilot — 15 October 2026
+
+Owner accepted the premortem plan. Use this single current draft for the already selected **owner-manual LinkedIn** channel; the alternatives below are historical. Automaton has not published a post. Intended audience is owners of small public B2B software websites who already use a repository/CMS agent. This is an audience hypothesis. The offer is a supervised pilot while automatic Site email remains under diagnosis. Price is EUR 9 after usefulness review; current paid orders remain closed until a genuine report and present delivery capacity pass the existing gates.
+
+> Running a small SaaS website with Codex, Claude or another coding agent?
+>
+> I’m testing Audit GEO: a focused website review that turns public-page evidence into up to three useful tasks for your agent. Each task includes its source, a concrete change, verification steps and a condition for leaving the page alone.
+>
+> The pilot price is €9, once. We review usefulness before inviting payment. If the evidence does not support a worthwhile change, we do not ask you to pay.
+>
+> This is a supervised pilot covering public HTML and technical/content foundations. Search rankings and ChatGPT recommendations are not measured or guaranteed. Save your private request page to follow the review.
+>
+> Disclosure: I operate Audit GEO.
+>
+> Scope, fictional example and eligibility request: https://audit.vutler.com/?source=linkedin#request
+
+The publisher must verify that the affiliation statement is true. Keep this as one manual post, with no unsolicited direct messages, ads or account automation. Publish only when an authorized operator is available to process requests; do not promise a delivery deadline that has not been confirmed.
+
+Record the actual public post URL/date and aggregate clicks/impressions if the owner supplies them. Self-reported request labels already exist; they are not verified attribution or visitor counts. `PILOT-STATUS.json` reports the separately registered first ten external qualified requests, reviewed usefulness, independently reconciled payments, confirmed report access and measured intervention costs. Unknown visits and visitor conversion stay unknown. Review after ten requests or 29 October; the existing heartbeat owns follow-up and creates no new timer. See OPERATIONS.md for the private evidence register. Do not count historical owner/admin tests or invent a post, traffic or customer.
+
+## Historical preparation — 14 October
+
 Prepared 14 October 2026. Drafts only: no external post, outreach, account login or paid promotion performed.
 
 ## Hypothesis and audience

@@ -10,11 +10,13 @@ import { draftSchema } from './draft-schema.mjs';
 import { reviewedPreview } from './preview.mjs';
 import { summarizeFunnel } from './funnel.mjs';
 import {safePageViewMetrics} from './page-view-metrics.mjs';
+import {loadPilotScorecard,recordAutomationWork} from './pilot-scorecard.mjs';
 import {selectAuditRequests,unavailableEvidenceMessage} from './operator-requests.mjs';
 import {validateNoActionReview,selectNoActionRequest} from './no-action-review.mjs';
 import { sniparaEnvironment } from '../../scripts/with-snipara.mjs';
 import { loadSniparaTools } from '../../dist/agent/snipara.js';
 import {loadBusinessPolicy,auditCapacity} from '../../dist/business/policy.js';
+if(process.argv.includes('--pilot-scorecard')&&process.argv.length!==3)throw Error('Pilot scorecard cannot combine with other modes');
 Object.assign(process.env,sniparaEnvironment());
 const memoryTools=await loadSniparaTools();
 const recall=memoryTools.find(t=>t.name==='snipara_recall');
@@ -55,6 +57,9 @@ try{
   const response=await fetch(new URL('/api/operator/page-views',site),{headers,redirect:'error',signal:AbortSignal.timeout(20000)});
   if(!response.ok)throw Error('Public GET metrics unavailable; deployment may be pending');
   console.log(JSON.stringify(safePageViewMetrics(await response.json())));
+ }else if(process.argv.includes('--pilot-scorecard')){
+  if(process.argv.length!==3)throw Error('Pilot scorecard cannot combine with mutating modes');
+  console.log(JSON.stringify(await loadPilotScorecard(root,await api('GET'))));
  }else if(process.argv.includes('--metrics-only')){
   if(process.argv.includes('--accept-orders')||process.argv.includes('--retry-review')||process.argv.includes('--retry-unavailable'))throw Error('Metrics mode cannot mutate orders');
   console.log(JSON.stringify(summarizeFunnel(await api('GET'))));
@@ -79,6 +84,8 @@ try{
  for(const job of jobs){
    if(!auditCapacity(ledger,policy).allowed){console.log(JSON.stringify({dailyQuotaReached:policy.enabled,attempts:ledger.attempts}));break;}
    if(!/^[a-f0-9-]{36}$/.test(job.id))throw Error('Invalid request ID');
+   const workStarted=performance.now();
+   try{
    const evidence=await collectEvidence(job.website,{pagespeed:process.argv.includes('--pagespeed')});
    await writeFile(join(reports,job.id+'.evidence.json'),JSON.stringify(evidence,null,2),{mode:0o600});
    if(!evidence.observations.some(o=>o.status===200&&!o.error)){await api('PATCH',{key:job.key,status:'needs_review',message:unavailableEvidenceMessage});console.log(JSON.stringify({requestId:job.id,status:'needs_review',reason:'public_evidence_unavailable'}));continue;}
@@ -95,6 +102,7 @@ try{
    const preview=reviewedPreview(draft,evidence);const accept=!!preview&&process.argv.includes('--accept-orders')&&queue.paymentsConfigured;
    await api('PATCH',{key:job.key,status:!draft.eligible?'ineligible':accept?'payment_pending':'prepared',...(accept?{report,taskCount:draft.taskCount,preview,previewApproved:true}:{}),message:!draft.eligible?'No useful paid change was supported by the evidence. No payment is requested.':accept?'Your useful report is prepared. Pay €9 using the link below, your report will unlock automatically on this private page. No subscription.':'A draft is prepared. Source support, severity and usefulness are being reviewed before a payment link is offered. No payment has been taken.'});
    count++;console.log(JSON.stringify({requestId:job.id,status:!draft.eligible?'ineligible':accept?'payment_pending':'prepared',usage:r.usage}));
+   }finally{await recordAutomationWork(reports,job.id,workStarted).catch(()=>console.error('Measured automation work could not be retained; economic coverage remains incomplete'));}
  }
  let notificationState={configured:false};if(typeof queue.notificationsConfigured==='boolean'){const mail=await fetch(new URL('/api/operator/notifications',site),{method:'POST',headers,signal:AbortSignal.timeout(30000),redirect:'error'});if(!mail.ok)throw Error('Notification reconciliation failed');notificationState=await mail.json();}console.log(JSON.stringify({prepared:count,attempts:ledger.attempts,externalPurchaseSpendCents:ledger.externalSpendCents,payment:'not_requested',notifications:notificationState}));
  }

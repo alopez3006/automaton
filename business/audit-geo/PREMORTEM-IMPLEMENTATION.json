@@ -1,0 +1,46 @@
+{
+  "observedAt": "2026-10-15T08:45:04.251Z",
+  "status": "implemented_locally_and_operationally",
+  "ownerAuthority": "Owner accepted applying the premortem recommendations in the main chat on 15 October 2026.",
+  "artifacts": [
+    "pilot-plan.json",
+    "pilot-scorecard.mjs",
+    "pilot-scorecard.test.mjs",
+    "PILOT-STATUS.json",
+    "MISSION.md",
+    "OPERATIONS.md",
+    "public-content/DISTRIBUTION-KIT.md"
+  ],
+  "implementation": {
+    "cohort": "Prospective first ten qualified external requests; historical owner/admin/tests excluded.",
+    "delivery": "Assisted native Resend channel available from prior provider/owner evidence. First real paid report receipt remains unproved.",
+    "measurement": "Read-only authenticated operator scorecard and measured collection/draft elapsed work; actual human time, fees and costs remain separately evidenced.",
+    "decisionCheckpoint": "29 October or ten qualified requests, without a new timer or automatic pause.",
+    "acquisition": "One targeted current draft for the previously chosen owner-manual LinkedIn channel; no external posting performed."
+  },
+  "verification": {
+    "testsPassed": 20,
+    "testsFailed": 0,
+    "operatorSyntax": "passed",
+    "diffCheck": "passed",
+    "liveScorecardObservedAt": "2026-10-15T08:43:35.514Z",
+    "nativeEnvironmentRevision": 10,
+    "emailsEnabled": true,
+    "paymentsEnabled": false,
+    "sandboxEnabled": false,
+    "trackingAndResendSecretPresencePreserved": true,
+    "sourceDeployment": false,
+    "automaticEmailRepair": false,
+    "customerSale": false,
+    "newEmailSent": false,
+    "auditInference": false,
+    "purchase": false
+  },
+  "dependencies": {
+    "automaticDiagnosticsAndPublicGETMeasurement": "Existing Sites source credential transfer was rejected by automatic approval review; no accepted alternative exposed, mechanism not retried.",
+    "externalDistribution": "Owner-manual publication choice remains; actual post URL/date and platform aggregates not supplied.",
+    "commercialEvidence": "Genuine external qualified request, useful independent report review, current operator capacity, actual associated payment and customer-confirmed report access."
+  },
+  "memoryId": "cmv9alhr505hyt0n32mvkz4y5",
+  "externalSpendCents": 0
+}

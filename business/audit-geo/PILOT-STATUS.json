@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "observedAt": "2026-10-15T08:43:35.514Z",
+  "reviewAt": "2026-10-29T08:30:00.000Z",
+  "segment": "small-saas-with-website-agent",
+  "decision": "prove_first_assisted_delivery",
+  "reviewDue": false,
+  "automaticDeliveryReady": false,
+  "assistedChannelAvailable": true,
+  "firstPaidCustomerDeliveryVerified": false,
+  "retainedInventory": {
+    "total": 4,
+    "statuses": {
+      "requested": 0,
+      "prepared": 1,
+      "needs_review": 0,
+      "payment_pending": 0,
+      "ineligible": 3,
+      "delivered": 0
+    },
+    "unknownStatus": 0,
+    "reviewedSummaries": 1
+  },
+  "cohort": {
+    "registeredExternalQualified": 0,
+    "target": 10,
+    "missingFromRetainedPage": 0,
+    "reviewedSummaries": 0,
+    "noUsefulTaskDecisions": 0,
+    "verifiedLivePayments": 0,
+    "customerConfirmedReportAccess": 0
+  },
+  "economics": {
+    "grossRevenueCents": 0,
+    "recordedHumanSeconds": 0,
+    "recordedAutomationSeconds": 0,
+    "humanCoverageComplete": false,
+    "costCoverageComplete": false,
+    "humanSecondsPerSale": null,
+    "estimatedContributionCents": null,
+    "humanHourlyValuationCents": 2400
+  },
+  "visits": null,
+  "visitorConversionRate": null,
+  "limitations": [
+    "Local evidence register, not authenticated payment verification; native provider retrieval and genuine customer confirmation must be recorded independently.",
+    "Retained requests include tests and a bounded first page; only explicitly qualified external requests enter this cohort.",
+    "No backfill of work time. Recorded time is partial until coverage is explicitly reconciled, including refusals, support and overhead. Automation elapsed time is not human labor or a cash model bill.",
+    "The hourly valuation is an assumption. Contribution stays unknown without human and actual fee/cost coverage.",
+    "Public GET events include bots/repeats and cannot supply a unique or qualified visitor denominator. Ten requests are a decision checkpoint, not proof of market fit.",
+    "Assisted native email requires a present authorized operator, reconciled event receipts and current capacity. It does not repair automatic Site sending or prove a paid report was received."
+  ]
+}
