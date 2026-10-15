@@ -1,6 +1,6 @@
 /** Automaton's local business mode, using the owner's official Codex OAuth executor. */
 import { spawn } from "node:child_process";
-import { readFile, writeFile, mkdir, open, unlink, chmod } from "node:fs/promises";
+import { readFile, writeFile, mkdir, open, unlink, chmod, rename } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, resolve, delimiter } from "node:path";
 import { randomUUID } from "node:crypto";
@@ -74,6 +74,18 @@ async function projectMemory() {
   return { context, client };
 }
 
+// Readers must see a complete previous or next snapshot, never a truncated write.
+export async function writeBusinessStatusSnapshot(file: string, value: Record<string, unknown>): Promise<void> {
+  const temporary = file + "." + randomUUID() + ".tmp";
+  try {
+    await writeFile(temporary, JSON.stringify(value, null, 2), { mode: 0o600, flag: "wx" });
+    await rename(temporary, file);
+  } catch (error) {
+    await unlink(temporary).catch(() => {});
+    throw error;
+  }
+}
+
 export async function runBusiness(options: {
   workspace?: string;
   executable?: string;
@@ -98,7 +110,7 @@ export async function runBusiness(options: {
     state = next;
     const value = { mode: "automaton-local-business", runId, pid: process.pid, state, updatedAt: new Date().toISOString(), ...extra };
     db.setKV("business_status", JSON.stringify(value));
-    statusWrites = statusWrites.then(() => writeFile(join(stateDir, "status.json"), JSON.stringify(value, null, 2), { mode: 0o600 }));
+    statusWrites = statusWrites.then(() => writeBusinessStatusSnapshot(join(stateDir, "status.json"), value));
     await statusWrites;
   };
   try {

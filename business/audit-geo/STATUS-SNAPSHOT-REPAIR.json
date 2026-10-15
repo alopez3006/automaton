@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-10-15T14:52:48.215Z",
+  "scope": "local controller status publication; no Site or customer-send change",
+  "incident": {
+    "symptom": "consoleSnapshot failed with Unexpected end of JSON input immediately after controller startup",
+    "readPath": ".automaton-business/status.json",
+    "subsequentRead": "valid running status and live controller; no duplicate started",
+    "cause": "serialized writeFile updates truncated the destination before replacement, allowing a concurrent reader to observe partial JSON"
+  },
+  "repair": {
+    "atomicRename": true,
+    "temporaryInSameDirectory": true,
+    "privateMode": "0600",
+    "serializedWriterRetained": true,
+    "failureCleanup": true,
+    "existingControllerRestarted": false,
+    "watcherRestarted": false,
+    "applies": "compiled for subsequent controller starts; current loaded process is unchanged"
+  },
+  "verification": {
+    "testsPassed": 41,
+    "testsFailed": 0,
+    "suites": [
+      "business-runtime",
+      "business-console",
+      "business-policy"
+    ],
+    "concurrentReaders": 6,
+    "transitions": 40,
+    "failedSerializationPreservesPrior": true,
+    "failedRenameCleansTemporary": true,
+    "typecheck": "passed",
+    "compiledExportAvailable": true,
+    "diffCheck": "passed"
+  },
+  "hashes": {
+    "runtime": "37827005274f39a4d5f3d8218202aa64b0d04f564ea12fa27834be112afd8e20",
+    "tests": "02054fbce53397e870887cc8b225a4e40b5f71d97b31ef4a9f8a47e2fd84d397"
+  },
+  "externalSpendCents": 0,
+  "customerDataRead": false,
+  "paymentSettingsChanged": false,
+  "countersReset": false,
+  "sourceDeployed": false
+}

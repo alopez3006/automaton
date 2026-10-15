@@ -1,7 +1,7 @@
 import {describe,it,expect} from 'vitest';
-import{mkdtemp,mkdir,writeFile,readFile,rm}from'node:fs/promises';
+import{mkdtemp,mkdir,writeFile,readFile,rm,readdir,stat}from'node:fs/promises';
 import{join}from'node:path';import{tmpdir}from'node:os';
-import{businessEnvironment,redactBusinessOutput,validateBusinessReceipt,runBusiness}from'../business/runtime.js';
+import{businessEnvironment,redactBusinessOutput,validateBusinessReceipt,runBusiness,writeBusinessStatusSnapshot}from'../business/runtime.js';
 import {createDatabase} from '../state/database.js';
 import {appendConsoleMessage} from '../business/console-state.js';
 import {legacyPolicy} from '../business/policy.js';
@@ -158,5 +158,38 @@ describe('Automaton local business mode',()=>{
  it('validates the per-pass remaining budget under the new fifty-euro mission ceiling',()=>{
    expect(validateBusinessReceipt(JSON.stringify({...receipt,externalSpendCents:3000}),5000).externalSpendCents).toBe(3000);
    expect(()=>validateBusinessReceipt(JSON.stringify({...receipt,externalSpendCents:501}),500)).toThrow('Invalid');
+ });
+});
+
+
+describe('business status snapshot publication',()=>{
+ it('keeps concurrent console readers on complete private snapshots throughout transitions',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-status-publication-')),file=join(dir,'status.json');
+  let finished=false,reads=0;
+  try{
+   await writeBusinessStatusSnapshot(file,{sequence:0,payload:'0'.repeat(65536)});
+   const readers=Array.from({length:6},async()=>{
+    while(!finished){
+     const value=JSON.parse(await readFile(file,'utf8'));
+     expect(value.payload).toBe(String(value.sequence).repeat(65536));reads++;
+    }
+   });
+   try{for(let sequence=1;sequence<=40;sequence++)await writeBusinessStatusSnapshot(file,{sequence,payload:String(sequence).repeat(65536)});}
+   finally{finished=true;await Promise.all(readers);}
+   expect(reads).toBeGreaterThan(0);expect(JSON.parse(await readFile(file,'utf8')).sequence).toBe(40);
+   expect((await stat(file)).mode&0o777).toBe(0o600);expect(await readdir(dir)).toEqual(['status.json']);
+  }finally{finished=true;await rm(dir,{recursive:true,force:true});}
+ });
+ it('preserves the prior status on serialization failure and removes an unpublished temporary on rename failure',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'automaton-status-failure-')),file=join(dir,'status.json');
+  try{
+   await writeBusinessStatusSnapshot(file,{state:'running'});
+   const cyclic:Record<string,unknown>={};cyclic.self=cyclic;
+   await expect(writeBusinessStatusSnapshot(file,cyclic)).rejects.toThrow();
+   expect(JSON.parse(await readFile(file,'utf8'))).toEqual({state:'running'});
+   const occupied=join(dir,'occupied');await mkdir(occupied);
+   await expect(writeBusinessStatusSnapshot(occupied,{state:'completed'})).rejects.toThrow();
+   expect((await readdir(dir)).sort()).toEqual(['occupied','status.json']);
+  }finally{await rm(dir,{recursive:true,force:true});}
  });
 });
