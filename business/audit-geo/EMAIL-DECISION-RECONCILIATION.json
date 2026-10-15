@@ -1,0 +1,56 @@
+{
+  "observedAt": "2026-10-15T07:47:20Z",
+  "hypothesis": "A pre-review confirmation may be interpreted as a payment invitation; reconcile actual message bodies and final server state before changing or resending.",
+  "providerEvidence": {
+    "recentMetadataCount": 25,
+    "relevantBodiesRead": 2,
+    "confirmationSentAt": "2026-10-14T21:35:28.183Z",
+    "confirmation": "Draft prepared, final source/severity/usefulness review pending; explicitly no payment requested or taken; no private tracking link included.",
+    "closureSentAt": "2026-10-14T22:07:42.574Z",
+    "closure": "Independent review did not establish a sufficiently useful supported change; explicitly no payment requested or taken.",
+    "bothProviderStatus": "delivered",
+    "paymentInvitationEstablished": false,
+    "boundary": "Connected provider records only. Does not disprove another message or establish what the recipient saw. No inbox access."
+  },
+  "serverVerification": {
+    "inspectedAt": "2026-10-15T07:46:49.115Z",
+    "matchingRequests": 1,
+    "status": "ineligible",
+    "previewApproved": false,
+    "paymentsConfigured": false,
+    "notificationsConfigured": true
+  },
+  "artifact": "notification-decision.test.mjs",
+  "localVerification": {
+    "testsPassed": 25,
+    "testsFailed": 0,
+    "newContractControls": 7
+  },
+  "actions": {
+    "resends": 0,
+    "productionChanges": 0,
+    "paymentActivation": false,
+    "credentialRead": false
+  },
+  "followUp": {
+    "questionId": "b02b33e4-b0b5-4d97-8073-b4b85083ee5b",
+    "requiredInput": "Exact subject of the message interpreted as a payment request; no private link or secret required.",
+    "acceptance": "Match that subject to a provider message and classify whether wording or an actual unauthorized invitation caused the incident."
+  },
+  "externalSpendCents": 0,
+  "supervisorVerification": {
+    "at": "2026-10-15T08:01:56.877Z",
+    "localTestsPassed": 25,
+    "localTestsFailed": 0,
+    "contractControls": 7,
+    "testSha256": "417268e12f8cfe58ab36db88bb724480f0c51de5fea57bf5f5cc7b7ca41bb96a",
+    "providerEvidence": "Controller recorded provider bodies; unchanged diagnosis not repeated by supervisor.",
+    "claimOfOtherPaymentMessage": "Still unresolved; existing exact-subject question remains pending.",
+    "ownerQuestionRepeated": false,
+    "requestReopened": false,
+    "emailResent": false,
+    "productionChanged": false,
+    "paymentActivated": false,
+    "scope": "Local notification/refusal and payment gates only; does not identify another message, prove human inbox content or repair automatic sending."
+  }
+}
